@@ -136,3 +136,6 @@ fi
 # Set Go env vars
 export GOPATH="$HOME/Dev/go"
 export GOBIN="$GOPATH/bin"
+
+# Set $EDITOR
+export EDITOR=/usr/bin/nvim
