@@ -1,0 +1,6 @@
+#Ignore any logs or backups
+logs
+backups
+
+#Ignore the decryption password (obviously)
+password
