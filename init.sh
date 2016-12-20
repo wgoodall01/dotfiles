@@ -82,41 +82,14 @@ if [ -f $DIR/password ]; then
 	PASSWORD=$(<$DIR/password)
 fi
 
-# Start file logging
-exec &> >(tee -a "$LOGS/init")
-
 # Prompt for optional stuff
 comment "Options:"
 read -p "[feature] Install SSH keys? [y/n]: " -n 1 -r
 [[ $REPLY =~ ^[Yy]$ ]] && CFG_SSH=true || CFG_SSH=false
 printf "\n"
 
-# if [ "$CFG_SSH" = true ]; then
-# 	comment "SSH keys:"
-# 	for f in $DIR/enc/.ssh/*; do
-# 		f=$(basename $f) # Only get the filename
-# 		printf "[decrypt] .ssh/$f: "
-# 		if [ -f ~/.ssh/$f ]; then
-# 			mkdir -p $BACKUPS/.ssh
-# 			cp ~/.ssh/$f $BACKUPS/.ssh/$f
-# 			rm -f ~/.ssh/$f
-# 			printf "backed up and "
-# 		fi
-# 		
-# 		if $DIR/crypto.sh decrypt $DIR/enc/.ssh/$f ~/.ssh/$f &>"$LOGS/${f}_decrypt" ; then
-# 			printf "decrypted to ~/.ssh/$f "
-# 			
-# 			if [[ ! $f =~ ^.*\.pub$ ]]; then
-# 				chmod 400 ~/.ssh/$f
-# 				printf " with 'chmod 400'"
-# 			fi
-# 		else
-# 			printf "there was a decryption error - check logs/${f}_decrypt. Did you forget the password file?"
-# 		fi
-# 		printf "\n"
-# 
-# 	done
-# fi
+# Start file logging
+exec &> >(tee -a "$LOGS/init")
 
 if [ "$CFG_SSH" = true ]; then
 	comment "SSH keys:"
