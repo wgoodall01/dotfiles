@@ -1,6 +1,10 @@
+#!/usr/bin/env bash
+
 # Dotfiles init script.
 # This should be run every time to update dotfiles.
 # It should not mess anything up if run multiple times.
+
+shopt -s nullglob
 
 cat <<_
   ____        _    __ _ _           _ 
@@ -13,6 +17,7 @@ _
 
 # Prompt for sudo
 sudo printf ""
+
 
 TIMESTAMP=$(date -d "today" +"%Y-%m-%d_%H-%M-%S")
 
@@ -80,6 +85,19 @@ fi
 
 # Start file logging
 exec &> >(tee -a "$LOGS/init")
+
+# Prompt for optional stuff
+comment "Options:"
+read -p "[feature] Install SSH keys? [y/n]: " -n 1 -r
+[[ $REPLY =~ ^[Yy]$ ]] && CFG_SSH=true || CFG_SSH=false
+printf "\n"
+
+if [ "$CFG_SSH" = true ]; then
+	comment "SSH keys:"
+	for f in $DIR/enc/.ssh/*; do
+		\
+	done
+fi
 
 
 comment "Shell configuration:"
