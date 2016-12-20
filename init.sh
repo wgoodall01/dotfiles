@@ -47,8 +47,7 @@ ln_replace(){
 
 		if [ -e $LOC ]; then
 			mkdir -p $(dirname $BACKUPS/$1)
-			cp -r $LOC $BACKUPS/$1
-			rm -r $LOC
+			mv $LOC $BACKUPS/$1
 			printf "backed up and "
 		fi
 		
@@ -69,7 +68,7 @@ install(){
 		if $(sudo apt-get install -y $1) &>$LOGS/$1_install; then
 			printf "done\n"
 		else
-			printf "failed - check logs/$1_install"
+			printf "failed - check logs/${1}_install"
 		fi
 	fi
 }
@@ -92,11 +91,71 @@ read -p "[feature] Install SSH keys? [y/n]: " -n 1 -r
 [[ $REPLY =~ ^[Yy]$ ]] && CFG_SSH=true || CFG_SSH=false
 printf "\n"
 
+# if [ "$CFG_SSH" = true ]; then
+# 	comment "SSH keys:"
+# 	for f in $DIR/enc/.ssh/*; do
+# 		f=$(basename $f) # Only get the filename
+# 		printf "[decrypt] .ssh/$f: "
+# 		if [ -f ~/.ssh/$f ]; then
+# 			mkdir -p $BACKUPS/.ssh
+# 			cp ~/.ssh/$f $BACKUPS/.ssh/$f
+# 			rm -f ~/.ssh/$f
+# 			printf "backed up and "
+# 		fi
+# 		
+# 		if $DIR/crypto.sh decrypt $DIR/enc/.ssh/$f ~/.ssh/$f &>"$LOGS/${f}_decrypt" ; then
+# 			printf "decrypted to ~/.ssh/$f "
+# 			
+# 			if [[ ! $f =~ ^.*\.pub$ ]]; then
+# 				chmod 400 ~/.ssh/$f
+# 				printf " with 'chmod 400'"
+# 			fi
+# 		else
+# 			printf "there was a decryption error - check logs/${f}_decrypt. Did you forget the password file?"
+# 		fi
+# 		printf "\n"
+# 
+# 	done
+# fi
+
 if [ "$CFG_SSH" = true ]; then
 	comment "SSH keys:"
+	mkdir -p ~/.ssh
+	tmp=$DIR/sshkey_tmp
+	mkdir -p $tmp
+
 	for f in $DIR/enc/.ssh/*; do
-		\
+		f=$(basename $f) # Only get the filename
+		printf "[decrypt] .ssh/$f: "	
+		# Decrypt the file to temp
+		if $DIR/crypto.sh decrypt $DIR/enc/.ssh/$f $tmp/$f &>$LOGS/${f}_decrypt; then
+			if [ -f ~/.ssh/$f ] && cmp --silent $tmp/$f ~/.ssh/$f; then
+				# Files match
+				printf "already exists in .ssh"
+			else
+				if [ -f ~/.ssh/$f ]; then
+					# File exists
+					mkdir -p $BACKUPS/.ssh
+					mv ~/.ssh/$f $BACKUPS/.ssh/$f
+				fi
+				
+				mv $tmp/$f ~/.ssh/$f
+				printf "decrypted to ~/.ssh/$f"
+
+				if [[ ! $f =~ ^.*.pub$ ]]; then
+					chmod 400 ~/.ssh/$f
+					printf " with 'chmod 400'"
+				fi
+			fi
+
+
+		else
+			printf "There was a decryption error - check logs/${f}_decrypt. Missing pw file?"
+		fi
+		printf "\n"
 	done
+
+	rm -rf $tmp
 fi
 
 
