@@ -4,7 +4,8 @@
 # This should be run every time to update dotfiles.
 # It should not mess anything up if run multiple times.
 
-shopt -s nullglob
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source lib/index.sh
 
 cat <<_
   ____        _    __ _ _           _ 
@@ -15,198 +16,51 @@ cat <<_
  Logging to logs/init
 _
 
-# Prompt for sudo
-sudo printf ""
-
-
-TIMESTAMP=$(date -d "today" +"%Y-%m-%d_%H-%M-%S")
-
-# Dir of script
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# Dir of backups
-BACKUPS=$DIR/backups/$TIMESTAMP
-mkdir -p $BACKUPS
-
-# Dir of logs
-LOGS=$DIR/logs/$TIMESTAMP
-mkdir -p $LOGS
-
-ln_replace(){
-	# If the file is already a link, do nothing
-	# If the file isn't a link, back it up and symlink it.
-	
-	printf "[link   ] $1: "
-
-	if [ -h ~/$1 ]; then
-		# File exists and is a symlink
-		printf "already linked"
-	else
-		LOC=~/$1
-		mkdir -p $(dirname $LOC)
-
-		if [ -e $LOC ]; then
-			mkdir -p $(dirname $BACKUPS/$1)
-			mv $LOC $BACKUPS/$1
-			printf "backed up and "
-		fi
-		
-		ln -s $DIR/links/$1 ~/$1
-		printf "linked from links/$1 to ~/$1"
-	fi
-
-	printf "\n"
-}
-
-install(){
-	# Install a package and log the installation
-	printf "[install] $1: "
-	if dpkg -s $1 &>/dev/null; then
-		printf "already installed\n"
-	else
-		printf "installing... "
-		if $(sudo apt-get install -y $1) &>$LOGS/$1_install; then
-			printf "done\n"
-		else
-			printf "failed - check logs/${1}_install"
-		fi
-	fi
-}
-
-install_pip(){
-	printf "[install] $1: "
-	if pip3 show $1 &>/dev/null; then
-		printf "already installed\n"
-	else
-		printf "installing... "
-		if pip3 install thefuck &>$LOGS/$1_install; then
-			printf "done\n"
-		else
-			printf "failed - check logs/${1}_install"
-		fi
-	fi
-}
-
-comment(){
-	printf "\n          $1\n"
-}
-
-# Load decryption password
-if [ -f $DIR/password ]; then
-	PASSWORD=$(<$DIR/password)
-fi
-
 # Prompt for optional stuff
 comment "Options:"
-read -p  "[feature] Install SSH keys?                [y/n]: " -n 1 -r
-[[ $REPLY =~ ^[Yy]$ ]] && CFG_SSH=true || CFG_SSH=false
-printf "\n"
-read -p "[feature] Install GUI tools (fonts, apps)? [y/n]: " -n 1 -r
-[[ $REPLY =~ ^[Yy]$ ]] && CFG_GUI=true || CFG_GUI=false
-printf "\n"
-
-# Start file logging
-exec &> >(tee -a "$LOGS/init")
+feature CFG_SSH "Install SSH keys"
+feature CFG_GUI "Install GUI tools/fonts"
 
 comment "Dependencies:"
-install python3
-install python3-dev
-install python3-pip
-install git
-ln_replace .gitconfig
+install_apt python3
+install_apt python3-dev
+install_apt python3-pip
+install_apt git
+link .gitconfig
 
-if [ "$CFG_SSH" = true ]; then
-	comment "SSH keys:"
-	mkdir -p ~/.ssh
-	tmp=$DIR/sshkey_tmp
-	mkdir -p $tmp
-
-	for f in $DIR/enc/.ssh/*; do
-		f=$(basename $f) # Only get the filename
-		printf "[decrypt] .ssh/$f: "	
-		# Decrypt the file to temp
-		if $DIR/crypto.sh decrypt $DIR/enc/.ssh/$f $tmp/$f &>$LOGS/${f}_decrypt; then
-			if [ -f ~/.ssh/$f ] && cmp --silent $tmp/$f ~/.ssh/$f; then
-				# Files match
-				printf "already exists in .ssh"
-			else
-				if [ -f ~/.ssh/$f ]; then
-					# File exists
-					mkdir -p $BACKUPS/.ssh
-					mv ~/.ssh/$f $BACKUPS/.ssh/$f
-				fi
-				
-				mv $tmp/$f ~/.ssh/$f
-				printf "decrypted to ~/.ssh/$f"
-
-				if [[ ! $f =~ ^.*.pub$ ]]; then
-					chmod 400 ~/.ssh/$f
-					printf " with 'chmod 400'"
-				fi
-			fi
-
-
-		else
-			printf "There was a decryption error - check logs/${f}_decrypt. Missing pw file?"
-		fi
-		printf "\n"
-	done
-
-	rm -rf $tmp
-fi
 
 if [ "$CFG_GUI" = true ]; then
 	comment "Powerline patched fonts: "
-	ln_replace .fonts
+	link .fonts
+fi
+
+if [ "$CFG_SSH" = true ]; then
+	comment "Install SSH keys: "
+	install_ssh_keys
 fi
 
 comment "Shell configuration:"
-ln_replace .bashrc
-ln_replace .profile
-ln_replace .bash_stuff
+link .bashrc
+link .profile
+link .bash_stuff
 install_pip thefuck
 
 comment "i3wm:"
-install i3
-ln_replace .config/i3
+install_apt i3
+link .config/i3
 
 comment "neovim:"
-install neovim
-ln_replace .config/nvim
+install_apt neovim
+link .config/nvim
 
 comment "nvm and nodejs:"
-printf "[install] nvm: "
-if [ -e ~/.nvm ]; then
-	printf "already installed\n"
-else
-	printf "installing... "
-	curl https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh 2>/dev/null | bash &> $LOGS/nvm_install
-	if [ "$?" -eq "0" ]; then
-		printf "done\n"
-		
-		# Load nvm
-		NVM_DIR=~/.nvm
-		[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-		# Install nodejs stable
-		printf "[install] nodejs stable: "
-		if nvm install stable &>$LOGS/node_install; then
-			printf "done\n"
-		else
-			printf "failed - check logs/node_install"
-		fi
-
-	else
-		printf "fail - check logs/nvm_install\n"
-	fi
-fi
-
+install_nodejs
 
 comment "Other stuff:"
-install htop
-install nload
-install tree
-install golang
-install xclip
-install default-jdk
+install_apt htop
+install_apt nload
+install_apt tree
+install_apt golang
+install_apt xclip
+install_apt default-jdk
 
