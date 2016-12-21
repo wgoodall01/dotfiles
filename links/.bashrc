@@ -155,3 +155,6 @@ eval $(thefuck --alias oops)
 
 # Add ~/.bash_stuff/bin to path
 export PATH="$HOME/.bash_stuff/bin:$PATH"
+
+# Add hub wrapper for git
+eval "$(hub alias -s)"
