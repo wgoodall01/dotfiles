@@ -73,6 +73,20 @@ install(){
 	fi
 }
 
+install_pip(){
+	printf "[install] $1: "
+	if pip3 show $1 &>/dev/null; then
+		printf "already installed\n"
+	else
+		printf "installing... "
+		if pip3 install thefuck &>$LOGS/$1_install; then
+			printf "done\n"
+		else
+			printf "failed - check logs/${1}_install"
+		fi
+	fi
+}
+
 comment(){
 	printf "\n          $1\n"
 }
@@ -93,6 +107,12 @@ printf "\n"
 
 # Start file logging
 exec &> >(tee -a "$LOGS/init")
+
+comment "Dependencies:"
+install python3
+install python3-dev
+install python3-pip
+install git
 
 if [ "$CFG_SSH" = true ]; then
 	comment "SSH keys:"
@@ -143,7 +163,7 @@ comment "Shell configuration:"
 ln_replace .bashrc
 ln_replace .profile
 ln_replace .bash_stuff
-
+install_pip thefuck
 
 comment "i3wm:"
 install i3
@@ -185,10 +205,7 @@ comment "Other stuff:"
 install htop
 install nload
 install tree
-install git
 install golang
-install python3
-install python3-pip
 install xclip
 install default-jdk
 
