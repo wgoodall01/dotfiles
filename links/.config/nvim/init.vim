@@ -11,10 +11,10 @@ autocmd InsertLeave * :set   relativenumber
 
 " X clipboard yank/paste
 function! ClipboardYank()
-  call system('xclip -i -selection clipboard', @@)
+  call system('pbcopy', @@)
 endfunction
 function! ClipboardPaste()
-  let @@ = system('xclip -o -selection clipboard')
+  let @@ = system('pbpaste')
 endfunction
 
 vnoremap <silent> y y:call ClipboardYank()<cr>

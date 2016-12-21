@@ -117,8 +117,8 @@ if ! shopt -oq posix; then
 fi
 
 # Add pbcopy/pbpaste
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
+#alias pbcopy='xclip -selection clipboard'
+#alias pbpaste='xclip -selection clipboard -o'
 
 export NVM_DIR="/home/wgoodall01/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -153,6 +153,5 @@ fi
 eval $(thefuck --alias)
 eval $(thefuck --alias oops)
 
-# Setup hr.sh 
-# https://github.com/LuRsT/hr/
-alias hr=~/.bash_stuff/hr.sh
+# Add ~/.bash_stuff/bin to path
+export PATH="$HOME/.bash_stuff/bin:$PATH"
