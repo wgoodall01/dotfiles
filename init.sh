@@ -53,8 +53,13 @@ comment "neovim:"
 install_apt neovim
 link .config/nvim
 
-comment "nvm and nodejs:"
+comment "Node.js:"
+install_nvm
 install_nodejs
+install_npm yarn
+install_npm webpack
+install_npm babel
+install_npm eslint
 
 comment "Other stuff:"
 install_apt htop

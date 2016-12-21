@@ -1,6 +1,6 @@
 #/usr/bin/env bash
 
-install_nodejs(){
+install_nvm(){
 
 	printf "[install] nvm: "
 	if [ -e ~/.nvm ]; then
@@ -14,19 +14,44 @@ install_nodejs(){
 			# Load nvm
 			NVM_DIR=~/.nvm
 			[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-			# Install nodejs stable
-			printf "[install] nodejs stable: "
-			if nvm install stable &>$LOGS/node_install; then
-				printf "done\n"
-			else
-				printf "failed - check logs/node_install"
-			fi
-
 		else
 			printf "fail - check logs/nvm_install\n"
 		fi
 	fi
+}
 
+install_nodejs(){
+	printf "[install] nodejs: "
+	if which node &>/dev/null; then
+		printf "already installed\n"
+	else
+
+		# Install nodejs stable
+		printf "installing... "
+		if nvm install stable &>$LOGS/node_install; then
+			printf "done\n"
+		else
+			printf "failed - check logs/node_install"
+		fi
+	fi
 
 }
+
+install_npm(){
+	#Init nvm for some reason
+	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+	
+	printf "[install] $1: "
+	if [ -d $NVM_DIR/versions/node/$(nvm current)/lib/node_modules/$1 ]; then
+		printf "already installed\n"
+	else
+		if npm install -g $1 &>$LOGS/${1}_install; then
+			printf "done\n"
+		else
+			printf "failed - check logs/${1}_install\n"
+		fi
+	fi
+}
+
+
+

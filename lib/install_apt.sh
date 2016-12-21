@@ -8,7 +8,7 @@ install_apt(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		if $(sudo apt-get install -y $1) &>$LOGS/$1_install; then
+		if sudo apt-get install -y $1 &>$LOGS/$1_install; then
 			printf "done\n"
 		else
 			printf "failed - check logs/${1}_install"
