@@ -37,15 +37,19 @@ function install_nodejs(){
 
 }
 
-function install_npm(){
+function init_nvm(){
 	#Init nvm for some reason
 	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+}
+
+function install_npm(){
+	NVM_NPM=$NVM_DIR/versions/node/$(nvm current)/bin/npm
 	
 	printf "[install] $1: "
 	if [ -d $NVM_DIR/versions/node/$(nvm current)/lib/node_modules/$1 ]; then
 		printf "already installed\n"
 	else
-		if npm install -g $1 &>$LOGS/${1}_install; then
+		if $NVM_NPM install -g $1 &>$LOGS/${1}_install; then
 			printf "done\n"
 		else
 			printf "failed - check logs/${1}_install\n"

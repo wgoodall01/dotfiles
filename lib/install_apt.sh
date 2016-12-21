@@ -11,7 +11,7 @@ install_apt(){
 		if sudo apt-get install -y $1 &>$LOGS/$1_install; then
 			printf "done\n"
 		else
-			printf "failed - check logs/${1}_install"
+			printf "failed - check logs/${1}_install\n"
 		fi
 	fi
 }
