@@ -27,6 +27,7 @@ install_apt python3-dev
 install_apt python3-pip
 install_apt git
 link .gitconfig
+install_apt software-properties-common # for apt-add-repository
 
 
 if [ "$CFG_GUI" = true ]; then
@@ -50,12 +51,14 @@ install_apt i3
 link .config/i3
 
 comment "neovim:"
+add_ppa "neovim-ppa/unstable"
 install_apt neovim
 link .config/nvim
 
 comment "Node.js:"
 install_nvm
 install_nodejs
+nvm_init
 install_npm yarn
 install_npm webpack
 install_npm babel

@@ -16,3 +16,20 @@ install_apt(){
 	fi
 }
 
+add_ppa(){
+	printf "[ppa    ] ppa:$1: "
+
+		if grep $1 /etc/apt/sources.list /etc/apt/sources.list.d/* &>/dev/null; then
+		# PPA already added
+		printf "already added.\n"
+	else
+		# Install PPA
+		if sudo apt-add-repository "ppa:$1" -y &>> $LOGS/ppa && sudo apt update &>> $LOGS/ppa; then
+			printf "done.\n"
+		else
+			printf "failed - check logs/ppa\n"
+		fi
+	fi
+
+}
+		
