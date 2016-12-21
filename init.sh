@@ -113,6 +113,7 @@ install python3
 install python3-dev
 install python3-pip
 install git
+ln_replace .gitconfig
 
 if [ "$CFG_SSH" = true ]; then
 	comment "SSH keys:"
