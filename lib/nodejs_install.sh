@@ -1,6 +1,6 @@
 #/usr/bin/env bash
 
-install_nvm(){
+function install_nvm(){
 
 	printf "[install] nvm: "
 	if [ -e ~/.nvm ]; then
@@ -20,9 +20,9 @@ install_nvm(){
 	fi
 }
 
-install_nodejs(){
+function install_nodejs(){
 	printf "[install] nodejs: "
-	if which node &>/dev/null; then
+	if which node &>/dev/null && [[ "$(which node)" == *"$NVM_DIR"* ]]; then
 		printf "already installed\n"
 	else
 
@@ -31,13 +31,13 @@ install_nodejs(){
 		if nvm install stable &>$LOGS/node_install; then
 			printf "done\n"
 		else
-			printf "failed - check logs/node_install"
+			printf "failed - check logs/node_install\n"
 		fi
 	fi
 
 }
 
-install_npm(){
+function install_npm(){
 	#Init nvm for some reason
 	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 	

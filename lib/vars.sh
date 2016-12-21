@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
 
+# ANSI term colors
+ANSI_RED="\e[91m"
+ANSI_RESET="\e[39m"
+
+
 TIMESTAMP=$(date -d "today" +"%Y-%m-%d_%H-%M-%S")
 
 # Dir of backups
