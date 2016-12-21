@@ -25,7 +25,6 @@ comment "Dependencies:"
 install_apt python3
 install_apt python3-dev
 install_apt python3-pip
-fix_local_perms # python needs this for some reason
 install_apt git
 link .gitconfig
 install_apt software-properties-common # for apt-add-repository
@@ -49,6 +48,7 @@ link .bashrc
 link .profile
 link .bash_stuff
 [ "$CFG_GUI" = true ] && dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
+fix_local_perms # python needs this for some reason
 install_pip thefuck
 
 comment "i3wm:"
