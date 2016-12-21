@@ -6,7 +6,7 @@ install_pip(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		if sudo pip3 install $1 &>$LOGS/$1_install; then
+		if sudo pip3 install --ignore-installed --user $1 &>$LOGS/$1_install; then
 			printf "done\n"
 		else
 			printf "failed - check logs/${1}_install"

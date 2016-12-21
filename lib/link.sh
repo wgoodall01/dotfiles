@@ -14,7 +14,7 @@ link(){
 		LOC=~/$1
 		mkdir -p $(dirname $LOC)
 
-		if [ -e $LOC ]; then
+		if [ -f $LOC ]; then
 			mkdir -p $(dirname $BACKUPS/$1)
 			mv $LOC $BACKUPS/$1
 			printf "backed up and "

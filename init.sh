@@ -29,10 +29,13 @@ install_apt git
 link .gitconfig
 install_apt software-properties-common # for apt-add-repository
 
-
 if [ "$CFG_GUI" = true ]; then
 	comment "Powerline patched fonts: "
 	link .fonts
+
+	comment "Chrome:"
+	add_ppa_chrome
+	install_apt google-chrome-stable
 fi
 
 if [ "$CFG_SSH" = true ]; then
@@ -44,6 +47,7 @@ comment "Shell configuration:"
 link .bashrc
 link .profile
 link .bash_stuff
+[ "$CFG_GUI" = true ] && dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
 install_pip thefuck
 
 comment "i3wm:"
