@@ -152,3 +152,7 @@ fi
 # Setup thefuck
 eval $(thefuck --alias)
 eval $(thefuck --alias oops)
+
+# Setup hr.sh 
+# https://github.com/LuRsT/hr/
+alias hr=~/.bash_stuff/hr.sh
