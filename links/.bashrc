@@ -139,3 +139,12 @@ export GOBIN="$GOPATH/bin"
 
 # Set $EDITOR
 export EDITOR=/usr/bin/nvim
+
+# Setup powerline-shell
+function _update_ps1() {
+    PS1="$(~/.bash_stuff/powerline-shell/powerline-shell.py $? 2> /dev/null)"
+}
+
+if [ "$TERM" != "linux" ]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi

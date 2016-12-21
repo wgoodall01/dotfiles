@@ -52,7 +52,7 @@ ln_replace(){
 		fi
 		
 		ln -s $DIR/links/$1 ~/$1
-		printf "linked from $DIR/links/$1 to $LOC"
+		printf "linked from links/$1 to ~/$1"
 	fi
 
 	printf "\n"
@@ -84,8 +84,11 @@ fi
 
 # Prompt for optional stuff
 comment "Options:"
-read -p "[feature] Install SSH keys? [y/n]: " -n 1 -r
+read -p  "[feature] Install SSH keys?                [y/n]: " -n 1 -r
 [[ $REPLY =~ ^[Yy]$ ]] && CFG_SSH=true || CFG_SSH=false
+printf "\n"
+read -p "[feature] Install GUI tools (fonts, apps)? [y/n]: " -n 1 -r
+[[ $REPLY =~ ^[Yy]$ ]] && CFG_GUI=true || CFG_GUI=false
 printf "\n"
 
 # Start file logging
@@ -131,10 +134,16 @@ if [ "$CFG_SSH" = true ]; then
 	rm -rf $tmp
 fi
 
+if [ "$CFG_GUI" = true ]; then
+	comment "Powerline patched fonts: "
+	ln_replace .fonts
+fi
 
 comment "Shell configuration:"
 ln_replace .bashrc
 ln_replace .profile
+ln_replace .bash_stuff
+
 
 comment "i3wm:"
 install i3
