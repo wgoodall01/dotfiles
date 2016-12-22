@@ -1,3 +1,18 @@
+let s:editor_root=expand('~/.config/nvim/')
+
+" Stuff for Vundle
+set nocompatible
+filetype off
+set rtp+=~/.config/nvim/bundle/Vundle.vim
+call vundle#begin(s:editor_root . '/bundle')
+
+" Vundle plugins
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+
+call vundle#end()
+filetype plugin indent on
+
 " Set tabs as \t and 4 spaces wide
 set tabstop=4
 set softtabstop=0 noexpandtab
