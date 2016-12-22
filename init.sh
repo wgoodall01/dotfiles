@@ -28,6 +28,7 @@ install_apt python3-pip
 install_apt git
 link .gitconfig
 install_apt software-properties-common # for apt-add-repository
+fix_local_perms # python needs this for some reason
 
 if [ "$CFG_GUI" = true ]; then
 	comment "Powerline patched fonts: "
@@ -48,17 +49,31 @@ link .bashrc
 link .profile
 link .bash_stuff
 [ "$CFG_GUI" = true ] && dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
-fix_local_perms # python needs this for some reason
 install_pip thefuck
 
 comment "i3wm:"
 install_apt i3
 link .config/i3
 
+comment "Powerline:"
+# fix_local_perms
+install_apt socat
+install_pip psutil
+install_apt libgit2-dev
+install_apt libffi-dev
+install_pip pygit2
+install_pip pyuv
+if [ "$CFG_GUI" = true ]; then
+	install_pip i3ipc
+	install_apt x11-xserver-utils
+fi
+install_pip powerline-status
+
 comment "neovim:"
 add_ppa "neovim-ppa/unstable"
 install_apt neovim
 link .config/nvim
+install_pip neovim
 
 comment "Node.js:"
 install_nvm

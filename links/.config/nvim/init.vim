@@ -9,9 +9,14 @@ call vundle#begin(s:editor_root . '/bundle')
 " Vundle plugins
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'git://github.com/tpope/vim-fugitive.git'
+Plugin 'vim-airline/vim-airline'
 
 call vundle#end()
 filetype plugin indent on
+
+" Airline config
+let g:airline_powerline_fonts=1
 
 " Set tabs as \t and 4 spaces wide
 set tabstop=4
