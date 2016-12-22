@@ -76,4 +76,4 @@ install_apt tree
 install_apt golang
 install_apt xclip
 install_apt default-jdk
-
+install_apt silversearcher-ag
