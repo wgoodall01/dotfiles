@@ -130,6 +130,9 @@ if [ "$TERM" != "linux" ]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
 
+# Load ssh env
+source ~/.ssh/environment
+
 # Setup thefuck
 eval $(thefuck --alias)
 eval $(thefuck --alias oops)
@@ -139,3 +142,16 @@ export PATH="$HOME/.bash_stuff/bin:$PATH"
 
 # Add hub wrapper for git
 eval "$(hub alias -s)"
+
+# Misc nags
+if ! ssh-add -l &>/dev/null; then
+	printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
+	NAGGED=true
+fi
+
+if [ "$NAGGED" = true ]; then
+	hr
+fi
+
+
+
