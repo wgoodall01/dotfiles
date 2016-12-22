@@ -116,29 +116,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Add pbcopy/pbpaste
-#alias pbcopy='xclip -selection clipboard'
-#alias pbpaste='xclip -selection clipboard -o'
-
-export NVM_DIR="/home/wgoodall01/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /home/wgoodall01/google-cloud-sdk/path.bash.inc ]; then
-  source '/home/wgoodall01/google-cloud-sdk/path.bash.inc'
-fi
-
 # The next line enables shell command completion for gcloud.
 if [ -f /home/wgoodall01/google-cloud-sdk/completion.bash.inc ]; then
   source '/home/wgoodall01/google-cloud-sdk/completion.bash.inc'
 fi
-
-# Set Go env vars
-export GOPATH="$HOME/Dev/go"
-export GOBIN="$GOPATH/bin"
-
-# Set $EDITOR
-export EDITOR=/usr/bin/nvim
 
 # Setup powerline-shell
 function _update_ps1() {
