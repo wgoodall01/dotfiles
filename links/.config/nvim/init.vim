@@ -18,6 +18,10 @@ filetype plugin indent on
 " Airline config
 let g:airline_powerline_fonts=1
 
+" Set crtlp to find dotfiles
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
 " Set tabs as \t and 4 spaces wide
 set tabstop=4
 set softtabstop=0 noexpandtab

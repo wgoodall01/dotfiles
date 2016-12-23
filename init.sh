@@ -81,7 +81,7 @@ install_nodejs
 nvm_init
 install_npm yarn
 install_npm webpack
-install_npm babel
+install_npm babel-cli
 install_npm eslint
 
 comment "Other stuff:"
