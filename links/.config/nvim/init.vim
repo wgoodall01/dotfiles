@@ -1,18 +1,19 @@
 let s:editor_root=expand('~/.config/nvim/')
 
-" Stuff for Vundle
+" Stuff for Plug
 set nocompatible
 filetype off
-set rtp+=~/.config/nvim/bundle/Vundle.vim
-call vundle#begin(s:editor_root . '/bundle')
+call plug#begin(s:editor_root . 'plugged')
 
 " Vundle plugins
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'git://github.com/tpope/vim-fugitive.git'
-Plugin 'vim-airline/vim-airline'
+Plug 'VundleVim/Vundle.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'git://github.com/tpope/vim-fugitive.git'
+Plug 'vim-airline/vim-airline'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-call vundle#end()
+call plug#end()
 filetype plugin indent on
 
 " Airline config
@@ -21,6 +22,16 @@ let g:airline_powerline_fonts=1
 " Set crtlp to find dotfiles
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
+" Enable deoplete
+let g:deoplete#enable_at_startup = 1
+
+" Tern stuff
+let g:tern#filetypes = [
+                \ 'jsx',
+                \ 'js',
+                \ 'es6',
+                \ ]
 
 " Set tabs as \t and 4 spaces wide
 set tabstop=4
