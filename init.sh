@@ -26,7 +26,7 @@ install_apt python3
 install_apt python3-dev
 install_apt python3-pip
 install_apt git
-link .gitconfig
+link_custom $DIR/links/._gitconfig ~/.gitconfig
 install_apt software-properties-common # for apt-add-repository
 fix_local_perms # python needs this for some reason
 
