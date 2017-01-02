@@ -2,5 +2,5 @@
 logs
 backups
 
-#Ignore the decryption password (obviously)
-password
+# Ignore the config file, it has the crypto pw in it
+config.sh

@@ -16,10 +16,17 @@ cat <<_
  Logging to logs/init
 _
 
-# Prompt for optional stuff
-comment "Options:"
-feature CFG_SSH "Install SSH keys"
-feature CFG_GUI "Install GUI tools/fonts"
+
+if [[ ! -e "$DIR/config.sh" ]]; then
+	printf "\nERROR: No configuraiton file.\n"
+	printf "Run 'cp config.sh.example config.sh' and edit it.\n"
+	exit 1
+fi
+
+comment "Configuration options:"
+source $DIR/config.sh
+printf "[config ] Enable SSH key decryption: $CFG_SSH\n"
+printf "[config ] Enable GUI app configuration: $CFG_GUI\n"
 
 comment "Dependencies:"
 install_apt python3
