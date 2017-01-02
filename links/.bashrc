@@ -162,5 +162,10 @@ set-pjd(){
 	pwd > ~/.projdir
 }
 
+# Shortcut to update dotfiles
+update-dotfiles(){
+	~/Dev/dotfiles/update.sh
+}
+
 export NVM_DIR="/home/wgoodall01/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
