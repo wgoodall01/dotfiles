@@ -12,6 +12,7 @@ Plug 'git://github.com/tpope/vim-fugitive.git'
 Plug 'vim-airline/vim-airline'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'digitaltoad/vim-pug'
 
 call plug#end()
 filetype plugin indent on
@@ -21,7 +22,7 @@ let g:airline_powerline_fonts=1
 
 " Set crtlp to find dotfiles
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn|DS_Store))$'
 
 " Enable deoplete
 let g:deoplete#enable_at_startup = 1
