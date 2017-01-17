@@ -44,6 +44,8 @@ set relativenumber number
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set   relativenumber 
 
+" Fix vim for webpack watcher
+set backupcopy=yes
 
 " X clipboard yank/paste
 function! ClipboardYank()
