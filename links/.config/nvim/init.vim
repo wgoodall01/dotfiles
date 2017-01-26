@@ -8,11 +8,13 @@ call plug#begin(s:editor_root . 'plugged')
 " Vundle plugins
 Plug 'VundleVim/Vundle.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'git://github.com/tpope/vim-fugitive.git'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'digitaltoad/vim-pug'
+Plug 'jiangmiao/auto-pairs'
+
 
 call plug#end()
 filetype plugin indent on
