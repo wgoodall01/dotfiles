@@ -154,13 +154,20 @@ if [ "$NAGGED" = true ]; then
 fi
 
 # Projdir
+
+if [[ ! -e ~/.projdir ]]; then echo ~ > ~/.projdir; fi
+
 pjd(){
-	cd $(cat ~/.projdir)
+	case "$1" in 
+		"set") pwd > ~/.projdir;;
+		"pwd") cat ~/.projdir;;
+		"")    if [[ -e ~/.projdir ]]; then cd $(cat ~/.projdir); else printf "Projdir does not exist yet.\n"; fi;;
+		*)     printf "Error: Bad command. 'set', 'pwd', or '' allowed.\n";;
+	esac
 }
 
-set-pjd(){
-	pwd > ~/.projdir
-}
+#Automatically cd to projdir
+pjd
 
 # Shortcut to update dotfiles
 update-dotfiles(){
