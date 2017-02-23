@@ -14,7 +14,8 @@ Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'digitaltoad/vim-pug'
 Plug 'jiangmiao/auto-pairs'
-
+Plug 'fatih/vim-go'
+Plug 'zchee/deoplete-go', { 'do': 'make' }
 
 call plug#end()
 filetype plugin indent on

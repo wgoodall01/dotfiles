@@ -43,8 +43,8 @@ export NVM_DIR="/home/wgoodall01/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f /home/wgoodall01/google-cloud-sdk/path.bash.inc ]; then
-  source '/home/wgoodall01/google-cloud-sdk/path.bash.inc'
+if [ -f $HOME/google-cloud-sdk/path.bash.inc ]; then
+  source '$HOME/google-cloud-sdk/path.bash.inc'
 fi
 
 # Set Go env vars
@@ -52,5 +52,10 @@ export GOPATH="$HOME/Dev/go"
 export GOBIN="$GOPATH/bin"
 
 # Set $EDITOR
-export EDITOR=/usr/bin/nvim
+export EDITOR=$(which nvim)
 
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

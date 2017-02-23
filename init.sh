@@ -96,6 +96,7 @@ install_apt htop
 install_apt nload
 install_apt tree
 install_apt golang
+install_apt gocode
 install_apt xclip
 install_apt default-jdk
 install_apt silversearcher-ag
