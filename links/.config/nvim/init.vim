@@ -12,6 +12,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi'
 Plug 'digitaltoad/vim-pug'
 Plug 'jiangmiao/auto-pairs'
 Plug 'fatih/vim-go'
@@ -41,6 +42,10 @@ let g:tern#filetypes = [
 set tabstop=4
 set softtabstop=0 noexpandtab
 set shiftwidth=4
+
+" TTY config
+set ttyfast
+set mouse=a
 
 " Enable numbering
 set relativenumber number

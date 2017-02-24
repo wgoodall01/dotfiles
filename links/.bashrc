@@ -160,7 +160,7 @@ if [[ ! -e ~/.projdir ]]; then echo ~ > ~/.projdir; fi
 pjd(){
 	case "$1" in 
 		"set") pwd > ~/.projdir;;
-		"pwd") cat ~/.projdir;;
+		"pwd") if [[ -e ~/.projdir ]]; then cat ~/.projdir; else printf "Projdir does not exist yet.\n"; fi;;
 		"")    if [[ -e ~/.projdir ]]; then cd $(cat ~/.projdir); else printf "Projdir does not exist yet.\n"; fi;;
 		*)     printf "Error: Bad command. 'set', 'pwd', or '' allowed.\n";;
 	esac
