@@ -66,9 +66,9 @@ comment "Powerline:"
 # fix_local_perms
 install_apt socat
 install_pip psutil
-install_apt libgit2-dev
+install_apt "libgit2-dev=0.24.1-2"  # Lock these versions so they work together
+install_pip "pygit2=0.24.0"         #
 install_apt libffi-dev
-install_pip pygit2
 install_pip pyuv
 if [ "$CFG_GUI" = true ]; then
 	install_pip i3ipc

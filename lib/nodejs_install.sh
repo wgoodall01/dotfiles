@@ -22,6 +22,14 @@ function install_nvm(){
 
 function install_nodejs(){
 	printf "[install] nodejs: "
+	
+			# Load nvm
+			NVM_DIR=~/.nvm
+			[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+	# Load nvm
+	NVM_DIR=~/.nvm
+	source "$NVM_DIR/nvm.sh"
+	
 	if which node &>/dev/null && [[ "$(which node)" == *"$NVM_DIR"* ]]; then
 		printf "already installed\n"
 	else

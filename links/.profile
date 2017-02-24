@@ -44,7 +44,7 @@ export NVM_DIR="/home/wgoodall01/.nvm"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f $HOME/google-cloud-sdk/path.bash.inc ]; then
-  source '$HOME/google-cloud-sdk/path.bash.inc'
+  source "$HOME/google-cloud-sdk/path.bash.inc"
 fi
 
 # Set Go env vars
