@@ -85,8 +85,8 @@ install_pip neovim
 
 comment "Node.js:"
 install_nvm
-nvm_init
 install_nodejs
+nvm_init
 install_npm yarn
 install_npm webpack
 install_npm babel-cli

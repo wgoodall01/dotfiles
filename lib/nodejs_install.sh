@@ -45,7 +45,7 @@ function install_nodejs(){
 function nvm_init(){
 	#Init nvm for some reason
 	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-	NVM_CURRENT=$NVM_DIR/versions/node/$(nvm current)/
+	NVM_CURRENT=$NVM_DIR/versions/node/$(nvm current)
 }
 
 function install_npm(){
