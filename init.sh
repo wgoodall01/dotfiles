@@ -29,10 +29,11 @@ printf "[config ] Enable SSH key decryption: $CFG_SSH\n"
 printf "[config ] Enable GUI app configuration: $CFG_GUI\n"
 
 comment "Dependencies:"
+install_apt git
+install_apt curl
 install_apt python3
 install_apt python3-dev
 install_apt python3-pip
-install_apt git
 link_custom $DIR/links/._gitconfig ~/.gitconfig
 install_apt software-properties-common # for apt-add-repository
 fix_local_perms # python needs this for some reason
@@ -84,8 +85,8 @@ install_pip neovim
 
 comment "Node.js:"
 install_nvm
-install_nodejs
 nvm_init
+install_nodejs
 install_npm yarn
 install_npm webpack
 install_npm babel-cli

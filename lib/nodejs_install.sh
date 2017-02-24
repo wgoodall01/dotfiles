@@ -7,7 +7,7 @@ function install_nvm(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		curl https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh 2>/dev/null | bash &> $LOGS/nvm_install
+		curl https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh 2>/dev/null | bash &> $LOGS/nvm_install
 		if [ "$?" -eq "0" ]; then
 			printf "done\n"
 			
@@ -23,9 +23,6 @@ function install_nvm(){
 function install_nodejs(){
 	printf "[install] nodejs: "
 	
-			# Load nvm
-			NVM_DIR=~/.nvm
-			[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 	# Load nvm
 	NVM_DIR=~/.nvm
 	source "$NVM_DIR/nvm.sh"
