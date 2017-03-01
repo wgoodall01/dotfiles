@@ -173,6 +173,9 @@ set $white #ffffff
 # Set wallpaper
 exec --no-startup-id xsetroot -solid "$dark"
 
+# If in vmware, then do that
+exec which vmware-user-suid-wrapper &>/dev/null && vmware-user-suid-wrapper
+
 # i3 window border colors
 # class                 border  backgr. text    indicator
 client.focused          $light  $light  $white  $dark
