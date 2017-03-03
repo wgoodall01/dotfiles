@@ -6,19 +6,25 @@ filetype off
 call plug#begin(s:editor_root . 'plugged')
 
 " Vundle plugins
-Plug 'VundleVim/Vundle.vim'
+" Plug 'VundleVim/Vundle.vim' " Why did I have this?
+
+" Utilities
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'digitaltoad/vim-pug'
 Plug 'jiangmiao/auto-pairs'
-Plug 'fatih/vim-go'
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Autocomplete 
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-go', { 'do': 'make' }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'zchee/deoplete-jedi'
 Plug 'artur-shaik/vim-javacomplete2'
 
+" Language support
+Plug 'digitaltoad/vim-pug'
+Plug 'fatih/vim-go'
 
 call plug#end()
 filetype plugin indent on
