@@ -5,9 +5,6 @@ set nocompatible
 filetype off
 call plug#begin(s:editor_root . 'plugged')
 
-" Vundle plugins
-" Plug 'VundleVim/Vundle.vim' " Why did I have this?
-
 " Utilities
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -62,15 +59,3 @@ autocmd InsertLeave * :set   relativenumber
 
 " Fix vim for webpack watcher
 set backupcopy=yes
-
-" X clipboard yank/paste
-function! ClipboardYank()
-  call system('pbcopy', @@)
-endfunction
-function! ClipboardPaste()
-  let @@ = system('pbpaste')
-endfunction
-
-vnoremap <silent> y y:call ClipboardYank()<cr>
-vnoremap <silent> d d:call ClipboardYank()<cr>
-nnoremap <silent> p :call ClipboardPaste()<cr>p
