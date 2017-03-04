@@ -53,9 +53,7 @@ set ttyfast
 set mouse=a
 
 " Enable numbering
-set relativenumber number
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set   relativenumber 
+set number
 
 " Fix vim for webpack watcher
 set backupcopy=yes
