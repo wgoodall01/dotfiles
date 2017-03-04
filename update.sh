@@ -21,8 +21,8 @@ git stash save # Save any uncomitted changes
 printf "\n\n -- Pull changes from remote:\n"
 git pull # Get changes from remote
 
-printf "\n\n -- Run updater script:\n"
-./init.sh # Run the updater script
+# printf "\n\n -- Run updater script:\n"
+# ./init.sh # Run the updater script
 
 printf "\n\n -- Reapply uncomitted changes:\n"
 git stash pop # Reapply any changes
