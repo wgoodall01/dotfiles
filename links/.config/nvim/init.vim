@@ -22,9 +22,22 @@ Plug 'artur-shaik/vim-javacomplete2'
 " Language support
 Plug 'digitaltoad/vim-pug'
 Plug 'fatih/vim-go'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+
 
 call plug#end()
 filetype plugin indent on
+
+" JS config
+let g:javascript_plugin_jsdoc = 1
+let g:jsx_ext_required = 0
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+
+" Java config
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
 
 " Airline config
 let g:airline_powerline_fonts=1
