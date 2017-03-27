@@ -11,5 +11,7 @@
 	a = "add"
 	c = "commit -m"
 	amend = "commit --amend --no-edit"
+
+	watch=!"watch --color \"git -c color.status=always status\""
 [push]
 	default = matching
