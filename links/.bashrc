@@ -51,6 +51,11 @@ alias ".."="cd .."
 alias "..."="cd ../.."
 alias "...."="cd ../../.."
 
+# Utility commands
+lsmake(){
+	grep $'^[^\t].*:$' Makefile | cut -d ':' -f 1
+}
+
 # Setup powerline-shell
 function _update_ps1() {
     PS1="$(~/.bash_stuff/powerline-shell/powerline-shell.py $? 2> /dev/null)"
