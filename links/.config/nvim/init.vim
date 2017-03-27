@@ -11,6 +11,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
 
 " Autocomplete 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -28,6 +29,9 @@ Plug 'mxw/vim-jsx'
 
 call plug#end()
 filetype plugin indent on
+
+" Editorconfig config
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " JS config
 let g:javascript_plugin_jsdoc = 1

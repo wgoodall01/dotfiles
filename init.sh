@@ -82,6 +82,7 @@ add_ppa "neovim-ppa/unstable"
 install_apt neovim
 link .config/nvim
 install_pip neovim
+install_apt editorconfig
 
 comment "Node.js:"
 install_nvm
