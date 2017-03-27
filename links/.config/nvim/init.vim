@@ -26,7 +26,6 @@ Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
-
 call plug#end()
 filetype plugin indent on
 
@@ -43,13 +42,10 @@ let g:tern#filetypes = [
                 \ 'js',
                 \ 'es6',
                 \ ]
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 
 " Java config
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
 
 " Airline config
 let g:airline_powerline_fonts=1
@@ -58,10 +54,10 @@ let g:airline_powerline_fonts=1
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn|DS_Store))$'
 
-" Enable deoplete
+" Completions config
 let g:deoplete#enable_at_startup = 1
-
-" Tern stuff
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Set tabs as \t and 4 spaces wide
 set tabstop=4
