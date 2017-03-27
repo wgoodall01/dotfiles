@@ -16,7 +16,7 @@ Plug 'editorconfig/editorconfig-vim'
 " Autocomplete 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-go', { 'do': 'make' }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'ternjs/tern_for_vim', { 'do': 'yarn' }
 Plug 'zchee/deoplete-jedi'
 Plug 'artur-shaik/vim-javacomplete2'
 
@@ -38,6 +38,14 @@ let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
+let g:tern#filetypes = [
+                \ 'jsx',
+                \ 'js',
+                \ 'es6',
+                \ ]
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 
 " Java config
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
@@ -54,11 +62,6 @@ let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|sv
 let g:deoplete#enable_at_startup = 1
 
 " Tern stuff
-let g:tern#filetypes = [
-                \ 'jsx',
-                \ 'js',
-                \ 'es6',
-                \ ]
 
 " Set tabs as \t and 4 spaces wide
 set tabstop=4
