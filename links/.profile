@@ -52,10 +52,6 @@ fi
 export GOPATH="$HOME/Dev/go"
 export GOBIN="$GOPATH/bin"
 
-# Set $EDITOR
-export EDITOR=$(which nvim)
-
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 

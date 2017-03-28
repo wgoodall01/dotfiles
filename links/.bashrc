@@ -2,6 +2,10 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Set defaults
+STUFF_DIR= ~./bash_stuff
+source ~/.bash_platform # This is for each platform
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -58,7 +62,7 @@ lsmake(){
 
 # Setup powerline-shell
 function _update_ps1() {
-    PS1="$(~/.bash_stuff/powerline-shell/powerline-shell.py $? 2> /dev/null)"
+    PS1="$($STUFF_DIR/powerline-shell/powerline-shell.py $? 2> /dev/null)"
 }
 
 if [ "$TERM" != "linux" ]; then
@@ -75,8 +79,11 @@ eval $(thefuck --alias oops)
 # Source global env
 source /etc/environment
 
+# Set $EDITOR
+export EDITOR=$(which nvim)
+
 # Add ~/.bash_stuff/bin to path
-export PATH="$HOME/.bash_stuff/bin:$PATH"
+export PATH="$STUFF_DIR/bin:$PATH"
 
 # Add hub wrapper for git
 eval "$(hub alias -s)"
