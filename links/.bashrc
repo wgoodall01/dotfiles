@@ -3,7 +3,7 @@
 # for examples
 
 # Set defaults
-STUFF_DIR= ~./bash_stuff
+STUFF_DIR="$HOME/.bash_stuff"
 source ~/.bash_platform # This is for each platform
 
 # If not running interactively, don't do anything
@@ -29,7 +29,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-shopt -s globstar
+[[ $(uname) != "Darwin" ]] && shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -38,7 +38,7 @@ shopt -s globstar
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
+    #alias dir='dir --color=auto
     #alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
@@ -77,7 +77,7 @@ eval $(thefuck --alias)
 eval $(thefuck --alias oops)
 
 # Source global env
-source /etc/environment
+[ -e /etc/environment ] && source /etc/environment
 
 # Set $EDITOR
 export EDITOR=$(which nvim)
