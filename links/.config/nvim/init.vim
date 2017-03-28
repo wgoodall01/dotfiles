@@ -56,7 +56,7 @@ let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|sv
 
 " Completions config
 let g:deoplete#enable_at_startup = 1
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+set completeopt-=preview
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Set tabs as \t and 4 spaces wide
