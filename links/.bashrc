@@ -3,7 +3,7 @@
 # for examples
 
 # Set defaults
-STUFF_DIR="$HOME/.bash_stuff"
+STUFF_DIR="$HOME/.bash_stuff" # Set a default
 source ~/.bash_platform # This is for each platform
 
 # If not running interactively, don't do anything
@@ -82,11 +82,30 @@ eval $(thefuck --alias oops)
 # Set $EDITOR
 export EDITOR=$(which nvim)
 
-# Add ~/.bash_stuff/bin to path
-export PATH="$STUFF_DIR/bin:$PATH"
+
+# Set PATH with bash_stuff and private bins (osx brew, mostly)
+PATH="$STUFF_DIR/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Add hub wrapper for git
 eval "$(hub alias -s)"
+
+# NVM stuff
+export NVM_DIR="/home/wgoodall01/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f $HOME/google-cloud-sdk/path.bash.inc ]; then
+  source "$HOME/google-cloud-sdk/path.bash.inc"
+fi
+
+# Set Go env vars
+export GOPATH="$HOME/Dev/go"
+export GOBIN="$GOPATH/bin"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Misc nags
 if ! ssh-add -l &>/dev/null; then

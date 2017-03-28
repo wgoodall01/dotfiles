@@ -8,9 +8,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# set PATH so it includes user's private bin directories
-echo test
-PATH="/usr/local/bin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Make sure ssh-agent is running
 SSH_ENV="$HOME/.ssh/environment"
@@ -31,24 +28,6 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
-
-# NVM stuff
-export NVM_DIR="/home/wgoodall01/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f $HOME/google-cloud-sdk/path.bash.inc ]; then
-  source "$HOME/google-cloud-sdk/path.bash.inc"
-fi
-
-# Set Go env vars
-export GOPATH="$HOME/Dev/go"
-export GOBIN="$GOPATH/bin"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then

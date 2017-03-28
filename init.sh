@@ -56,6 +56,7 @@ comment "Shell configuration:"
 link .bashrc
 link .profile
 link .bash_stuff
+touch ~/.bash_platform && echo "[setup  ] Make empty bash_platform"
 [ "$CFG_GUI" = true ] && dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
 install_pip thefuck
 
