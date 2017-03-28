@@ -95,6 +95,7 @@ install_npm babel-cli
 install_npm eslint
 
 comment "Other stuff:"
+install_apt dtrx
 install_apt htop
 install_apt nload
 install_apt tree

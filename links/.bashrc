@@ -51,6 +51,7 @@ alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
 alias g="git"
+alias ext="dtrx"
 alias ".."="cd .."
 alias "..."="cd ../.."
 alias "...."="cd ../../.."
