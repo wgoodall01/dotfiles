@@ -10,7 +10,7 @@ source ~/.bash_platform # This is for each platform
 [ -e /etc/environment ] && source /etc/environment
 
 # Set PATH with bash_stuff and private bins (osx brew, mostly)
-export PATH="$STUFF_DIR/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$STUFF_DIR/bin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 # If not running interactively, don't do anything
 case $- in
