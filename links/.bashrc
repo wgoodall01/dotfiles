@@ -6,6 +6,12 @@
 STUFF_DIR="$HOME/.bash_stuff" # Set a default
 source ~/.bash_platform # This is for each platform
 
+# Source global env
+[ -e /etc/environment ] && source /etc/environment
+
+# Set PATH with bash_stuff and private bins (osx brew, mostly)
+export PATH="$STUFF_DIR/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin:$PATH"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -38,8 +44,6 @@ shopt -s checkwinsize
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto
-    #alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -77,15 +81,8 @@ source ~/.ssh/environment
 eval $(thefuck --alias)
 eval $(thefuck --alias oops)
 
-# Source global env
-[ -e /etc/environment ] && source /etc/environment
-
 # Set $EDITOR
 export EDITOR=$(which nvim)
-
-
-# Set PATH with bash_stuff and private bins (osx brew, mostly)
-PATH="$STUFF_DIR/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Add hub wrapper for git
 eval "$(hub alias -s)"
