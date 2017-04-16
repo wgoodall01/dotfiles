@@ -2,7 +2,7 @@
 
 install_pip(){
 	printf "[install] $1: "
-	if pip3 show $1 &>/dev/null; then
+	if $DIR/lib/py_installed.py $1 &>/dev/null; then
 		printf "already installed\n"
 	else
 		printf "installing... "

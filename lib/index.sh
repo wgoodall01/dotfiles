@@ -8,4 +8,5 @@ source lib/install_apt.sh
 source lib/install_pip.sh
 source lib/dconf_load.sh
 source lib/chrome_install.sh
+source lib/cloud_install.sh
 source lib/link.sh

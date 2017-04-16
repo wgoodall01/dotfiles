@@ -27,6 +27,7 @@ comment "Configuration options:"
 source $DIR/config.sh
 printf "[config ] Enable SSH key decryption: $CFG_SSH\n"
 printf "[config ] Enable GUI app configuration: $CFG_GUI\n"
+printf "[config ] Install cloud utils: $CFG_CLOUD\n"
 
 comment "Dependencies:"
 install_apt git
@@ -69,7 +70,7 @@ comment "Powerline:"
 install_apt socat
 install_pip psutil
 install_apt "libgit2-dev=0.24.1-2"  # Lock these versions so they work together
-install_pip "pygit2==0.24.0"         #
+install_pip "pygit2==0.24.0"        #
 install_apt libffi-dev
 install_pip pyuv
 if [ "$CFG_GUI" = true ]; then
@@ -93,6 +94,11 @@ install_npm yarn
 install_npm webpack
 install_npm babel-cli
 install_npm eslint
+
+if [ "$CFG_CLOUD" = true ]; then
+	comment "Cloud CLIs:"
+	cloud_install
+fi
 
 comment "Other stuff:"
 install_apt dtrx

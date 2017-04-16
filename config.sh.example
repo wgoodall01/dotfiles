@@ -1,10 +1,8 @@
 #1!/usr/bin/env bash
 
-# Enable GUI app installs and configuration?
-export CFG_GUI=false
-
-# Enable SSH key decryption?
-export CFG_SSH=false
+export CFG_GUI=false   # Enable GUI app installs and configuration?
+export CFG_SSH=false   # Enable SSH key decryption?
+export CFG_CLOUD=false # Enable installing of cloud stuff?
 
 # Crypto password for SSH keys and sensitive info
 export CRYPTO_PW=""
