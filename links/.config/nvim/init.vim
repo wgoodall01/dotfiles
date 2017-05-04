@@ -57,6 +57,7 @@ let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|sv
 
 " Completions config
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay=1000
 set completeopt-=preview
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
