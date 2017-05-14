@@ -145,3 +145,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 #t11e setup
 export PATH="$PATH:$HOME/Dev/t11e/puppet/bin"
+
+# added by travis gem
+[ -f /home/wgoodall01/.travis/travis.sh ] && source /home/wgoodall01/.travis/travis.sh
