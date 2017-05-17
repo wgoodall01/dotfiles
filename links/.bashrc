@@ -59,6 +59,7 @@ alias ext="dtrx"
 alias ".."="cd .."
 alias "..."="cd ../.."
 alias "...."="cd ../../.."
+alias "tree"="tree -I node_modules"
 
 # Utility commands
 lsmake(){
