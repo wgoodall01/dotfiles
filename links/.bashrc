@@ -63,7 +63,21 @@ alias "tree"="tree -I node_modules"
 
 # Utility commands
 lsmake(){
-	grep $'^[^\t].*:$' Makefile | cut -d ':' -f 1
+	if [[ -e "./Makefile" ]]; then
+		grep $'^[^\t].*:$' Makefile | cut -d ':' -f 1
+	fi;
+
+	if [[ -e "./package.json" ]]; then
+		node <<-'EOF'
+			const p = require("./package.json");
+			const s = p.scripts;
+			if(typeof s === "undefined"){
+				console.log("No scripts in package.json")
+			}else{
+				Object.keys(s).forEach(k => console.log(`${k} : ${s[k]}`)) 
+			}
+		EOF
+	fi;
 }
 
 # Setup powerline-shell
