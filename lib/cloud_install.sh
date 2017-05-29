@@ -19,4 +19,6 @@ cloud_install(){
 	printf "done\n"	
 	
 	install_apt google-cloud-sdk
+	install_apt google-cloud-sdk-datastore-emulator
+
 }
