@@ -10,6 +10,7 @@
 	s = "status"
 	a = "add"
 	c = "commit -m"
+	ds = "diff --staged"
 	amend = "commit --amend --no-edit"
 
 	watch=!"watch --color \"git -c color.status=always status\""
