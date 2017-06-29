@@ -101,6 +101,7 @@ if [ "$CFG_CLOUD" = true ]; then
 fi
 
 comment "Other stuff:"
+install_apt cmake
 install_apt dtrx
 install_apt htop
 install_apt nload

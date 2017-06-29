@@ -10,6 +10,7 @@
 	s = "status"
 	a = "add"
 	c = "commit -m"
+	up=!"git pull --rebase && git push"
 	ds = "diff --staged"
 	amend = "commit --amend --no-edit"
 
