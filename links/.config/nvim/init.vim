@@ -13,6 +13,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ap/vim-css-color'
+Plug 'sbdchd/neoformat'
 
 " Autocomplete 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -44,6 +45,26 @@ let g:tern#filetypes = [
                 \ 'es6',
                 \ ]
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
+
+
+" Neoformat configs - format on save
+let g:neoformat_javascript_prettier = {
+			\'args': ['--single-quote', '--print-width 100', '--bracket-spacing false'],
+			\'exe': 'prettier',
+			\ }
+
+let g:neoformat_css_prettier = {
+			\'args': ['--parser postcss', '--single-quote', '--print-width 100', '--bracket-spacing false'],
+			\'exe': 'prettier',
+			\ }
+
+let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_css = ['prettier']
+let g:neoformat_only_msg_on_error = 1
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
 
 " Java config
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
