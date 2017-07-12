@@ -5,6 +5,7 @@
 # It should not mess anything up if run multiple times.
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
 source lib/index.sh
 
 cat <<_
@@ -85,6 +86,7 @@ install_apt neovim
 link .config/nvim
 install_pip neovim
 install_apt editorconfig
+nvim +PlugInstall +qall
 
 comment "Node.js:"
 install_nvm
@@ -94,6 +96,7 @@ install_npm yarn
 install_npm webpack
 install_npm babel-cli
 install_npm eslint
+install_npm prettier
 
 if [ "$CFG_CLOUD" = true ]; then
 	comment "Cloud CLIs:"
@@ -101,7 +104,8 @@ if [ "$CFG_CLOUD" = true ]; then
 fi
 
 comment "Other stuff:"
-install_apt cmake
+install_apt cmake # For deoplete-clang
+install_apt clang # /
 install_apt dtrx
 install_apt htop
 install_apt nload

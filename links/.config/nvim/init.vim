@@ -21,6 +21,7 @@ Plug 'zchee/deoplete-go', { 'do': 'make' }
 Plug 'ternjs/tern_for_vim', { 'do': 'yarn' }
 Plug 'zchee/deoplete-jedi'
 Plug 'artur-shaik/vim-javacomplete2'
+Plug 'tweekmonster/deoplete-clang2'
 
 " Language support
 Plug 'digitaltoad/vim-pug'
@@ -77,7 +78,7 @@ let g:airline_powerline_fonts=1
 
 " Set crtlp to find dotfiles
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn|DS_Store))$'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|build|CMakeFiles)|(\.(swp|ico|git|svn|DS_Store))$'
 
 " Completions config
 let g:deoplete#enable_at_startup = 1

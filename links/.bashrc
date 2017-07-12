@@ -146,9 +146,13 @@ pjd(){
 #Automatically cd to projdir
 pjd
 
-# Shortcut to update dotfiles
+# Shortcut to update/install dotfiles
 update-dotfiles(){
 	~/Dev/dotfiles/update.sh
+}
+
+install-dotfiles(){
+	~/Dev/dotfiles/init.sh
 }
 
 export NVM_DIR="/home/wgoodall01/.nvm"
