@@ -106,11 +106,6 @@ eval "$(hub alias -s)"
 export NVM_DIR="/home/wgoodall01/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f $HOME/google-cloud-sdk/path.bash.inc ]; then
-  source "$HOME/google-cloud-sdk/path.bash.inc"
-fi
-
 # Set Go env vars
 export GOPATH="$HOME/Dev/go"
 export GOBIN="$GOPATH/bin"
@@ -164,6 +159,13 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 #t11e setup
 export PATH="$PATH:$HOME/Dev/t11e/puppet/bin"
+export PATH="$PATH:$HOME/Dev/t11e/donkey/bin"
 
 # added by travis gem
 [ -f /home/wgoodall01/.travis/travis.sh ] && source /home/wgoodall01/.travis/travis.sh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/wgoodall01/google-cloud-sdk/path.bash.inc' ]; then source '/home/wgoodall01/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/wgoodall01/google-cloud-sdk/completion.bash.inc' ]; then source '/home/wgoodall01/google-cloud-sdk/completion.bash.inc'; fi
