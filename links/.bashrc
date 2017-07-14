@@ -108,7 +108,7 @@ export NVM_DIR="/home/wgoodall01/.nvm"
 
 # Set Go env vars
 export GOPATH="$HOME/Dev/go"
-export GOBIN="$GOPATH/bin"
+export PATH="$PATH:$GOPATH/bin"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -155,7 +155,6 @@ export NVM_DIR="/home/wgoodall01/.nvm"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-
 
 #t11e setup
 export PATH="$PATH:$HOME/Dev/t11e/puppet/bin"
