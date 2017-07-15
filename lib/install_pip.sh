@@ -9,7 +9,7 @@ install_pip(){
 		if pip3 install --ignore-installed --user $1 &>$LOGS/$1_install; then
 			printf "done\n"
 		else
-			printf "failed - check logs/${1}_install\n"
+			fatal "failed - check logs/${1}_install\n"
 		fi
 	fi
 }
@@ -19,6 +19,6 @@ fix_local_perms(){
 	if sudo chown -R ${USER}:${USER} ~/.local ~/.cache &> $LOGS/chown; then
 		printf "done\n"
 	else
-		printf "failed - check logs/chown for details\n"
+		fatal "failed - check logs/chown for details\n"
 	fi
 }

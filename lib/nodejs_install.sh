@@ -15,7 +15,7 @@ function install_nvm(){
 			NVM_DIR=~/.nvm
 			[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 		else
-			printf "fail - check logs/nvm_install\n"
+			fatal "fail - check logs/nvm_install\n"
 		fi
 	fi
 }
@@ -36,7 +36,7 @@ function install_nodejs(){
 		if nvm install stable &>$LOGS/node_install; then
 			printf "done\n"
 		else
-			printf "failed - check logs/node_install\n"
+			fatal "failed - check logs/node_install\n"
 		fi
 	fi
 
@@ -56,7 +56,7 @@ function install_npm(){
 		if $NVM_CURRENT/bin/npm install -g $1 &>$LOGS/${1}_install; then
 			printf "done\n"
 		else
-			printf "failed - check logs/${1}_install\n"
+			fatal "failed - check logs/${1}_install\n"
 		fi
 	fi
 }

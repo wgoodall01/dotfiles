@@ -35,6 +35,9 @@ filetype plugin indent on
 " Editorconfig config
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
+" Auto reload files
+set autoread
+
 " JS config
 let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0

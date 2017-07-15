@@ -33,16 +33,30 @@ printf "[config ] Install cloud utils: $CFG_CLOUD\n"
 comment "Dependencies:"
 install_apt git
 install_apt curl
+install_apt python
 install_apt python3
 install_apt python3-dev
+install_apt build-essential
+install_apt libssl-dev
+install_apt libffi-dev
+install_apt python-dev
 install_apt python3-pip
 link_custom $DIR/links/._gitconfig ~/.gitconfig
 install_apt software-properties-common # for apt-add-repository
-fix_local_perms # python needs this for some reason
+# fix_local_perms # python needs this for some reason
 
 if [ "$CFG_GUI" = true ]; then
 	comment "Powerline patched fonts: "
 	link .fonts
+
+	comment "i3wm:"
+	install_apt xorg
+	install_apt dconf-tools
+	install_apt dconf-cli
+	install_apt dbus-x11
+	install_apt gnome-terminal
+	install_apt i3
+	link .config/i3
 
 	comment "Chrome:"
 	add_ppa_chrome
@@ -62,9 +76,11 @@ touch ~/.bash_platform && echo "[setup  ] Make empty bash_platform"
 [ "$CFG_GUI" = true ] && dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
 install_pip thefuck
 
-comment "i3wm:"
-install_apt i3
-link .config/i3
+if [ "$CFG_CLOUD" = true ]; then
+	comment "Cloud CLIs:"
+	gcloud_install
+	docker_install
+fi
 
 comment "Powerline:"
 # fix_local_perms
@@ -80,6 +96,11 @@ if [ "$CFG_GUI" = true ]; then
 fi
 install_pip powerline-status
 
+comment "Node.js:"
+install_nvm
+install_nodejs
+nvm_init
+
 comment "neovim:"
 add_ppa "neovim-ppa/unstable"
 install_apt neovim
@@ -88,22 +109,12 @@ install_pip neovim
 install_apt editorconfig
 nvim +PlugInstall +qall
 
-comment "Node.js:"
-install_nvm
-install_nodejs
-nvm_init
+comment "Other stuff:"
 install_npm yarn
 install_npm webpack
 install_npm babel-cli
 install_npm eslint
 install_npm prettier
-
-if [ "$CFG_CLOUD" = true ]; then
-	comment "Cloud CLIs:"
-	cloud_install
-fi
-
-comment "Other stuff:"
 install_apt cmake # For deoplete-clang
 install_apt clang # /
 install_apt dtrx
