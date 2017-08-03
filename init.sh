@@ -124,5 +124,6 @@ install_apt tree
 install_apt golang
 install_apt gocode
 install_apt xclip
+install_apt unison
 install_apt default-jdk
 install_apt silversearcher-ag
