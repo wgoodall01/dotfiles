@@ -15,5 +15,7 @@
 	amend = "commit --amend --no-edit"
 
 	watch=!"watch --color \"git -c color.status=always status\""
+	eslint-staged=!"eslint $(git diff --staged --name-only | tr '\n' ' ')"
+	eslint-changed=!"eslint $(git diff --name-only | tr '\n' ' ')"
 [push]
 	default = matching
