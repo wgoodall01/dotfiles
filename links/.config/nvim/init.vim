@@ -62,8 +62,14 @@ let g:neoformat_css_prettier = {
 			\'exe': 'prettier',
 			\ }
 
+let g:neoformat_scss_prettier = {
+			\'args': ['--parser postcss', '--single-quote', '--print-width 100', '--bracket-spacing false'],
+			\'exe': 'prettier',
+			\ }
+
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_css = ['prettier']
+let g:neoformat_enabled_scss = ['prettier']
 let g:neoformat_only_msg_on_error = 1
 augroup fmt
   autocmd!
