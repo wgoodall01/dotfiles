@@ -39,6 +39,9 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# Start nvim
+bindsym $mod+backslash exec "cd $(cat ~/.projdir); i3-sensible-terminal -e nvim"
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
