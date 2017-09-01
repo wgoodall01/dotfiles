@@ -2,6 +2,32 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+enable_debug=false
+
+time_millis(){
+	echo "$(date +%s%N) / 1000000" | bc
+}
+start_time="$(time_millis)"
+last_time="$start_time"
+time_diff(){
+	if $enable_debug; then
+		current="$(time_millis)"
+		startdiff="$(echo "$current - $start_time" | bc)"
+		lastdiff="$(echo "$current - $last_time" | bc)"
+		printf "[@%6d]  [+%6d]    $1\n" "$startdiff" "$lastdiff"
+		last_time="$current"
+	else
+		printf "## "
+	fi;
+}
+
+time_end(){
+	clear
+}
+
+time_diff "start"
+
+
 # Set defaults
 STUFF_DIR="$HOME/.bash_stuff" # Set a default
 source ~/.bash_platform # This is for each platform
@@ -33,6 +59,8 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+time_diff "environment"
+
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 [[ $(uname) != "Darwin" ]] && shopt -s globstar
@@ -61,6 +89,8 @@ alias "..."="cd ../.."
 alias "...."="cd ../../.."
 alias "tree"="tree -I node_modules"
 
+time_diff "aliasses"
+
 # Utility commands
 lsmake(){
 	if [[ -e "./Makefile" ]]; then
@@ -80,6 +110,8 @@ lsmake(){
 	fi;
 }
 
+time_diff "lsmake"
+
 # Setup powerline-shell
 function _update_ps1() {
     PS1="$($STUFF_DIR/powerline-shell/powerline-shell.py $? 2> /dev/null)"
@@ -89,12 +121,18 @@ if [ "$TERM" != "linux" ]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
 
+time_diff "powerline-shell"
+
 # Load ssh env
 source ~/.ssh/environment
 
+time_diff "ssh env"
+
 # Setup thefuck
-eval $(thefuck --alias)
-eval $(thefuck --alias oops)
+# eval $(thefuck --alias) # cached below
+alias fuck='TF_CMD=$(TF_ALIAS=fuck PYTHONIOENCODING=utf-8 TF_SHELL_ALIASES=$(alias) thefuck $(fc -ln -1)) && eval $TF_CMD; history -s $TF_CMD'
+
+time_diff "thefuck"
 
 # Set $EDITOR
 export EDITOR=$(which nvim)
@@ -102,31 +140,29 @@ export EDITOR=$(which nvim)
 # Set $CLICOLOR
 export CLICOLOR=1
 
+time_diff "clicolor, editor"
+
 # Add hub wrapper for git
 eval "$(hub alias -s)"
 
-# NVM stuff
-export NVM_DIR="/home/wgoodall01/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+time_diff "hub"
 
 # Set Go env vars
 export GOPATH="$HOME/Dev/go"
 export PATH="$PATH:$GOPATH/bin"
+
+time_diff "go"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-# Misc nags
-if ! ssh-add -l &>/dev/null; then
-	printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
-	NAGGED=true
-fi
 
-if [ "$NAGGED" = true ]; then
-	hr
-fi
+time_diff "rvm"
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+
+time_diff "n"
 
 # Projdir
 
@@ -144,6 +180,8 @@ pjd(){
 #Automatically cd to projdir
 pjd
 
+time_diff "cd projdir"
+
 # Shortcut to update/install dotfiles
 update-dotfiles(){
 	~/Dev/dotfiles/update.sh
@@ -153,8 +191,6 @@ install-dotfiles(){
 	~/Dev/dotfiles/init.sh
 }
 
-export NVM_DIR="/home/wgoodall01/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -168,8 +204,25 @@ export PATH="$PATH:$HOME/Dev/t11e/monkey/bin"
 # added by travis gem
 [ -f /home/wgoodall01/.travis/travis.sh ] && source /home/wgoodall01/.travis/travis.sh
 
+time_diff "path, travis"
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/wgoodall01/google-cloud-sdk/path.bash.inc' ]; then source '/home/wgoodall01/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/wgoodall01/google-cloud-sdk/completion.bash.inc' ]; then source '/home/wgoodall01/google-cloud-sdk/completion.bash.inc'; fi
+
+time_diff "gcloud setup"
+
+time_end
+
+# Misc nags
+if ! ssh-add -l &>/dev/null; then
+	printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
+	NAGGED=true
+fi
+
+if [ "$NAGGED" = true ]; then
+	hr
+fi
+

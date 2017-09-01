@@ -97,9 +97,11 @@ fi
 install_pip powerline-status
 
 comment "Node.js:"
-install_nvm
-install_nodejs
-nvm_init
+install_n
+install_npm webpack
+install_npm babel-cli
+install_npm eslint
+install_npm prettier
 
 comment "neovim:"
 add_ppa "neovim-ppa/unstable"
@@ -110,11 +112,6 @@ install_apt editorconfig
 nvim +PlugInstall +qall
 
 comment "Other stuff:"
-install_npm yarn
-install_npm webpack
-install_npm babel-cli
-install_npm eslint
-install_npm prettier
 install_apt cmake # For deoplete-clang
 install_apt clang # /
 install_apt dtrx
