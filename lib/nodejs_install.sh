@@ -21,7 +21,7 @@ function install_n(){
 
 function install_npm(){
 	printf "[install] $1: "
-	if [ -d ~/n/bin/node_modules/$1 ]; then
+	if [ -d ~/n/lib/node_modules/$1 ]; then
  		printf "already installed\n"
  	else
 		if npm install -g $1 &>$LOGS/${1}_install; then

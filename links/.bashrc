@@ -5,25 +5,53 @@
 enable_debug=false
 
 time_millis(){
-	echo "$(date +%s%N) / 1000000" | bc
+#	echo "$(date +%s%N) / 1000000" | bc
+	rawtime="$(date +%s%N)"
+	echo "$((rawtime / 1000000))"
 }
 start_time="$(time_millis)"
 last_time="$start_time"
+line_length=0
+
+print_line(){
+	clear_line
+	line_length=${#1}
+	printf "$1"
+}
+
+clear_line(){
+	printf "\r"
+	printf '%0.s ' $(seq 1 $((line_length + 1)))
+	printf "\r"
+}
+
 time_diff(){
 	if $enable_debug; then
 		current="$(time_millis)"
-		startdiff="$(echo "$current - $start_time" | bc)"
-		lastdiff="$(echo "$current - $last_time" | bc)"
+		startdiff="$((current - start_time))"
+		lastdiff="$((current - last_time))"
 		printf "[@%6d]  [+%6d]    $1\n" "$startdiff" "$lastdiff"
 		last_time="$current"
 	else
-		printf "## "
+		print_line "[ $1 ]"
 	fi;
 }
 
 time_end(){
-	clear
+	if ! $enable_debug; then
+		clear_line
+	else
+		current="$(time_millis)"
+		printf "\n Total time: $((current - start_time)) ms\n"
+		hr
+		printf "\n"
+	fi;
 }
+
+if ! $enable_debug; then
+	printf "| "
+	((line_length += 2))
+fi;
 
 time_diff "start"
 
