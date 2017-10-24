@@ -102,6 +102,7 @@ install_npm webpack
 install_npm babel-cli
 install_npm eslint
 install_npm prettier
+install_npm nodemon
 
 comment "neovim:"
 add_ppa "neovim-ppa/unstable"
