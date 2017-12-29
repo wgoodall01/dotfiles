@@ -120,6 +120,7 @@ install_apt htop
 install_apt nload
 install_apt tree
 install_apt meld
+install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
 install_apt golang
 install_apt gocode
 install_apt xclip
