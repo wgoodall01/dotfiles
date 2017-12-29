@@ -9,11 +9,13 @@ exec &> >(tee -a "$LOGS/init")
 sudo printf ""
 
 comment(){
-	printf "\n          $1\n"
+	printf "\n          $ANSI_RED$1$ANSI_RESET\n"
 }
 
 fatal(){
+	printf $ANSI_RED
 	printf "\n\n[  FATAL]: $1"
+	printf $ANSI_RESET
 	exit 1
 }
 

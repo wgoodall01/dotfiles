@@ -2,8 +2,13 @@
 
 
 # ANSI term colors
-ANSI_RED="\e[91m"
-ANSI_RESET="\e[39m"
+if [ -t 1 ]; then
+	ANSI_RED="\e[91m"
+	ANSI_RESET="\e[39m"
+else
+	ANSI_RED=""
+	ANSI_RESET=""
+fi
 
 
 TIMESTAMP=$(date -d "today" +"%Y-%m-%d_%H-%M-%S")
