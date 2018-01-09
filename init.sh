@@ -40,6 +40,7 @@ install_apt build-essential
 install_apt libssl-dev
 install_apt libffi-dev
 install_apt python-dev
+install_apt python-pip
 install_apt python3-pip
 link_custom $DIR/links/._gitconfig ~/.gitconfig
 install_apt software-properties-common # for apt-add-repository
@@ -104,11 +105,19 @@ install_npm eslint
 install_npm prettier
 install_npm nodemon
 
+comment "Golang:"
+install_apt golang
+install_go github.com/nsf/gocode
+
+comment "Java:"
+install_apt default-jdk
+
 comment "neovim:"
 add_ppa "neovim-ppa/unstable"
 install_apt neovim
 link .config/nvim
 install_pip neovim
+install_pip2 neovim
 install_apt editorconfig
 nvim +PlugInstall +qall
 
@@ -121,9 +130,6 @@ install_apt nload
 install_apt tree
 install_apt meld
 install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
-install_apt golang
-install_apt gocode
 install_apt xclip
 install_apt unison
-install_apt default-jdk
 install_apt silversearcher-ag
