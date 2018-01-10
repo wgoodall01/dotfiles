@@ -16,10 +16,10 @@ install_go(){
 		printf "already installed\n"
 	else
 		printf "installing..."
-		if go get "$1" &>$LOGS/goget_$1; then
+		if go get "$1" &>$LOGS/goget_$(basename "$1"); then
 			printf "done\n"
 		else
-			fatal "failed - check logs/goget_$1\n"
+			fatal "failed - check logs/goget_$(basename "$1")\n"
 		fi
 	fi
 }

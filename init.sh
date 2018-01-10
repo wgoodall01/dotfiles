@@ -108,6 +108,7 @@ install_npm nodemon
 comment "Golang:"
 install_apt golang
 install_go github.com/nsf/gocode
+install_go golang.org/x/tools/cmd/gorename
 
 comment "Java:"
 install_apt default-jdk
