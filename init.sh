@@ -134,3 +134,4 @@ install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.d
 install_apt xclip
 install_apt unison
 install_apt silversearcher-ag
+install_apt aria2
