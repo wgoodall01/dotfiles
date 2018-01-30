@@ -87,8 +87,8 @@ comment "Powerline:"
 # fix_local_perms
 install_apt socat
 install_pip psutil
-install_apt "libgit2-dev=0.24.1-2"  # Lock these versions so they work together
-install_pip "pygit2==0.24.0"        #
+install_apt "libgit2-dev=0.25.1+really0.24.6-1"  # Lock these versions together
+install_pip "pygit2==0.24.0"                     #
 install_apt libffi-dev
 install_pip pyuv
 if [ "$CFG_GUI" = true ]; then
@@ -129,9 +129,11 @@ install_apt dtrx
 install_apt htop
 install_apt nload
 install_apt tree
-install_apt meld
-install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
-install_apt xclip
 install_apt unison
 install_apt silversearcher-ag
 install_apt aria2
+if [ "$CFG_GUI" = true ]; then
+	install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
+	install_apt xclip
+	install_apt meld
+fi
