@@ -7,7 +7,8 @@ function install_n(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		curl -L https://git.io/n-install 2> /dev/null | bash -s -- -y -n &> $LOGS/nvm_install 
+		curl -L https://git.io/n-install 2> /dev/null | bash -s -- -y &> $LOGS/nvm_install
+		npm install -g yarn &> $LOGS/yarn_install
 		if [ "$?" -eq "0" ]; then
 			printf "done\n"
 		else
@@ -23,7 +24,7 @@ function install_npm(){
 	if [ -d ~/n/lib/node_modules/$1 ]; then
  		printf "already installed\n"
  	else
-		if ~/n/bin/npm install -g $1 &>$LOGS/${1}_install; then
+		if npm install -g $1 &>$LOGS/${1}_install; then
  			printf "done\n"
  		else
  			fatal "failed - check logs/${1}_install\n"
