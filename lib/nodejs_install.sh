@@ -7,8 +7,7 @@ function install_n(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		curl -L https://git.io/n-install 2> /dev/null | bash -s -- -y &> $LOGS/nvm_install
-		~/n/bin/npm install -g yarn &> $LOGS/yarn_install
+		curl -L https://git.io/n-install 2> /dev/null | bash -s -- -y -n &> $LOGS/nvm_install 
 		if [ "$?" -eq "0" ]; then
 			printf "done\n"
 		else

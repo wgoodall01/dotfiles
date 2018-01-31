@@ -99,6 +99,9 @@ install_pip powerline-status
 
 comment "Node.js:"
 install_n
+add_apt_key_url "https://dl.yarnpkg.com/debian/pubkey.gpg"
+add_apt "https://dl.yarnpkg.com/debian/ stable main"
+install_apt yarn
 install_npm webpack
 install_npm babel-cli
 install_npm eslint
