@@ -106,9 +106,11 @@ install_npm prettier
 install_npm nodemon
 
 comment "Golang:"
+add_ppa "longsleep/golang-backports"
 install_apt golang
 install_go github.com/nsf/gocode
 install_go golang.org/x/tools/cmd/gorename
+install_go github.com/golang/dep/cmd/dep
 
 comment "Java:"
 install_apt default-jdk

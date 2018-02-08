@@ -14,9 +14,11 @@ last_time="$start_time"
 line_length=0
 
 print_line(){
-	clear_line
-	line_length=${#1}
-	printf "$1"
+	if shopt -q login_shell; then
+		clear_line
+		line_length=${#1}
+		printf "$1"
+	fi
 }
 
 clear_line(){
@@ -48,10 +50,10 @@ time_end(){
 	fi;
 }
 
-if ! $enable_debug; then
-	printf "| "
-	((line_length += 2))
-fi;
+# if ! $enable_debug; then
+# 	printf "| "
+# 	((line_length += 2))
+# fi;
 
 time_diff "start"
 
