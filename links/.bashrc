@@ -179,6 +179,7 @@ time_diff "hub"
 
 # Set Go env vars
 export GOPATH="$HOME/Dev/go"
+export GOROOT="$(go env GOROOT)"
 export PATH="$PATH:$GOPATH/bin"
 
 time_diff "go"
