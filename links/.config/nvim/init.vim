@@ -79,9 +79,6 @@ augroup END
 " Java config
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
-" Stop YAML from being annoying
-autocmd FileType yaml setl indentKeys-=<:>
-
 " Airline config
 let g:airline_powerline_fonts=1
 
