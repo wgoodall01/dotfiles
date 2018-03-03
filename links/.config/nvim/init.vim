@@ -58,12 +58,12 @@ let g:neoformat_javascript_prettier = {
 			\ }
 
 let g:neoformat_css_prettier = {
-			\'args': ['--parser postcss', '--single-quote', '--print-width 100', '--bracket-spacing false'],
+			\'args': ['--parser css', '--single-quote', '--print-width 100', '--bracket-spacing false'],
 			\'exe': 'prettier',
 			\ }
 
 let g:neoformat_scss_prettier = {
-			\'args': ['--parser postcss', '--single-quote', '--print-width 100', '--bracket-spacing false'],
+			\'args': ['--parser css', '--single-quote', '--print-width 100', '--bracket-spacing false'],
 			\'exe': 'prettier',
 			\ }
 
