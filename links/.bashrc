@@ -66,7 +66,7 @@ source ~/.bash_platform # This is for each platform
 [ -e /etc/environment ] && source /etc/environment
 
 # Set PATH with bash_stuff and private bins (osx brew, mostly)
-export PATH="$STUFF_DIR/bin:$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="./node_modules/.bin:$STUFF_DIR/bin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 # If not running interactively, don't do anything
 case $- in
@@ -193,6 +193,9 @@ export PATH="$PATH:$HOME/.rvm/bin"
 time_diff "rvm"
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 
+# Yarn path
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
 time_diff "n"
 
 # Projdir
@@ -256,4 +259,5 @@ fi
 if [ "$NAGGED" = true ]; then
 	hr
 fi
+
 
