@@ -113,11 +113,11 @@ alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
 alias g="git"
-alias ext="dtrx"
 alias ".."="cd .."
 alias "..."="cd ../.."
 alias "...."="cd ../../.."
 alias "tree"="tree -I node_modules"
+alias "gcla"="gcloud alpha interactive"
 
 time_diff "aliasses"
 
@@ -192,6 +192,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 time_diff "rvm"
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # Yarn path
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
