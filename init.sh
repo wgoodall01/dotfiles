@@ -122,8 +122,9 @@ link .config/nvim
 install_pip neovim
 install_pip2 neovim
 install_apt editorconfig
-nvim +PlugInstall +qall
-nvim +GoInstallBinaries
+printf "[nvim   ] Install plugins, Go stuff..."
+nvim --headless +PlugInstall +GoInstallBinaries +qall
+printf "done.\n"
 
 comment "Other stuff:"
 install_apt cmake # For deoplete-clang
