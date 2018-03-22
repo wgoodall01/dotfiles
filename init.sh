@@ -135,6 +135,6 @@ install_apt tree
 install_apt meld
 install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
 install_apt xclip
-install_apt unison
 install_apt silversearcher-ag
+install_apt mosh
 install_apt aria2
