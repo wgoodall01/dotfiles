@@ -49,6 +49,7 @@ let g:tern#filetypes = [
                 \ 'es6',
                 \ ]
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
+autocmd FileType javascript setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
 
 
 " Neoformat configs - format on save
