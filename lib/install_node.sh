@@ -1,22 +1,25 @@
 #/usr/bin/env bash
 
 function install_n(){
-
 	printf "[install] n: "
 	if n --version &>/dev/null; then
 		printf "already installed\n"
 	else
 		printf "installing... "
-		curl -L https://git.io/n-install 2> /dev/null | bash -s -- -y &> $LOGS/nvm_install
-		npm install -g yarn &> $LOGS/yarn_install
+
+		export PATH="$PATH:$HOME/n/bin"
+
+		rm -rf ~/n\
+			&& curl -L https://git.io/n-install 2>$LOGS/n_install >/tmp/n-install.sh\
+			&& chmod 700 /tmp/n-install.sh\
+			&& /tmp/n-install.sh -yn latest &> $LOGS/n_install
+
 		if [ "$?" -eq "0" ]; then
 			printf "done\n"
 		else
-			fatal "fail - check logs/nvm_install\n"
+			fatal "fail - check logs/n_install\n"
 		fi
 	fi
-
-	#install n
 }
 
 function install_npm(){

@@ -19,7 +19,7 @@ install_deb_url(){
 
 		result=\
 			curl "$url" -o "$tempdir/package.deb" &>$logfile &&\
-			sudo dpkg -i "$tempdir/package.deb" &>$logfile;
+			sudo gdebi -n "$tempdir/package.deb" &>$logfile;
 		
 		if $result; then
 			printf "done\n";

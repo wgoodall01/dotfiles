@@ -32,6 +32,8 @@ printf "[config ] Install cloud utils: $CFG_CLOUD\n"
 
 comment "Dependencies:"
 install_apt git
+install_apt gnupg # for ./crypto.sh
+install_apt gdebi # install debs, resolve deps
 install_apt curl
 install_apt python
 install_apt python3
@@ -44,24 +46,34 @@ install_apt python-pip
 install_apt python3-pip
 link_custom $DIR/links/._gitconfig ~/.gitconfig
 install_apt software-properties-common # for apt-add-repository
-# fix_local_perms # python needs this for some reason
 
 if [ "$CFG_GUI" = true ]; then
-	comment "Powerline patched fonts: "
-	link .fonts
-
 	comment "i3wm:"
 	install_apt xorg
 	install_apt dconf-tools
 	install_apt dconf-cli
 	install_apt dbus-x11
-	install_apt gnome-terminal
 	install_apt i3
 	link .config/i3
+	install_apt xclip
+
+	comment "Gnome-terminal"
+	install_apt gnome-terminal
+	link .fonts
+	dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
 
 	comment "Chrome:"
-	add_ppa_chrome
+	add_apt_key_url "https://dl-ssl.google.com/linux/linux_signing_key.pub"
+	add_apt "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
 	install_apt google-chrome-stable
+
+	comment "Other utils:"
+	install_apt xclip
+	install_pip i3ipc
+	install_apt x11-xserver-utils
+	install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
+	install_apt meld
+
 fi
 
 if [ "$CFG_SSH" = true ]; then
@@ -73,32 +85,29 @@ comment "Shell configuration:"
 link .bashrc
 link .profile
 link .bash_stuff
-touch ~/.bash_platform && echo "[setup  ] Make empty bash_platform"
-[ "$CFG_GUI" = true ] && dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
-install_pip thefuck
+install_apt thefuck
+touch ~/.bash_platform\
+	&& echo "[setup  ] Make empty bash_platform"
 
 if [ "$CFG_CLOUD" = true ]; then
 	comment "Cloud CLIs:"
 	gcloud_install
-	docker_install
+	install_apt docker.io
+	add_docker_user_group
 fi
 
 comment "Powerline:"
-# fix_local_perms
 install_apt socat
 install_pip psutil
-install_apt "libgit2-dev=0.24.1-2"  # Lock these versions so they work together
-install_pip "pygit2==0.24.0"        #
+install_apt "libgit2-dev=0.26.0+dfsg.1-1.1build1"  # Lock these versions so they work together
+install_pip "pygit2==0.26.0"                       #
 install_apt libffi-dev
 install_pip pyuv
-if [ "$CFG_GUI" = true ]; then
-	install_pip i3ipc
-	install_apt x11-xserver-utils
-fi
 install_pip powerline-status
 
 comment "Node.js:"
 install_n
+install_npm yarn
 install_npm webpack
 install_npm babel-cli
 install_npm eslint
@@ -106,8 +115,7 @@ install_npm prettier
 install_npm nodemon
 
 comment "Golang:"
-add_ppa "longsleep/golang-backports"
-install_apt golang
+install_golang
 install_go github.com/nsf/gocode
 install_go golang.org/x/tools/cmd/gorename
 install_go github.com/golang/dep/cmd/dep
@@ -116,15 +124,15 @@ comment "Java:"
 install_apt default-jdk
 
 comment "neovim:"
-add_ppa "neovim-ppa/unstable"
 install_apt neovim
 link .config/nvim
-install_pip neovim
-install_pip2 neovim
+install_apt python-neovim
+install_apt python3-neovim
 install_apt editorconfig
 printf "[nvim   ] Install plugins, Go stuff..."
-nvim --headless +PlugInstall +GoInstallBinaries +qall
-printf "done.\n"
+nvim --headless +PlugInstall +GoInstallBinaries +qall &>$LOGS/nvim_install_utils\
+	&& printf "done.\n"\
+	|| fatal "failed--check logs/nvim_install_utils"
 
 comment "Other stuff:"
 install_apt cmake # For deoplete-clang
@@ -133,9 +141,9 @@ install_apt dtrx
 install_apt htop
 install_apt nload
 install_apt tree
-install_apt meld
-install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
-install_apt xclip
 install_apt silversearcher-ag
 install_apt mosh
 install_apt aria2
+
+
+

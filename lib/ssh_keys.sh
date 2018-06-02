@@ -33,6 +33,7 @@ install_ssh_keys(){
 		else
 			fatal "There was a decryption error - check logs/${f}_decrypt. Missing pw file?"
 		fi
+
 		printf "\n"
 	done
 

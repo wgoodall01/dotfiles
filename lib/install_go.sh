@@ -2,6 +2,7 @@
 
 install_golang(){
 	install_apt golang
+	install_apt golang-go
 
 	# Set Go env vars
 	export GOPATH="$HOME/Dev/go"

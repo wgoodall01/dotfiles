@@ -33,25 +33,10 @@ gcloud_install(){
 	fi
 }
 
-docker_install(){
-	if which docker &>/dev/null; then
-		printf "[install] docker: already installed.\n"
-	else
-		printf "[install] docker...\n"
-		install_apt apt-transport-https
-		install_apt ca-certificates
-		install_apt software-properties-common
 
-		add_apt_key_url "https://download.docker.com/linux/ubuntu/gpg"
-
-		release=$(lsb_release -cs)
-		download_url="https://download.docker.com/linux/ubuntu"
-		add_apt "deb [arch=amd64] $download_url $release stable"
-		install_apt docker-ce
-
-		printf "[   user]: add $USER to docker group..."
-		sudo groupadd docker &>/dev/null
-		sudo usermod -a -G docker $USER
-		printf "done.\n"
-	fi
+add_docker_user_group(){
+	printf "[ docker] Add user to docker group... "\
+		&& sudo usermod -a -G docker $USER &>$LOGS/docker_group\
+		&& printf "done.\n"\
+		|| fatal "couldn't add user - check LOGS/docker_group"
 }
