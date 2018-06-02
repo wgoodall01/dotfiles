@@ -126,13 +126,17 @@ install_apt default-jdk
 comment "neovim:"
 install_apt neovim
 link .config/nvim
-install_apt python-neovim
-install_apt python3-neovim
+install_pip neovim
+install_pip2 neovim
 install_apt editorconfig
-printf "[nvim   ] Install plugins, Go stuff..."
-nvim --headless +PlugInstall +GoInstallBinaries +qall &>$LOGS/nvim_install_utils\
+printf "[nvim   ] Install plugins... "\
+	&& nvim --headless +PlugInstall +qall &>$LOGS/nvim_plug_install\
 	&& printf "done.\n"\
-	|| fatal "failed--check logs/nvim_install_utils"
+	|| fatal "failed--check logs/nvim_plug_install"
+printf "[nvim   ] Install Go binaries... "\
+	&& nvim --headless +GoInstallBinaries +qall &>$LOGS/nvim_gobin\
+	&& printf "done.\n"\
+	|| fatal "failed--check logs/nvim_gobin"
 
 comment "Other stuff:"
 install_apt cmake # For deoplete-clang

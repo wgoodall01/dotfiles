@@ -38,6 +38,10 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " Auto reload files
 set autoread
 
+" vim-go config
+" Don't auto-update go tools with :GoInstallBinaries
+let g:go_get_update = 0 
+
 " JS config
 let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
