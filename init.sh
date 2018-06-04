@@ -24,13 +24,13 @@ if [[ ! -e "$DIR/config.sh" ]]; then
 	exit 1
 fi
 
-comment "Configuration options:"
+comment "Configuration options"
 source $DIR/config.sh
 printf "[config ] Enable SSH key decryption: $CFG_SSH\n"
 printf "[config ] Enable GUI app configuration: $CFG_GUI\n"
 printf "[config ] Install cloud utils: $CFG_CLOUD\n"
 
-comment "Dependencies:"
+comment "Dependencies"
 install_apt git
 install_apt gnupg # for ./crypto.sh
 install_apt gdebi # install debs, resolve deps
@@ -48,7 +48,7 @@ link_custom $DIR/links/._gitconfig ~/.gitconfig
 install_apt software-properties-common # for apt-add-repository
 
 if [ "$CFG_GUI" = true ]; then
-	comment "i3wm:"
+	comment "i3wm"
 	install_apt xorg
 	install_apt dconf-tools
 	install_apt dconf-cli
@@ -62,12 +62,12 @@ if [ "$CFG_GUI" = true ]; then
 	link .fonts
 	dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
 
-	comment "Chrome:"
+	comment "Chrome"
 	add_apt_key_url "https://dl-ssl.google.com/linux/linux_signing_key.pub"
 	add_apt "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
 	install_apt google-chrome-stable
 
-	comment "Other utils:"
+	comment "Other utils"
 	install_apt xclip
 	install_pip i3ipc
 	install_apt x11-xserver-utils
@@ -77,11 +77,11 @@ if [ "$CFG_GUI" = true ]; then
 fi
 
 if [ "$CFG_SSH" = true ]; then
-	comment "Install SSH keys: "
+	comment "Install SSH keys"
 	install_ssh_keys
 fi
 
-comment "Shell configuration:"
+comment "Shell configuration"
 link .bashrc
 link .profile
 link .bash_stuff
@@ -90,13 +90,13 @@ touch ~/.bash_platform\
 	&& echo "[setup  ] Make empty bash_platform"
 
 if [ "$CFG_CLOUD" = true ]; then
-	comment "Cloud CLIs:"
+	comment "Cloud CLIs"
 	gcloud_install
 	install_apt docker.io
 	add_docker_user_group
 fi
 
-comment "Powerline:"
+comment "Powerline"
 install_apt socat
 install_pip psutil
 install_apt "libgit2-dev=0.26.0+dfsg.1-1.1build1"  # Lock these versions so they work together
@@ -105,7 +105,7 @@ install_apt libffi-dev
 install_pip pyuv
 install_pip powerline-status
 
-comment "Node.js:"
+comment "Node.js"
 install_n
 install_npm yarn
 install_npm webpack
@@ -114,31 +114,25 @@ install_npm eslint
 install_npm prettier
 install_npm nodemon
 
-comment "Golang:"
+comment "Golang"
 install_golang
 install_go github.com/nsf/gocode
 install_go golang.org/x/tools/cmd/gorename
 install_go github.com/golang/dep/cmd/dep
 
-comment "Java:"
+comment "Java"
 install_apt default-jdk
 
-comment "neovim:"
+comment "neovim"
 install_apt neovim
 link .config/nvim
 install_pip neovim
 install_pip2 neovim
 install_apt editorconfig
-printf "[nvim   ] Install plugins... "\
-	&& nvim --headless +PlugInstall +qall &>$LOGS/nvim_plug_install\
-	&& printf "done.\n"\
-	|| fatal "failed--check logs/nvim_plug_install"
-printf "[nvim   ] Install Go binaries... "\
-	&& nvim --headless +GoInstallBinaries +qall &>$LOGS/nvim_gobin\
-	&& printf "done.\n"\
-	|| fatal "failed--check logs/nvim_gobin"
+nvim_run +PlugInstall
+nvim_run +GoInstallBinaries
 
-comment "Other stuff:"
+comment "Other stuff"
 install_apt cmake # For deoplete-clang
 install_apt clang # /
 install_apt dtrx
