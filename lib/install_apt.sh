@@ -8,7 +8,7 @@ install_apt(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		if sudo apt-get install -y $1 &>$LOGS/$1_install; then
+		if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y $1 &>$LOGS/$1_install; then
 			printf "done\n"
 		else
 			fatal "failed - check logs/${1}_install\n"
@@ -26,7 +26,7 @@ add_apt(){
 		export search="$1"
 	fi
 	
-
+	
 	printf "[apt    ] $1: "
 
 	if grep -F "$search" /etc/apt/sources.list /etc/apt/sources.list.d/* &>/dev/null; then

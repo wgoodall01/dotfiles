@@ -57,6 +57,14 @@ if [ "$CFG_GUI" = true ]; then
 	link .config/i3
 	install_apt xclip
 
+	comment "lightdm"
+	install_apt lightdm
+	printf "[default] set /etc/X11/default-display-manager..."\
+		&& sudo sh -c 'echo "/usr/sbin/lightdm" > "/etc/X11/default-display-manager"'\
+		&& sudo dpkg-reconfigure -f noninteractive lightdm\
+		&& printf 'done.\n'\
+		|| fatal "couldn't change /etc/X11/default-display-manager to /usr/sbin/lightdm."
+
 	comment "Gnome-terminal"
 	install_apt gnome-terminal
 	link .fonts
