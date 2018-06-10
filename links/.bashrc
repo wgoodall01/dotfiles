@@ -205,10 +205,45 @@ if [[ ! -e ~/.projdir ]]; then echo ~ > ~/.projdir; fi
 
 pjd(){
 	case "$1" in 
-		"set") pwd > ~/.projdir;;
-		"pwd") if [[ -e ~/.projdir ]]; then cat ~/.projdir; else printf "Projdir does not exist yet.\n"; fi;;
-		"")    if [[ -e ~/.projdir ]]; then cd $(cat ~/.projdir); else printf "Projdir does not exist yet.\n"; fi;;
-		*)     printf "Error: Bad command. 'set', 'pwd', or '' allowed.\n";;
+		"set") 
+			pwd > ~/.projdir;;
+		"pwd") 
+			if [[ -e ~/.projdir ]]; then 
+				cat ~/.projdir
+			else 
+				printf "Projdir does not exist yet.\n"
+			fi;;
+		"")    
+			if [[ -e ~/.projdir ]]; then 
+				cd $(cat ~/.projdir)
+			else 
+				printf "Projdir does not exist yet.\n"
+			fi;;
+		"to") 
+			dir="$HOME/Dev/$2"
+			if [[ -d "$dir" ]]; then
+				echo "$dir" >~/.projdir
+				cd "$dir"
+			elif [[ -e "$dir" ]]; then
+				printf "~/Dev/$2 already exists, is not a directory."
+			else
+				mkdir -p "$dir"
+				printf "$dir" >~/projdir
+				cd "$dir"
+			fi;;
+		*)	
+			cat <<-EOF
+			usage: pjd [<command>] [<dir>]
+
+			pjd without any command CDs to the directory in ~/.projdir.
+
+			Commands:
+			  set       Set the ~/.projdir to the current directory.
+			  pwd       Prints the contents of ~/.projdir.
+			  to <dir>  Creates ~/Dev/<dir>, sets ~/.projdir, and cds to it.
+
+			EOF
+			;;
 	esac
 }
 
