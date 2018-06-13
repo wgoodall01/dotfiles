@@ -58,7 +58,7 @@ autocmd FileType javascript setlocal tabstop=2 expandtab shiftwidth=2 softtabsto
 
 " Neoformat configs - format on save
 let g:neoformat_javascript_prettier = {
-			\'args': ['--single-quote', '--print-width 100', '--bracket-spacing false'],
+			\'args': ['--parser babylon', '--single-quote', '--print-width 100', '--bracket-spacing false'],
 			\'exe': 'prettier',
 			\ }
 
