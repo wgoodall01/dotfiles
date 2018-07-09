@@ -29,6 +29,9 @@ else
     start_agent;
 fi
 
+# Set the timezone properly
+export TZ='America/New_York'
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
 	# include .bashrc if it exists
