@@ -113,23 +113,51 @@ install_apt libffi-dev
 install_pip pyuv
 install_pip powerline-status
 
+comment "asdf:"
+install_asdf
+
 comment "Node.js"
-install_n
-install_npm yarn
-install_npm webpack
-install_npm babel-cli
-install_npm eslint
-install_npm prettier
-install_npm nodemon
+link ".default-npm-packages"
+install_asdf_plugin nodejs "https://github.com/asdf-vm/asdf-nodejs.git"
+install_asdf_node_keys
+install_asdf_lang nodejs "10.6.0"
+# install_npm yarn
+# install_npm webpack-cli
+# install_npm babel-cli
+# install_npm eslint
+# install_npm prettier
+# install_npm nodemon
 
 comment "Golang"
-install_golang
+install_asdf_plugin golang https://github.com/kennyp/asdf-golang.git
+set_go_env
+install_asdf_lang golang "1.10.3"
 install_go github.com/nsf/gocode
 install_go golang.org/x/tools/cmd/gorename
 install_go github.com/golang/dep/cmd/dep
 
+comment "Ruby"
+link ".default-gems"
+install_apt gcc-6
+install_apt "g++-6"
+install_apt autoconf  # you need all this stuff because asdf-ruby builds from source.
+install_apt bison
+install_apt build-essential
+install_apt libssl1.0-dev
+install_apt libyaml-dev
+install_apt libreadline6-dev
+install_apt zlib1g-dev
+install_apt libncurses5-dev
+install_apt libffi-dev
+install_apt libgdbm5
+install_apt libgdbm-dev
+install_asdf_plugin ruby "https://github.com/asdf-vm/asdf-ruby.git"
+CC="/usr/bin/gcc-6"\
+	PKG_CONFIG_PATH="/usr/lib/openssl-1.0/"install_asdf_lang ruby "2.3.7" -patch <$DIR/res/ruby2x-openssl-patch
+
 comment "Java"
-install_apt default-jdk
+install_asdf_plugin java "https://github.com/skotchpine/asdf-java"
+install_asdf_lang java "10.0.1"
 
 comment "neovim"
 install_apt neovim

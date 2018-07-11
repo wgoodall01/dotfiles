@@ -68,6 +68,9 @@ source ~/.bash_platform # This is for each platform
 # Set PATH with bash_stuff and private bins (osx brew, mostly)
 export PATH="./node_modules/.bin:$STUFF_DIR/bin:$HOME/bin:$HOME/.local/bin:$PATH"
 
+# Path for ubuntu snaps
+export PATH="$PATH:/snap/bin"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -179,25 +182,17 @@ time_diff "hub"
 
 # Set Go env vars
 export GOPATH="$HOME/Dev/go"
-export GOROOT="$(go env GOROOT)"
 export PATH="$PATH:$GOPATH/bin"
 
 time_diff "go"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+source ~/.asdf/asdf.sh
+source ~/.asdf/completions/asdf.bash
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+time_diff "asdf"
 
-
-time_diff "rvm"
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
+# Path for global yarn modules
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-# Yarn path
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-time_diff "n"
 
 # Projdir
 
@@ -222,8 +217,8 @@ pjd(){
 		"to") 
 			dir="$HOME/Dev/$2"
 			if [[ -d "$dir" ]]; then
-				echo "$dir" >~/.projdir
 				cd "$dir"
+				pjd set "$dir"
 			elif [[ -e "$dir" ]]; then
 				printf "~/Dev/$2 already exists, is not a directory."
 			else
@@ -267,9 +262,8 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 #t11e setup
 export PUPPET_VM_NFS_DISABLE=1
-export PATH="$PATH:$HOME/Dev/t11e/puppet/bin"
+export PATH="$PATH:$HOME/Dev/t11e/bin"
 export PATH="$PATH:$HOME/Dev/t11e/donkey/bin"
-export PATH="$PATH:$HOME/Dev/t11e/monkey/bin"
 
 # added by travis gem
 [ -f /home/wgoodall01/.travis/travis.sh ] && source /home/wgoodall01/.travis/travis.sh

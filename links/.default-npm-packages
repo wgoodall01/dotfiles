@@ -1,0 +1,5 @@
+yarn
+babel-cli
+eslint
+prettier
+nodemon

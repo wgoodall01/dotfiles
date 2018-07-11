@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-install_golang(){
-	install_apt golang
-	install_apt golang-go
-
+set_go_env(){
 	# Set Go env vars
 	export GOPATH="$HOME/Dev/go"
 	export PATH="$PATH:$GOPATH/bin"
-
 	mkdir -p "$GOPATH"
 }
 
