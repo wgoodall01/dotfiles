@@ -101,6 +101,9 @@ set tabstop=4
 set softtabstop=0 noexpandtab
 set shiftwidth=4
 
+" For makefiles, force indenting with tabs
+autocmd FileType make set noexpandtab shiftwidth=4 softtabstop=0
+
 " TTY config
 set ttyfast
 set mouse=a
@@ -109,11 +112,15 @@ set mouse=a
 set number
 
 " scrolloff -- number of lines to keep above/below cursor at all times
-set scrolloff=20
+set scrolloff=5
 
 " set cursor line
 set cursorline
 hi CursorLine	cterm=NONE ctermbg=234 ctermfg=NONE
+
+" smartcase -- treat lowercase as mixed case in searches
+set smartcase
+set ignorecase
 
 " Fix vim for webpack watcher
 set backupcopy=yes
