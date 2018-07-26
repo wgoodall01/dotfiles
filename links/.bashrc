@@ -247,6 +247,16 @@ pjd
 
 time_diff "cd projdir"
 
+# cd relative to ~/Dev
+dcd(){
+	cd ~/Dev/$*
+}
+
+# cd relative to Projdir
+pcd(){
+	cd $(pjd pwd)/$*
+}
+
 # Shortcut to update/install dotfiles
 update-dotfiles(){
 	~/Dev/dotfiles/update.sh
@@ -256,6 +266,23 @@ install-dotfiles(){
 	~/Dev/dotfiles/init.sh
 }
 
+# Shortcut to mount vmware shared folders
+mount-shared-folders(){
+	sudo mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other
+}
+
+# Shortcut to run a Docker container like a command
+docli(){
+	# Run a container, and:
+	#	- delete it when it finishes
+	#	- forward process signals to it
+	#	- run interactively, and allocate it a TTY
+	docker run\
+		--rm\
+		--sig-proxy=true\
+		-it\
+		"$@"
+}
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
