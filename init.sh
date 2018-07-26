@@ -153,7 +153,7 @@ install_apt libgdbm5
 install_apt libgdbm-dev
 install_asdf_plugin ruby "https://github.com/asdf-vm/asdf-ruby.git"
 CC="/usr/bin/gcc-6"\
-	PKG_CONFIG_PATH="/usr/lib/openssl-1.0/"install_asdf_lang ruby "2.3.7" -patch <$DIR/res/ruby2x-openssl-patch
+	PKG_CONFIG_PATH="/usr/lib/openssl-1.0/" install_asdf_lang ruby "2.2.6" -patch <$DIR/res/ruby2x-openssl-patch
 
 comment "Java"
 install_asdf_plugin java "https://github.com/skotchpine/asdf-java"
@@ -178,6 +178,7 @@ install_apt tree
 install_apt silversearcher-ag
 install_apt mosh
 install_apt aria2
+install_apt nginx-core
 
 
 
