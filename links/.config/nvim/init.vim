@@ -27,22 +27,22 @@ set autoread
 " vim-go config
 Plug 'fatih/vim-go', {'for':'go'}
 " Don't auto-update go tools with :GoInstallBinaries
-let g:go_get_update = 0 
+let g:go_get_update = 0
 
 " JS config
 Plug 'pangloss/vim-javascript', {'for':'javascript'}
 Plug 'mxw/vim-jsx', {'for':'javascript'}
-Plug 'digitaltoad/vim-pug' 
+Plug 'digitaltoad/vim-pug'
 Plug 'ternjs/tern_for_vim', { 'do': 'yarn' }
 let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
 let g:tern#filetypes = [
-                \ 'jsx',
-                \ 'js',
-                \ 'es6',
-                \ ]
+			\ 'jsx',
+			\ 'js',
+			\ 'es6',
+			\ ]
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 autocmd FileType javascript setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
 
@@ -68,10 +68,29 @@ let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_css = ['prettier']
 let g:neoformat_enabled_scss = ['prettier']
 let g:neoformat_only_msg_on_error = 1
+
+let g:neoformat_on_save = 1
+function MaybeNeoformat()
+	if g:neoformat_on_save
+		Neoformat
+	endif
+endfunction
+
 augroup fmt
-  autocmd!
-  autocmd BufWritePre * | Neoformat
+	autocmd!
+	autocmd BufWritePre * | call MaybeNeoformat()
 augroup END
+
+" Disable neoformat for t11e/homeland
+augroup t11e_homeland_no_homeland
+	autocmd!
+	autocmd BufNewFile,BufRead */t11e/homeland/* let g:neoformat_on_save = 0
+augroup END
+
+" Neoformat: basic formatting if it can't otherwise format a file
+let g:neoformat_basic_format_align=1
+let g:neoformat_basic_format_retab=1
+let g:neoformat_basic_format_trim=1
 
 " Airline config
 Plug 'vim-airline/vim-airline'
