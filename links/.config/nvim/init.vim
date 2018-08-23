@@ -123,6 +123,9 @@ set shiftwidth=4
 " For makefiles, force indenting with tabs
 autocmd FileType make set noexpandtab shiftwidth=4 softtabstop=0
 
+" For YAML, use 2-space indents
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
 " TTY config
 set ttyfast
 set mouse=a
