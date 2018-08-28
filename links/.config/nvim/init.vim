@@ -30,8 +30,8 @@ Plug 'fatih/vim-go', {'for':'go'}
 let g:go_get_update = 0
 
 " JS config
-Plug 'pangloss/vim-javascript', {'for':'javascript'}
-Plug 'mxw/vim-jsx', {'for':'javascript'}
+Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
+Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'digitaltoad/vim-pug'
 Plug 'ternjs/tern_for_vim', { 'do': 'yarn' }
 let g:javascript_plugin_jsdoc = 1
