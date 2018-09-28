@@ -66,7 +66,7 @@ let g:neoformat_scss_prettier = {
 			\ }
 
 let g:neoformat_cpp_clangformat = {
-			\'args': ['--style="{IndentWidth: 4, TabWidth: 4, UseTab: Always}"'],
+			\'args': ['--style="{IndentWidth: 4, TabWidth: 4, UseTab: Always, PointerAlignment: Left}"'],
 			\'exe': 'clang-format',
 			\ }
 
