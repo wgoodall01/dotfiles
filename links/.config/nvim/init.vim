@@ -45,6 +45,7 @@ let g:tern#filetypes = [
 			\ ]
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 autocmd FileType javascript setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
+autocmd FileType css setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
 
 
 " Neoformat - format on save, should use prettier for most things.
@@ -64,9 +65,15 @@ let g:neoformat_scss_prettier = {
 			\'exe': 'prettier',
 			\ }
 
+let g:neoformat_cpp_clangformat = {
+			\'args': ['--style="{IndentWidth: 4, TabWidth: 4, UseTab: Always}"'],
+			\'exe': 'clang-format',
+			\ }
+
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_css = ['prettier']
 let g:neoformat_enabled_scss = ['prettier']
+let g:neoformat_enabled_cpp = ['clangformat']
 let g:neoformat_only_msg_on_error = 1
 
 let g:neoformat_on_save = 1
