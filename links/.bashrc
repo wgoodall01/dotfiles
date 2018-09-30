@@ -307,10 +307,17 @@ time_diff "gcloud setup"
 
 time_end
 
-# Misc nags
 if ! ssh-add -l &>/dev/null; then
-	printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
-	NAGGED=true
+	# Prompt for SSH key, if askpass is installed.
+	askpass="$(which ssh-askpass)"
+	if [[ "$askpass" != "" ]]; then
+		# use askpass
+		SSH_ASKPASS="$askpass" ssh-add &>/dev/null </dev/null
+	else
+		# prompt to do it manually.
+		printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
+		NAGGED=true
+	fi
 fi
 
 if [ "$NAGGED" = true ]; then
