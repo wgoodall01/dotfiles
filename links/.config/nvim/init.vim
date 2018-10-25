@@ -10,6 +10,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
+Plug 'godlygeek/tabular'
 
 " Easymotion - Abbreviations and stuff
 Plug 'easymotion/vim-easymotion'
