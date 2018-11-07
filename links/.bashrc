@@ -4,9 +4,12 @@
 
 enable_debug=false
 
+# On osx, use gdate.
+datecmd="date"
+[[ -e "/usr/local/bin/gdate" ]] && datecmd="/usr/local/bin/gdate"
+
 time_millis(){
-#	echo "$(date +%s%N) / 1000000" | bc
-	rawtime="$(date +%s%N)"
+	rawtime="$($datecmd "+%s%N")"
 	echo "$((rawtime / 1000000))"
 }
 start_time="$(time_millis)"
@@ -301,10 +304,10 @@ export PATH="$PATH:$HOME/Dev/t11e/donkey/bin"
 time_diff "path, travis"
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/wgoodall01/google-cloud-sdk/path.bash.inc' ]; then source '/home/wgoodall01/google-cloud-sdk/path.bash.inc'; fi
+if [ -f "/home/wgoodall01/google-cloud-sdk/path.bash.inc" ]; then source "/home/wgoodall01/google-cloud-sdk/path.bash.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/wgoodall01/google-cloud-sdk/completion.bash.inc' ]; then source '/home/wgoodall01/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then source "$HOME/google-cloud-sdk/completion.bash.inc"; fi
 
 time_diff "gcloud setup"
 
