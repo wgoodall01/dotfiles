@@ -74,6 +74,7 @@ let g:neoformat_cpp_clangformat = {
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_css = ['prettier']
 let g:neoformat_enabled_scss = ['prettier']
+let g:neoformat_enabled_yaml = ['prettier']
 let g:neoformat_enabled_cpp = ['clangformat']
 let g:neoformat_only_msg_on_error = 1
 
@@ -94,11 +95,6 @@ augroup t11e_homeland_no_homeland
 	autocmd!
 	autocmd BufNewFile,BufRead */t11e/homeland/* let g:neoformat_on_save = 0
 augroup END
-
-" Neoformat: basic formatting if it can't otherwise format a file
-let g:neoformat_basic_format_align=1
-let g:neoformat_basic_format_retab=1
-let g:neoformat_basic_format_trim=1
 
 " Airline config
 Plug 'vim-airline/vim-airline'
