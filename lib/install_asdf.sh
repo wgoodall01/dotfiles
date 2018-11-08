@@ -1,4 +1,4 @@
-\n#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 install_asdf(){
 	printf "[asdf   ] install asdf... "
