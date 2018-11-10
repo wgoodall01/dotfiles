@@ -3,5 +3,5 @@ logs
 backups
 
 # Ignore the config file, it has the crypto pw in it
-config.sh
+./config.sh
 .DS_Store
