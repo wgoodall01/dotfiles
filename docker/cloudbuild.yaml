@@ -12,3 +12,5 @@ steps:
 
 images:
   - gcr.io/wgoodall01-testing/dotfiles
+
+timeout: 3600s
