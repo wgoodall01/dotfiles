@@ -45,9 +45,11 @@ install_asdf_lang(){
 	logname="asdf_install_${lang}_${version}"
 	if [[ ! "$installed" = *"$lang @ $version"* ]]; then
 		asdf install "$lang" "$version" &>"$LOGS/$logname"\
-			&& asdf global "$lang" "$version" &>> "$LOGS/$logname"\
-			&& printf "done.\n"\
 			|| fatal "couldn't install $lang $version--check logs/$logname for details."
+		asdf global "$lang" "$version" &>> "$LOGS/$logname"\
+			|| fatal "couldn't set $lang $version as global--check logs/$logname"
+
+		printf "done\n"
 	else
 		printf "already installed.\n"
 	fi

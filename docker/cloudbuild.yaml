@@ -1,0 +1,14 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/wgoodall01-testing/dotfiles",
+        "-f",
+        "docker/Dockerfile",
+        ".",
+      ]
+
+images:
+  - gcr.io/wgoodall01-testing/dotfiles
