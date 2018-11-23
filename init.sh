@@ -81,7 +81,7 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt x11-xserver-utils
 	install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
 	install_apt meld
-
+	install_apt ssh-askpass-gnome
 fi
 
 if [ "$CFG_SSH" = true ]; then
