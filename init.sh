@@ -157,7 +157,7 @@ CC="/usr/bin/gcc-6"\
 
 comment "Java"
 install_asdf_plugin java "https://github.com/skotchpine/asdf-java"
-install_asdf_lang java "10.0.1"
+install_asdf_lang java "openjdk-10.0.2"
 
 comment "neovim"
 install_apt neovim
