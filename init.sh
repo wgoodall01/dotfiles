@@ -44,7 +44,7 @@ install_apt libffi-dev
 install_apt python-dev
 install_apt python-pip
 install_apt python3-pip
-link_custom $DIR/links/._gitconfig ~/.gitconfig
+link_custom $DIR/links/__gitcfg ~/.gitconfig # for some reason, files called ".gitconfig" act oddly
 install_apt software-properties-common # for apt-add-repository
 
 if [ "$CFG_GUI" = true ]; then
@@ -107,8 +107,10 @@ fi
 comment "Powerline"
 install_apt socat
 install_pip psutil
-install_apt "libgit2-dev=0.26.0+dfsg.1-1.1build1"  # Lock these versions so they work together
-install_pip "pygit2==0.26.0"                       #
+install_apt libgit2-dev
+install_apt python3-pygit2
+# install_apt "libgit2-26"     # Lock these versions so they work together
+# install_pip "pygit2==0.26.0" #
 install_apt libffi-dev
 install_pip pyuv
 install_pip powerline-status

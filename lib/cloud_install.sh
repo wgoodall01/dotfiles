@@ -36,7 +36,7 @@ gcloud_install(){
 
 add_docker_user_group(){
 	printf "[ docker] Add user to docker group... "\
-		&& sudo usermod -a -G docker $USER &>$LOGS/docker_group\
+		&& sudo usermod -a -G docker "$(whoami)" &>$LOGS/docker_group\
 		&& printf "done.\n"\
 		|| fatal "couldn't add user - check LOGS/docker_group"
 }
