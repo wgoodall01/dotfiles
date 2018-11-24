@@ -7,7 +7,7 @@ link(){
 	
 	printf "[link   ] $1: "
 
-	if [ -h ~/$1 ]; then
+	if [[ -h ~/$1 ]] && [[ "$(readlink ~/$1)" == "$DIR/links/$1" ]]; then
 		# File exists and is a symlink
 		printf "already linked"
 	else
@@ -33,7 +33,7 @@ link_custom(){
 	
 	printf "[link   ] $1 >> $2: "
 
-	if [ -h $2 ]; then
+	if [[ -h $2 ]] && [[ "$(readlink $2)" == "$1" ]]; then
 		# File exists and is a symlink
 		printf "already linked"
 	else
