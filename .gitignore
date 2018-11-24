@@ -1,7 +1,10 @@
-#Ignore any logs or backups
+# Ignore any logs or backups
 logs
 backups
 
 # Ignore the config file, it has the crypto pw in it
-./config.sh
+/config.sh
+
+# useless stuff
+**/.uuid
 .DS_Store
