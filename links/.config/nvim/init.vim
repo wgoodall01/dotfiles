@@ -31,6 +31,7 @@ Plug 'fatih/vim-go', {'for':'go'}
 let g:go_get_update = 0
 
 " JS config
+let g:node_host_prog = '/home/wgoodall01/.asdf/installs/nodejs/11.10.0/.npm/bin/neovim-node-host'
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'digitaltoad/vim-pug'
@@ -47,6 +48,11 @@ let g:tern#filetypes = [
 autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
 autocmd FileType javascript setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
 autocmd FileType css setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
+
+" Typescript config
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
 
 " Neoformat - format on save, should use prettier for most things.
@@ -96,6 +102,9 @@ augroup t11e_homeland_no_homeland
 	autocmd BufNewFile,BufRead */t11e/homeland/* let g:neoformat_on_save = 0
 augroup END
 
+" add ':date' to insert $(date)
+command Date r ! date -Iseconds
+
 " Airline config
 Plug 'vim-airline/vim-airline'
 let g:airline_powerline_fonts=1
@@ -103,7 +112,7 @@ let g:airline_powerline_fonts=1
 " Ctrlp - fast file seracher
 Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist|build|CMakeFiles)|(\.(swp|ico|git|svn|DS_Store))$'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|.next|target|dist|build|CMakeFiles)|(\.(swp|ico|git|svn|DS_Store))$'
 
 " Completions config
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }

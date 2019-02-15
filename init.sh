@@ -125,7 +125,7 @@ if [[ "$CFG_LANG_NODEJS" == "true" ]]; then
 	link ".default-npm-packages"
 	install_asdf_plugin nodejs "https://github.com/asdf-vm/asdf-nodejs.git"
 	install_asdf_node_keys
-	install_asdf_lang nodejs "10.6.0"
+	install_asdf_lang nodejs "11.10.0"
 fi
 
 if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
