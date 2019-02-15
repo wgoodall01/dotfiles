@@ -58,7 +58,7 @@ Plug 'peitalin/vim-jsx-typescript'
 " Neoformat - format on save, should use prettier for most things.
 Plug 'sbdchd/neoformat'
 let g:neoformat_javascript_prettier = {
-			\'args': ['--parser babylon', '--single-quote', '--print-width 100', '--bracket-spacing false'],
+			\'args': ['--parser babel', '--single-quote', '--print-width 100', '--bracket-spacing false'],
 			\'exe': 'prettier',
 			\ }
 
