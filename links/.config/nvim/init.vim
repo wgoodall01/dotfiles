@@ -63,6 +63,11 @@ let g:neoformat_cpp_clangformat = {
 			\'exe': 'clang-format',
 			\ }
 
+let g:neoformat_yaml_prettier = { 
+			\'args': ['--parser yaml'] ,
+			\'exe': 'prettier',
+			\}
+
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_css = ['prettier']
 let g:neoformat_enabled_scss = ['prettier']
