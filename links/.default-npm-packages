@@ -1,5 +1,6 @@
 yarn
 prettier
+serve
 nodemon
 neovim
 typescript
