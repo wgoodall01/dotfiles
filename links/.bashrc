@@ -311,18 +311,21 @@ time_diff "gcloud setup"
 
 time_end
 
-if ! ssh-add -l &>/dev/null; then
-	# Prompt for SSH key, if askpass is installed.
-	askpass="$(which ssh-askpass)"
-	if [[ "$askpass" != "" ]]; then
-		# use askpass
-		SSH_ASKPASS="$askpass" ssh-add &>/dev/null </dev/null
-	else
-		# prompt to do it manually.
-		printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
-		NAGGED=true
+(	
+	flock -x 42
+	if ! ssh-add -l &>/dev/null; then
+		# Prompt for SSH key, if askpass is installed.
+		askpass="$(which ssh-askpass)"
+		if [[ "$askpass" != "" ]]; then
+			# use askpass
+			SSH_ASKPASS="$askpass" ssh-add &>/dev/null </dev/null
+		else
+			# prompt to do it manually.
+			printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
+			NAGGED=true
+		fi
 	fi
-fi
+) 42>"$HOME/.bash_stuff/ssh_pass.lock"
 
 if [ "$NAGGED" = true ]; then
 	hr
