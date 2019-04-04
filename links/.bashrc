@@ -75,7 +75,7 @@ export PATH="./node_modules/.bin:$STUFF_DIR/bin:$HOME/bin:$HOME/.local/bin:$PATH
 export PATH="$PATH:/snap/bin"
 
 # Path for /usr/local/bin (osx needs this)
-export PATH="$PATH:/usr/local/bin"
+export PATH="/usr/local/bin:$PATH"
 
 # If not running interactively, don't do anything
 case $- in
