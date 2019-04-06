@@ -30,34 +30,11 @@ Plug 'fatih/vim-go', {'for':'go'}
 " Don't auto-update go tools with :GoInstallBinaries
 let g:go_get_update = 0
 
-" JS config
-let g:node_host_prog = '/home/wgoodall01/.asdf/installs/nodejs/11.10.0/.npm/bin/neovim-node-host'
-Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
-Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug 'digitaltoad/vim-pug'
-Plug 'ternjs/tern_for_vim', { 'do': 'yarn' }
-let g:javascript_plugin_jsdoc = 1
-let g:jsx_ext_required = 0
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
-let g:tern#filetypes = [
-			\ 'jsx',
-			\ 'js',
-			\ 'es6',
-			\ ]
-autocmd FileType javascript nnoremap <silent> <buffer> gb :TernDef<CR>
-autocmd FileType javascript setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
-autocmd FileType css setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
-
-" Typescript config
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-
+" Config for most languages
+Plug 'sheerun/vim-polyglot'
 
 " Neoformat - format on save, should use prettier for most things.
 Plug 'sbdchd/neoformat'
-
 let g:neoformat_cpp_clangformat = {
 			\'args': ['--style="{IndentWidth: 4, TabWidth: 4, UseTab: Always, PointerAlignment: Left}"'],
 			\'exe': 'clang-format',
@@ -91,14 +68,30 @@ augroup END
 " add ':date' to insert $(date)
 command Date r ! date -Iseconds
 
-" Airline config
-Plug 'vim-airline/vim-airline'
-let g:airline_powerline_fonts=1
+" Lightline
+Plug 'itchyny/lightline.vim'
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 
-" Ctrlp - fast file seracher
-Plug 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|.next|target|dist|build|CMakeFiles)|(\.(swp|ico|git|svn|DS_Store))$'
+" fzf for opening files
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+let $FZF_DEFAULT_COMMAND='ag --nocolor --ignore node_modules -g ""'
+let $FZF_DEFAULT_OPTS='--inline-info'
+let g:fzf_layout = { 'down': '~20%' }
+command! Files call fzf#vim#files(s:find_git_root(), {'options': '--prompt " /"'})
+noremap <silent> <c-p> :Files<CR>
+noremap <silent> <c-l> :Commands<CR>
 
 " Completions config
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
