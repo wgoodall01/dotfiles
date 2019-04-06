@@ -93,6 +93,11 @@ command! Files call fzf#vim#files(s:find_git_root(), {'options': '--prompt " /"'
 noremap <silent> <c-p> :Files<CR>
 noremap <silent> <c-l> :Commands<CR>
 
+" Linting config
+Plug 'w0rp/ale'
+let g:ale_lint_on_text_changed = 'never'
+highlight SpellBad ctermbg=DarkMagenta
+
 " Completions config
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-go', { 'do': 'make', 'for':'go' }
@@ -115,6 +120,12 @@ set shiftwidth=4
 " TTY config
 set ttyfast
 set mouse=a
+
+" always show sign column
+set signcolumn=yes
+
+" reduce idle update time
+set updatetime=400
 
 " Enable numbering
 set number
