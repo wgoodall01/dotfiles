@@ -86,7 +86,7 @@ Plug 'junegunn/fzf.vim'
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-let $FZF_DEFAULT_COMMAND='ag --hidden -g ""'
+let $FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 let $FZF_DEFAULT_OPTS='--inline-info'
 let g:fzf_layout = { 'down': '~20%' }
 command! Files call fzf#vim#files(s:find_git_root(), {'options': '--prompt " /"'})
@@ -111,12 +111,6 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 set tabstop=4
 set softtabstop=0 noexpandtab
 set shiftwidth=4
-
-" For makefiles, force indenting with tabs
-autocmd FileType make set noexpandtab shiftwidth=4 softtabstop=0
-
-" For YAML, use 2-space indents
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " TTY config
 set ttyfast
