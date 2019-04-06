@@ -172,6 +172,7 @@ if [[ "$CFG_LANG_CPP" == "true" ]]; then
 fi
 
 comment "neovim"
+add_ppa "neovim-ppa/stable"
 install_apt neovim
 link .config/nvim
 install_pip neovim
