@@ -86,7 +86,7 @@ Plug 'junegunn/fzf.vim'
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-let $FZF_DEFAULT_COMMAND='ag --nocolor --ignore node_modules -g ""'
+let $FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 let $FZF_DEFAULT_OPTS='--inline-info'
 let g:fzf_layout = { 'down': '~20%' }
 command! Files call fzf#vim#files(s:find_git_root(), {'options': '--prompt " /"'})
