@@ -96,7 +96,8 @@ noremap <silent> <c-l> :Commands<CR>
 " Linting config
 Plug 'w0rp/ale'
 let g:ale_lint_on_text_changed = 'never'
-highlight SpellBad ctermbg=DarkMagenta
+highlight SpellBad ctermbg=DarkMagenta ctermfg=White
+highlight SpellCap ctermfg=DarkGray
 
 " Completions config
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -104,8 +105,17 @@ Plug 'zchee/deoplete-go', { 'do': 'make', 'for':'go' }
 Plug 'zchee/deoplete-jedi', {'for':'python'}
 Plug 'tweekmonster/deoplete-clang2', {'for':'cpp'}
 let g:deoplete#enable_at_startup = 1
-set completeopt-=preview
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" set completeopt-=preview
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+" Language server client for autocomplete
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+	\ 'javascript': ['javascript-typescript-stdio', '-l', '/tmp/tslog'],
+	\ 'typescript': ['javascript-typescript-stdio', '-l', '/tmp/tslog'],
+	\ }
+noremap <silent> <Leader>c :call LanguageClient_contextMenu()<CR>
 
 " Java autocomplete config
 Plug 'artur-shaik/vim-javacomplete2', {'for':'java'}

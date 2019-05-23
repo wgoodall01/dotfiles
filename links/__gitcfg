@@ -9,6 +9,7 @@
 
 	s = "status -u"
 	a = "add"
+	aa = "add --all"
 	c = "commit -m"
 	up=!"git pull --rebase && git push"
 	ds = "diff --staged"
