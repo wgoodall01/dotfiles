@@ -13,6 +13,7 @@
 	c = "commit -m"
 	up=!"git pull --rebase && git push"
 	ds = "diff --staged"
+	df = "diff"
 	amend = "commit --amend --no-edit"
 	sweep = "stash -k -u"
 
