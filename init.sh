@@ -49,7 +49,6 @@ install_apt software-properties-common # for apt-add-repository
 if [ "$CFG_GUI" = true ]; then
 	comment "i3wm"
 	install_apt xorg
-	install_apt dconf-tools
 	install_apt dconf-cli
 	install_apt dbus-x11
 	install_apt i3
@@ -74,9 +73,6 @@ if [ "$CFG_GUI" = true ]; then
 	add_apt "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
 	install_apt google-chrome-stable
 
-	comment "Git config"
-	link_custom $DIR/links/__gitcfg ~/.gitconfig # for some reason, files called ".gitconfig" act oddly
-
 	comment "Other utils"
 	install_apt xclip
 	install_pip i3ipc
@@ -90,6 +86,9 @@ if [ "$CFG_SSH" = true ]; then
 	comment "Install SSH keys"
 	install_ssh_keys
 fi
+
+comment "Git config"
+link .config/git
 
 comment "Shell configuration"
 link .bashrc
