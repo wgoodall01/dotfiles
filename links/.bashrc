@@ -176,6 +176,9 @@ time_diff "thefuck"
 # Set $EDITOR
 export EDITOR=$(which nvim)
 
+# Alias nvim to vim
+alias vim=nvim
+
 # Set $CLICOLOR
 export CLICOLOR=1
 
