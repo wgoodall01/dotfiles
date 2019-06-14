@@ -53,7 +53,6 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt dbus-x11
 	install_apt i3
 	link .config/i3
-	install_apt xclip
 
 	comment "lightdm"
 	install_apt lightdm
@@ -94,9 +93,8 @@ comment "Shell configuration"
 link .bashrc
 link .profile
 link .bash_stuff
-install_apt thefuck
-touch ~/.bash_platform\
-	&& echo "[setup  ] Make empty bash_platform"
+install_apt highlight
+install_fzf
 
 if [ "$CFG_CLOUD" = true ]; then
 	comment "Cloud CLIs"

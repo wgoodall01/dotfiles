@@ -63,7 +63,6 @@ time_diff "start"
 
 # Set defaults
 STUFF_DIR="$HOME/.bash_stuff" # Set a default
-source ~/.bash_platform # This is for each platform
 
 # Source global env
 [ -e /etc/environment ] && source /etc/environment
@@ -292,6 +291,12 @@ docli(){
 		-it\
 		"$@"
 }
+
+# Install FZF bash keybinds and config
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_OPTS='--inline-info'
+export FZF_CTRL_T_OPTS="--preview '[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
