@@ -1,8 +1,7 @@
-FROM ubuntu:bionic
+FROM ubuntu:disco
 
 # Install desktop packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-server
 
 # Set up passwordless sudo
