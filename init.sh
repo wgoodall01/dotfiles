@@ -93,6 +93,7 @@ comment "Shell configuration"
 link .bashrc
 link .profile
 link .bash_stuff
+link .inputrc # for anything that uses readline
 install_apt highlight
 install_fzf
 

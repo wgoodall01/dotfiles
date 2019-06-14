@@ -1,0 +1,15 @@
+set editing-mode vi
+
+# show all completions when tab is pressed
+set show-all-if-ambiguous on
+set menu-complete-display-prefix on
+
+# ignore completion case
+set completion-ignore-case on
+
+### keybinds for insert mode ########
+set keymap vi-insert
+
+# set forward-search and reverse-search to ctrl-{p,n}
+"\C-P": history-search-backward
+"\C-N": history-search-forward
