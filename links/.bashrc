@@ -150,12 +150,11 @@ lsmake(){
 
 time_diff "lsmake"
 
-# Setup powerline-shell
 function _update_ps1() {
-    PS1="$($STUFF_DIR/powerline-shell/powerline-shell.py $? 2> /dev/null)"
+    PS1=$(powerline-shell $?)
 }
 
-if [ "$TERM" != "linux" ]; then
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
 

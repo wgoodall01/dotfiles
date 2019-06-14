@@ -1,8 +1,13 @@
-class DefaultColor:
+class DefaultColor(object):
     """
     This class should have the default colors for every segment.
     Please test every new segment with this theme first.
     """
+    # RESET is not a real color code. It is used as in indicator
+    # within the code that any foreground / background color should
+    # be cleared
+    RESET = -1
+
     USERNAME_FG = 250
     USERNAME_BG = 240
     USERNAME_ROOT_BG = 124
@@ -21,13 +26,13 @@ class DefaultColor:
     READONLY_BG = 124
     READONLY_FG = 254
 
-    SSH_BG = 166 # medium orange
+    SSH_BG = 166  # medium orange
     SSH_FG = 254
 
-    REPO_CLEAN_BG = 148  # a light green color
+    REPO_CLEAN_BG = 238  # a light blue color
     REPO_CLEAN_FG = 0  # black
-    REPO_DIRTY_BG = 161  # pink/red
-    REPO_DIRTY_FG = 15  # white
+    REPO_DIRTY_BG = 238  # same as clean
+    REPO_DIRTY_FG = 0  # same as clean
 
     JOBS_FG = 39
     JOBS_BG = 238
@@ -53,8 +58,23 @@ class DefaultColor:
     GIT_CONFLICTED_BG = 9
     GIT_CONFLICTED_FG = 15
 
+    GIT_STASH_BG = 221
+    GIT_STASH_FG = 0
+
     VIRTUAL_ENV_BG = 35  # a mid-tone green
     VIRTUAL_ENV_FG = 00
+
+    BATTERY_NORMAL_BG = 22
+    BATTERY_NORMAL_FG = 7
+    BATTERY_LOW_BG = 196
+    BATTERY_LOW_FG = 7
+
+    AWS_PROFILE_FG = 39
+    AWS_PROFILE_BG = 238
+
+    TIME_FG = 250
+    TIME_BG = 238
+
 
 class Color(DefaultColor):
     """

@@ -8,3 +8,5 @@ backups
 # useless stuff
 **/.uuid
 .DS_Store
+*.pyc
+**/__pycache__

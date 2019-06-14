@@ -1,0 +1,8 @@
+{
+  "segments": ["virtual_env", "ssh", "cwd", "git", "jobs", "exit_code"],
+  "mode": "flat",
+  "cwd": {
+    "mode": "plain"
+  },
+  "theme": "~/.config/powerline-shell/theme.py"
+}

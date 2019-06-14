@@ -104,15 +104,8 @@ if [ "$CFG_CLOUD" = true ]; then
 fi
 
 comment "Powerline"
-install_apt socat
-install_pip psutil
-install_apt libgit2-dev
-install_apt python3-pygit2
-# install_apt "libgit2-26"     # Lock these versions so they work together
-# install_pip "pygit2==0.26.0" #
-install_apt libffi-dev
-install_pip pyuv
-install_pip powerline-status
+link .config/powerline-shell
+install_pip powerline-shell
 
 comment "asdf:"
 install_asdf
