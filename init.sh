@@ -59,6 +59,12 @@ if [ "$CFG_GUI" = true ]; then
 	link .fonts
 	dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
 
+	comment "Cursor theme"
+	install_apt dmz-cursor-theme
+	printf "[alternt] Updating default cursor... "
+	(sudo update-alternatives --set x-cursor-theme "/usr/share/icons/DMZ-White/cursor.theme" && printf "done.\n") \
+		|| fatal "Failed to update alternatives for cursor theme."
+
 	comment "Chrome"
 	add_apt_key_url "https://dl-ssl.google.com/linux/linux_signing_key.pub"
 	add_apt "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
