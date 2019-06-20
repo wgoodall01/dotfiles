@@ -6,7 +6,7 @@ install_pip(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		if pip3 install --ignore-installed --user $1 &>$LOGS/pip3_$1_install; then
+		if pip3 install --user $1 &>$LOGS/pip3_$1_install; then
 			printf "done\n"
 		else
 			fatal "failed - check logs/pip3_${1}_install\n"
@@ -20,7 +20,7 @@ install_pip2(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		if pip install --ignore-installed --user $1 &>$LOGS/pip2_$1_install; then
+		if pip install --user $1 &>$LOGS/pip2_$1_install; then
 			printf "done\n"
 		else
 			fatal "failed - check logs/pip2_${1}_install\n"
