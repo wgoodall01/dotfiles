@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-export CFG_GUI=false   # Enable GUI app installs and configuration?
-export CFG_SSH=false   # Enable SSH key decryption?
-export CFG_CLOUD=false # Enable installing of cloud stuff?
+export CFG_SSH=false       # Enable SSH key decryption?
+export CFG_CLOUD=false     # Enable installing of cloud stuff?
+
+export CFG_GUI=false       # Enable GUI app installs and configuration?
+export CFG_GUI_HIDPI=false # Enable HIDPI scaling?
 
 # Language configuration
 export CFG_LANG_NODEJS=true 

@@ -69,6 +69,11 @@ if [ "$CFG_GUI" = true ]; then
 	add_apt_key_url "https://dl-ssl.google.com/linux/linux_signing_key.pub"
 	add_apt "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
 	install_apt google-chrome-stable
+	if [ "$CFG_GUI_HIDPI" = true ]; then
+		# For HIDPI displays, link a special .desktop file which gives scaling as a
+		# commandline argument whenever Chrome is launched.
+		link ".local/share/applications/google-chrome.desktop"
+	fi
 
 	comment "Other utils"
 	install_apt xclip
