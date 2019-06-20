@@ -53,6 +53,15 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt dbus-x11
 	install_apt i3
 	link .config/i3
+	if [ "$CFG_GUI_HIDPI" = true ]; then
+		printf "[copy   ] Add Xresources/set-dpi..."
+		(
+			sudo cp "$DIR/res/x11-set-dpi" "/etc/X11/Xresources/set-dpi" &&\
+			sudo chown root:root "/etc/X11/Xresources/set-dpi" &&\
+			sudo chmod 0644 "/etc/X11/Xresources/set-dpi" &&\
+			printf "done.\n" 
+		)   || fatal "Could not copy set-dpi to /etc/X11/Xresources"
+	fi
 
 	comment "Gnome-terminal"
 	install_apt gnome-terminal
