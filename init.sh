@@ -49,18 +49,26 @@ install_apt software-properties-common # for apt-add-repository
 if [ "$CFG_GUI" = true ]; then
 	comment "i3wm"
 	install_apt xorg
+	install_apt compton
 	install_apt dconf-cli
 	install_apt dbus-x11
 	install_apt i3
 	link .config/i3
 	if [ "$CFG_GUI_HIDPI" = true ]; then
-		printf "[copy   ] Add Xresources/set-dpi..."
+		printf "[copy   ] Add /etc/X11/Xresources/set-dpi ..."
 		(
 			sudo cp "$DIR/res/x11-set-dpi" "/etc/X11/Xresources/set-dpi" &&\
 			sudo chown root:root "/etc/X11/Xresources/set-dpi" &&\
 			sudo chmod 0644 "/etc/X11/Xresources/set-dpi" &&\
 			printf "done.\n" 
 		)   || fatal "Could not copy set-dpi to /etc/X11/Xresources"
+		printf "[copy   ] Add /etc/gdm3/custom.conf ..."
+		(
+			sudo cp "$DIR/res/gdm3-custom.conf" "/etc/gdm3/custom.conf" &&\
+			sudo chown root:root "/etc/gdm3/custom.conf" &&\
+			sudo chmod 0644 "/etc/gdm3/custom.conf" &&\
+			printf "done.\n" 
+		)   || fatal "Could not copy gdm3-custom.conf to /etc/gdm3/custom.conf"
 	fi
 
 	comment "Gnome-terminal"

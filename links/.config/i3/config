@@ -157,17 +157,12 @@ bindsym $mod+r mode "resize"
 set $blue  #268BD2
 set $red   #DC322F
 
+# Black -> dark -> grey -> light -> white
 set $black #000000
 set $dark  #222222
 set $grey  #333333
 set $light #555555
 set $white #ffffff
-
-# Black -> dark -> grey -> light -> white
-
-
-# Set wallpaper
-exec --no-startup-id xsetroot -solid "$dark"
 
 # If in vmware, then do that
 exec which vmware-user-suid-wrapper &>/dev/null && vmware-user-suid-wrapper
@@ -191,7 +186,7 @@ bar {
 			# Type             border  background font
 			focused_workspace  $blue   $blue    $white
 			active_workspace   $light  $light   $white 
-			inactive_workspace $dark   $med     $white
+			inactive_workspace $dark   $dark    $white
 			urgent_workspace   $red    $red     $white
 		}
 		
@@ -199,3 +194,10 @@ bar {
         tray_output primary
 		position bottom
 }
+
+
+# Start Compton
+exec --no-startup-id compton --config ~/.config/compton.conf -b
+
+# Set wallpaper
+exec --no-startup-id hsetroot -solid "$dark"
