@@ -171,11 +171,12 @@ alias fuck='TF_CMD=$(TF_ALIAS=fuck PYTHONIOENCODING=utf-8 TF_SHELL_ALIASES=$(ali
 
 time_diff "thefuck"
 
-# Set $EDITOR
-export EDITOR=$(which nvim)
-
 # Alias nvim to vim
 alias vim=nvim
+
+# Set $EDITOR, etc
+export EDITOR=$(which nvim)
+export MANPAGER="nvim -c 'set ft=man' -"
 
 # Set $CLICOLOR
 export CLICOLOR=1
