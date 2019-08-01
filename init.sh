@@ -26,9 +26,16 @@ fi
 
 comment "Configuration options"
 source $DIR/config.sh
-printf "[config ] Enable SSH key decryption: $CFG_SSH\n"
-printf "[config ] Enable GUI app configuration: $CFG_GUI\n"
-printf "[config ] Install cloud utils: $CFG_CLOUD\n"
+printf "[config ] Enable SSH key decryption      : %s\n" "$CFG_SSH"
+printf "[config ] Install cloud utils            : %s\n" "$CFG_CLOUD"
+printf "[config ] Enable GUI app configuration   : %s\n" "$CFG_GUI"
+printf "[config ] Enable HiDPI GUI support       : %s\n" "$CFG_GUI_HIDPI"
+printf "[config ] Language support for Node.js   : %s\n" "$CFG_LANG_NODEJS"
+printf "[config ] Language support for Golang    : %s\n" "$CFG_LANG_GOLANG"
+printf "[config ] Language support for Ruby      : %s\n" "$CFG_LANG_RUBY"
+printf "[config ] Language support for Java      : %s\n" "$CFG_LANG_JAVA"
+printf "[config ] Language support for C++       : %s\n" "$CFG_LANG_CPP"
+printf "[config ] Language support for Rust      : %s\n" "$CFG_LANG_RUST"
 
 comment "Dependencies"
 install_apt git
@@ -180,6 +187,12 @@ if [[ "$CFG_LANG_CPP" == "true" ]]; then
 	comment "C++"
 	install_apt cmake # For deoplete-clang
 	install_apt clang # /
+fi
+
+if [[ "$CFG_LANG_RUST" == "true" ]]; then
+	comment "Rust"
+	install_asdf_plugin rust 
+	install_asdf_lang rust "1.36.0"
 fi
 
 comment "neovim"
