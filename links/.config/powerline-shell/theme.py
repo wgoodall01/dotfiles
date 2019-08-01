@@ -29,10 +29,11 @@ class DefaultColor(object):
     SSH_BG = 166  # medium orange
     SSH_FG = 254
 
-    REPO_CLEAN_BG = 238  # a light blue color
-    REPO_CLEAN_FG = 0  # black
-    REPO_DIRTY_BG = 238  # same as clean
-    REPO_DIRTY_FG = 0  # same as clean
+    # W: edits to this block
+    REPO_CLEAN_BG = 10 # slate gray
+    REPO_CLEAN_FG = 7  # silver
+    REPO_DIRTY_BG = 10 # same as above
+    REPO_DIRTY_FG = 7  # same as above
 
     JOBS_FG = 39
     JOBS_BG = 238
