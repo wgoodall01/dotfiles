@@ -78,10 +78,11 @@ if [ "$CFG_GUI" = true ]; then
 		)   || fatal "Could not copy gdm3-custom.conf to /etc/gdm3/custom.conf"
 	fi
 
-	comment "Gnome-terminal"
-	install_apt gnome-terminal
+	comment "Alacritty"
+	add_ppa "mmstick76/alacritty"
+	install_apt alacritty
+	link .config/alacritty
 	link .fonts
-	dconf_load "/org/gnome/terminal/" "gnome_terminal_settings"
 
 	comment "Cursor theme"
 	install_apt dmz-cursor-theme
