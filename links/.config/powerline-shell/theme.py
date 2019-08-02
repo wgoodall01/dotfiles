@@ -30,9 +30,9 @@ class DefaultColor(object):
     SSH_FG = 254
 
     # W: edits to this block
-    REPO_CLEAN_BG = 10 # slate gray
+    REPO_CLEAN_BG = 25 # slate gray
     REPO_CLEAN_FG = 7  # silver
-    REPO_DIRTY_BG = 10 # same as above
+    REPO_DIRTY_BG = 25 # same as above
     REPO_DIRTY_FG = 7  # same as above
 
     JOBS_FG = 39
