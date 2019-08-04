@@ -210,6 +210,7 @@ fi
 
 comment "Utilities"
 install_apt dtrx
+install_apt entr
 install_apt htop
 install_apt nload
 install_apt tree
