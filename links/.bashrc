@@ -279,6 +279,11 @@ mount-shared-folders(){
 	sudo mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other
 }
 
+# Run a command for any change to non-gitignored files in the working directory
+onchange(){
+	ag -l | entr -s "hr && ($*)"
+}
+
 # Shortcut to run a Docker container like a command
 docli(){
 	# Run a container, and:
