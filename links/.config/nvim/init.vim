@@ -60,9 +60,15 @@ augroup fmt
 augroup END
 
 " Disable neoformat for t11e/homeland
-augroup t11e_homeland_no_homeland
+augroup t11e_homeland_no_neoformat
 	autocmd!
 	autocmd BufNewFile,BufRead */t11e/homeland/* let g:neoformat_on_save = 0
+augroup END
+
+" Set columns for cs-1332
+augroup cs_1332_line_length
+	autocmd!
+	autocmd BufNewFile,BufRead */Dev/cs-1332/* set textwidth=80 colorcolumn=+1
 augroup END
 
 " add ':date' to insert $(date)
@@ -97,6 +103,9 @@ let g:ale_lint_on_text_changed = 'never'
 highlight SpellBad ctermbg=DarkMagenta ctermfg=White
 highlight SpellCap ctermfg=DarkGray
 
+" Colorcolumn colors
+highlight ColorColumn ctermbg=darkgray
+
 " Completions config
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-go', { 'do': 'make', 'for':'go' }
@@ -109,9 +118,11 @@ let g:deoplete#enable_at_startup = 1
 " Language server client for autocomplete
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_useVirtualText = 0
 let g:LanguageClient_serverCommands = {
 	\ 'javascript': ['javascript-typescript-stdio', '-l', '/tmp/tslog'],
 	\ 'typescript': ['javascript-typescript-stdio', '-l', '/tmp/tslog'],
+	\ 'rust': ['rls']
 	\ }
 noremap <silent> <Leader>c :call LanguageClient_contextMenu()<CR>
 
