@@ -126,6 +126,7 @@ alias "..."="cd ../.."
 alias "...."="cd ../../.."
 alias "tree"="tree -I node_modules"
 alias "gcla"="gcloud alpha interactive"
+alias "open"="xdg-open"
 
 time_diff "aliasses"
 
