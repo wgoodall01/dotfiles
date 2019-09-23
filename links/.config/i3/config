@@ -45,6 +45,9 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
+# remap capslock to ctrl in X
+exec setxkbmap -option ctrl:nocaps
+
 # change focus
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
