@@ -36,6 +36,7 @@ printf "[config ] Language support for Ruby      : %s\n" "$CFG_LANG_RUBY"
 printf "[config ] Language support for Java      : %s\n" "$CFG_LANG_JAVA"
 printf "[config ] Language support for C++       : %s\n" "$CFG_LANG_CPP"
 printf "[config ] Language support for Rust      : %s\n" "$CFG_LANG_RUST"
+printf "[config ] Environment support for Conda  : %s\n" "$CFG_CONDA"
 
 comment "Dependencies"
 install_apt git
@@ -194,6 +195,13 @@ if [[ "$CFG_LANG_RUST" == "true" ]]; then
 	comment "Rust"
 	install_asdf_plugin rust 
 	install_asdf_lang rust "1.36.0"
+fi
+
+if [[ "$CFG_CONDA" == "true" ]]; then
+	comment "Conda"
+	add_apt_key_url "https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc"
+	add_apt "deb [arch=amd64] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main"
+	install_apt conda
 fi
 
 comment "neovim"

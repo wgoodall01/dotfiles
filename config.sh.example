@@ -14,5 +14,8 @@ export CFG_LANG_JAVA=true
 export CFG_LANG_CPP=false
 export CFG_LANG_RUST=false
 
+# Conda?
+export CFG_CONDA=false
+
 # Crypto password for SSH keys and sensitive info
 export CRYPTO_PW=""
