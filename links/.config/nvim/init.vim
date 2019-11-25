@@ -7,6 +7,7 @@ call plug#begin(s:editor_root . 'plugged')
 
 " Misc Utilities
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
