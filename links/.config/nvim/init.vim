@@ -37,11 +37,18 @@ Plug 'sheerun/vim-polyglot'
 " Neoformat - format on save, should use prettier for most things.
 Plug 'sbdchd/neoformat'
 let g:neoformat_cpp_clangformat = {
-			\'args': ['--style="{IndentWidth: 4, TabWidth: 4, UseTab: Always, PointerAlignment: Left}"'],
 			\'exe': 'clang-format',
+			\'args': ['--style="{IndentWidth: 4, TabWidth: 4, UseTab: Always, PointerAlignment: Left}"'],
+			\ }
+let g:neoformat_typescriptreact_prettier = {
+			\ 'exe': 'prettier',
+			\ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'typescript'],
+			\ 'stdin': 1
 			\ }
 
 let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_typescript = ['prettier']
+let g:neoformat_enabled_typescriptreact = ['prettier']
 let g:neoformat_enabled_css = ['prettier']
 let g:neoformat_enabled_scss = ['prettier']
 let g:neoformat_enabled_yaml = ['prettier']

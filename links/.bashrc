@@ -68,7 +68,7 @@ STUFF_DIR="$HOME/.bash_stuff" # Set a default
 [ -e /etc/environment ] && source /etc/environment
 
 # Set PATH with bash_stuff and private bins (osx brew, mostly)
-export PATH="./node_modules/.bin:$STUFF_DIR/bin:$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$STUFF_DIR/bin:$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Path for ubuntu snaps
 export PATH="$PATH:/snap/bin"
@@ -127,6 +127,7 @@ alias "...."="cd ../../.."
 alias "tree"="tree -I node_modules"
 alias "gcla"="gcloud alpha interactive"
 alias "open"="xdg-open"
+alias "yx"="yarn run --silent"
 
 time_diff "aliasses"
 
