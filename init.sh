@@ -101,13 +101,15 @@ if [ "$CFG_GUI" = true ]; then
 		link ".local/share/applications/google-chrome.desktop"
 	fi
 
-	comment "Other utils"
+	comment "GUI utilities"
 	install_apt xclip
 	install_pip i3ipc
 	install_apt x11-xserver-utils
-	install_deb_url gitkraken "https://release.gitkraken.com/linux/gitkraken-amd64.deb"
 	install_apt meld
 	install_apt ssh-askpass-gnome
+	install_snap ngrok
+	install_snap gitkraken
+	install_snap insomnia
 fi
 
 if [ "$CFG_SSH" = true ]; then
@@ -129,6 +131,7 @@ install_fzf
 if [ "$CFG_CLOUD" = true ]; then
 	comment "Cloud CLIs"
 	gcloud_install
+	install_snap heroku
 	install_apt docker.io
 	add_docker_user_group
 fi
@@ -182,6 +185,7 @@ fi
 if [[ "$CFG_LANG_JAVA" == "true" ]]; then
 	comment "Java"
 	install_asdf_plugin java "https://github.com/skotchpine/asdf-java"
+	install_asdf_plugin maven
 	install_asdf_lang java "openjdk-10.0.2"
 fi
 
@@ -226,6 +230,7 @@ install_apt silversearcher-ag
 install_apt mosh
 install_apt aria2
 install_apt nginx-core
+install_snap shellcheck
 
 
 

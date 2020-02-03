@@ -6,6 +6,7 @@ source lib/ssh_keys.sh
 source lib/install_go.sh
 source lib/install_asdf.sh
 source lib/install_apt.sh
+source lib/install_snap.sh
 source lib/install_deb_url.sh
 source lib/install_pip.sh
 source lib/install_fzf.sh
