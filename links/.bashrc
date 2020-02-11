@@ -128,6 +128,7 @@ alias "tree"="tree -I node_modules"
 alias "gcla"="gcloud alpha interactive"
 alias "open"="xdg-open"
 alias "yx"="yarn run --silent"
+alias "fd"="fdfind"
 
 time_diff "aliasses"
 
