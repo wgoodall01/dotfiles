@@ -101,6 +101,13 @@ if [ "$CFG_GUI" = true ]; then
 		link ".local/share/applications/google-chrome.desktop"
 	fi
 
+	comment "Disable ACPI sleep, suspend, hibernate"
+	printf "[acpi   ] Mask sleep..."
+	(\
+		sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target &>"$LOGS/disable_acpi_sleep" \
+		&& printf "done.\n" \
+	) || fatal "Failed to disable ACPI sleep";
+
 	comment "GUI utilities"
 	install_apt xclip
 	install_pip i3ipc
