@@ -31,6 +31,10 @@ Plug 'fatih/vim-go', {'for':'go'}
 " Don't auto-update go tools with :GoInstallBinaries
 let g:go_get_update = 0
 
+" Config for LC-3 assembly
+Plug 'zacharied/lc3.vim'
+let g:lc3_detect_asm = 1
+
 " Config for most languages
 Plug 'sheerun/vim-polyglot'
 
