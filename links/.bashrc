@@ -230,12 +230,8 @@ pjd(){
 			if [[ -d "$dir" ]]; then
 				cd "$dir"
 				pjd set "$dir"
-			elif [[ -e "$dir" ]]; then
-				printf "~/Dev/$2 already exists, is not a directory."
 			else
-				mkdir -p "$dir"
-				printf "$dir" >~/projdir
-				cd "$dir"
+				printf "~/Dev/$2 is not a directory.\n"
 			fi;;
 		*)	
 			cat <<-EOF
