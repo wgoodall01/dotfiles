@@ -91,15 +91,8 @@ if [ "$CFG_GUI" = true ]; then
 	(sudo update-alternatives --set x-cursor-theme "/usr/share/icons/DMZ-White/cursor.theme" && printf "done.\n") \
 		|| fatal "Failed to update alternatives for cursor theme."
 
-	comment "Chrome"
-	add_apt_key_url "https://dl-ssl.google.com/linux/linux_signing_key.pub"
-	add_apt "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
-	install_apt google-chrome-stable
-	if [ "$CFG_GUI_HIDPI" = true ]; then
-		# For HIDPI displays, link a special .desktop file which gives scaling as a
-		# commandline argument whenever Chrome is launched.
-		link ".local/share/applications/google-chrome.desktop"
-	fi
+	comment "Firefox"
+	install_apt firefox
 
 	comment "Disable ACPI sleep, suspend, hibernate"
 	printf "[acpi   ] Mask sleep..."
