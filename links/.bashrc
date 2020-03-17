@@ -278,6 +278,26 @@ mount-shared-folders(){
 	sudo mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other
 }
 
+# I always wind up looking up the boilerplate for this, so have this on hand in the shell
+touch-shell(){
+	file="$1"
+
+	# Check if the file already exists. If so, actually touch it.
+	if [[ -f "$file" ]]; then
+		touch "$file"
+	else
+		# Create the file if it doesn't already exist.
+		cat >$file <<-"EOF"
+			#!/usr/bin/env bash
+			set -euo pipefail  
+			DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+		EOF
+	fi
+
+	# Set as executable
+	chmod +x "$file"
+}
+
 # Run a command for any change to non-gitignored files in the working directory
 onchange(){
 	ag -l | entr -s "hr && ($*)"
