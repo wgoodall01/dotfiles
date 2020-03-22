@@ -13,9 +13,9 @@ comment(){
 }
 
 fatal(){
-	printf $ANSI_RED
+	printf "$ANSI_RED"
 	printf "\n\n[  FATAL]: $1"
-	printf $ANSI_RESET
+	printf "$ANSI_RESET"
 	exit 1
 }
 

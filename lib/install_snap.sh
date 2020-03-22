@@ -8,7 +8,7 @@ install_snap(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		if (sudo snap install "$1") &>"$LOGS/$1_snap_install"; then
+		if (sudo snap install $2 "$1") &>"$LOGS/$1_snap_install"; then
 			printf "done\n"
 		else
 			fatal "failed - check logs/${1}_install\n"

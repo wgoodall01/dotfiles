@@ -131,7 +131,7 @@ install_fzf
 if [ "$CFG_CLOUD" = true ]; then
 	comment "Cloud CLIs"
 	gcloud_install
-	install_snap heroku
+	install_snap heroku --classic
 	install_apt docker.io
 	add_docker_user_group
 fi
