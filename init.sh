@@ -215,6 +215,7 @@ link .config/nvim
 install_pip neovim
 install_pip2 neovim
 install_apt editorconfig
+install_apt clang-format
 nvim_run +PlugInstall
 if [[ "$CFG_LANG_GOLANG" == "true" ]]; then 
 	nvim_run +GoInstallBinaries
