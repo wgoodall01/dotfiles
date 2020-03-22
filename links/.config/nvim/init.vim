@@ -57,6 +57,7 @@ let g:neoformat_enabled_css = ['prettier']
 let g:neoformat_enabled_scss = ['prettier']
 let g:neoformat_enabled_yaml = ['prettier']
 let g:neoformat_enabled_cpp = ['clangformat']
+let g:neoformat_enabled_c = ['clangformat']
 let g:neoformat_enabled_java = ['clangformat']
 let g:neoformat_only_msg_on_error = 1
 
