@@ -116,6 +116,7 @@ Plug 'w0rp/ale'
 let g:ale_lint_on_text_changed = 'never'
 highlight SpellBad ctermbg=DarkMagenta ctermfg=White
 highlight SpellCap ctermfg=DarkGray
+noremap <Leader>l :lnext<CR>
 
 " Colorcolumn colors
 highlight ColorColumn ctermbg=darkgray
