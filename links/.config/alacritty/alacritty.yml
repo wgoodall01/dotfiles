@@ -161,7 +161,7 @@ key_bindings:
   - { key: Add, mods: Control, action: IncreaseFontSize }
   - { key: Subtract, mods: Control, action: DecreaseFontSize }
   - { key: Minus, mods: Control, action: DecreaseFontSize }
-  - { key: Return, mods: Alt, action: ToggleFullscreen }
+  # - { key: Return, mods: Alt, action: ToggleFullscreen } # W: Alt-enter conflicts with i3 when you double-tap it.
 
   - { key: Paste, action: Paste }
   - { key: Copy, action: Copy }
