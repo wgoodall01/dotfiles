@@ -198,7 +198,7 @@ fi
 if [[ "$CFG_LANG_RUST" == "true" ]]; then
 	comment "Rust"
 	install_asdf_plugin rust 
-	install_asdf_lang rust "1.36.0"
+	install_asdf_lang rust "stable"
 fi
 
 if [[ "$CFG_CONDA" == "true" ]]; then
