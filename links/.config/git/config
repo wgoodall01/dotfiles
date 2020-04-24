@@ -23,6 +23,3 @@
 
 [push]
 	default = matching
-
-[hub]
-	host = "github.gatech.edu"

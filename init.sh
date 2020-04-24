@@ -119,6 +119,8 @@ fi
 
 comment "Git config"
 link .config/git
+# NB: DO NOT SYMLINK ~/.config/hub
+#     IT CONTAINS AUTH TOKENS
 
 comment "Shell configuration"
 link .bashrc
