@@ -48,7 +48,6 @@ install_apt libssl-dev
 install_apt libffi-dev
 install_apt python
 install_apt python-dev
-install_apt python-pip
 install_apt python3
 install_apt python3-dev
 install_apt python3-pip
@@ -211,11 +210,9 @@ if [[ "$CFG_CONDA" == "true" ]]; then
 fi
 
 comment "neovim"
-add_ppa "neovim-ppa/stable"
 install_apt neovim
 link .config/nvim
 install_pip neovim
-install_pip2 neovim
 install_apt editorconfig
 install_apt clang-format
 nvim_run +PlugInstall
@@ -224,7 +221,7 @@ if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
 fi
 
 comment "Utilities"
-install_apt dtrx
+install_apt unp
 install_apt entr
 install_apt htop
 install_apt tig
