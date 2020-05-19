@@ -24,6 +24,35 @@ print_line(){
 	fi
 }
 
+
+
+hr() {
+	local COLS;
+	COLS="$(tput cols)";
+	if (( COLS <= 0 )) ; then
+		COLS="${COLUMNS:-80}"
+	fi
+
+    local WORD="─"
+    if [[ -n "$WORD" ]] ; then
+        local LINE=''
+        while (( ${#LINE} < COLS ))
+        do
+            LINE="$LINE$WORD"
+        done
+
+        echo "${LINE:0:$COLS}"
+    fi
+}
+
+pbcopy() {
+	xclip -selection clipboard
+}
+
+pbpaste() {
+	xclip -selection clipboard -o
+}
+
 clear_line(){
 	printf "\r"
 	printf '%0.s ' $(seq 1 $((line_length + 1)))
@@ -360,7 +389,7 @@ time_end
 			NAGGED=true
 		fi
 	fi
-) 42>"$HOME/.bash_stuff/ssh_pass.lock"
+) 42>"$HOME/.w_ssh_ask_pass.lock"
 
 if [ "$NAGGED" = true ]; then
 	hr

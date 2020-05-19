@@ -117,6 +117,7 @@ if [ "$CFG_SSH" = true ]; then
 fi
 
 comment "Git config"
+install_apt hub
 link .config/git
 # NB: DO NOT SYMLINK ~/.config/hub
 #     IT CONTAINS AUTH TOKENS
