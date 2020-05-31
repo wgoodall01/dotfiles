@@ -1,4 +1,4 @@
-FROM ubuntu:disco
+FROM ubuntu:focal
 
 # Install desktop packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
@@ -21,7 +21,7 @@ WORKDIR /home/wgoodall01/Dev
 
 # Switch to dev directory
 
-# copy in dotfiles, condig.sh, then run init.sh
+# copy in dotfiles, config.sh, then run init.sh
 COPY --chown=wgoodall01:wgoodall01 . /home/wgoodall01/Dev/dotfiles
 COPY --chown=wgoodall01 docker/config.sh /home/wgoodall01/Dev/dotfiles/config.sh
 WORKDIR /home/wgoodall01/Dev/dotfiles
