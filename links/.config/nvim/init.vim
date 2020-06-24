@@ -26,58 +26,12 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " Auto reload files
 set autoread
 
-" vim-go config
-Plug 'fatih/vim-go', {'for':'go'}
-" Don't auto-update go tools with :GoInstallBinaries
-let g:go_get_update = 0
-
 " Config for LC-3 assembly
 Plug 'zacharied/lc3.vim'
 let g:lc3_detect_asm = 1
 
 " Config for most languages
 Plug 'sheerun/vim-polyglot'
-
-" Neoformat - format on save, should use prettier for most things.
-Plug 'sbdchd/neoformat'
-let g:neoformat_cpp_clangformat = {
-			\'exe': 'clang-format',
-			\'args': ['--style="{IndentWidth: 4, TabWidth: 4, UseTab: Always, PointerAlignment: Left}"'],
-			\ }
-let g:neoformat_typescriptreact_prettier = {
-			\ 'exe': 'prettier',
-			\ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'typescript'],
-			\ 'stdin': 1
-			\ }
-
-let g:neoformat_enabled_javascript = ['prettier']
-let g:neoformat_enabled_typescript = ['prettier']
-let g:neoformat_enabled_typescriptreact = ['prettier']
-let g:neoformat_enabled_css = ['prettier']
-let g:neoformat_enabled_scss = ['prettier']
-let g:neoformat_enabled_yaml = ['prettier']
-let g:neoformat_enabled_cpp = ['clangformat']
-let g:neoformat_enabled_c = ['clangformat']
-let g:neoformat_enabled_java = ['clangformat']
-let g:neoformat_only_msg_on_error = 1
-
-let g:neoformat_on_save = 1
-function MaybeNeoformat()
-	if g:neoformat_on_save
-		Neoformat
-	endif
-endfunction
-
-augroup fmt
-	autocmd!
-	autocmd BufWritePre * | call MaybeNeoformat()
-augroup END
-
-" Disable neoformat for t11e/homeland
-augroup t11e_homeland_no_neoformat
-	autocmd!
-	autocmd BufNewFile,BufRead */t11e/homeland/* let g:neoformat_on_save = 0
-augroup END
 
 " Set columns for cs-1332
 augroup cs_1332_line_length
@@ -111,11 +65,11 @@ command! Files call fzf#vim#files(s:find_git_root(), {'options': '--prompt " /"'
 noremap <silent> <c-p> :Files<CR>
 noremap <silent> <c-l> :Commands<CR>
 
-" Linting config
-Plug 'w0rp/ale'
+" Code analysis
 let g:ale_lint_on_text_changed = 'never'
-highlight SpellBad ctermbg=DarkMagenta ctermfg=White
-highlight SpellCap ctermfg=DarkGray
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {'*': ['prettier']}
+Plug 'dense-analysis/ale'
 noremap <Leader>l :lnext<CR>
 
 " Colorcolumn colors
@@ -123,28 +77,10 @@ highlight ColorColumn ctermbg=darkgray
 
 " Completions config
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-go', { 'do': 'make', 'for':'go' }
-Plug 'zchee/deoplete-jedi', {'for':'python'}
-Plug 'tweekmonster/deoplete-clang2', {'for':'cpp'}
+Plug 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:deoplete#enable_at_startup = 1
-" set completeopt-=preview
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-" Language server client for autocomplete
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_useVirtualText = 0
-let g:LanguageClient_serverCommands = {
-	\ 'javascript': ['javascript-typescript-stdio', '-l', '/tmp/tslog'],
-	\ 'typescript': ['javascript-typescript-stdio', '-l', '/tmp/tslog'],
-	\ 'rust': ['rls']
-	\ }
-noremap <silent> <Leader>c :call LanguageClient_contextMenu()<CR>
-
-" Java autocomplete config
-Plug 'artur-shaik/vim-javacomplete2', {'for':'java'}
-autocmd FileType java let g:deoplete#auto_complete_delay=1000
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+set completeopt-=preview 
 
 " Set tabs as \t and 4 spaces wide
 set tabstop=4

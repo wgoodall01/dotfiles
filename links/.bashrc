@@ -212,6 +212,7 @@ time_diff "hub"
 
 # Set Go env vars
 export GOPATH="$HOME/Dev/go"
+export GO111MODULE="on"
 export PATH="$PATH:$GOPATH/bin"
 
 time_diff "go"

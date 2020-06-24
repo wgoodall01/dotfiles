@@ -156,9 +156,9 @@ if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
 	comment "Golang"
 	install_asdf_plugin golang https://github.com/kennyp/asdf-golang.git
 	set_go_env
-	install_asdf_lang golang "1.12.5"
-	install_go github.com/nsf/gocode
+	install_asdf_lang golang "1.14.4"
 	install_go golang.org/x/tools/cmd/gorename
+	install_go golang.org/x/tools/gopls@latest
 	install_go github.com/golang/dep/cmd/dep
 fi
 
