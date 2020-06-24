@@ -90,20 +90,14 @@ time_end(){
 time_diff "start"
 
 
-# Set defaults
-STUFF_DIR="$HOME/.bash_stuff" # Set a default
-
 # Source global env
 [ -e /etc/environment ] && source /etc/environment
 
-# Set PATH with bash_stuff and private bins (osx brew, mostly)
-export PATH="$STUFF_DIR/bin:$HOME/bin:$HOME/.local/bin:$PATH"
+# Set PATH with local bins
+export PATH="$HOME/.local/bin:$PATH"
 
 # Path for ubuntu snaps
 export PATH="$PATH:/snap/bin"
-
-# Path for /usr/local/bin (osx needs this)
-export PATH="/usr/local/bin:$PATH"
 
 # If not running interactively, don't do anything
 case $- in
@@ -197,10 +191,6 @@ source ~/.ssh/environment
 
 time_diff "ssh env"
 
-# Setup thefuck
-# eval $(thefuck --alias) # cached below
-alias fuck='TF_CMD=$(TF_ALIAS=fuck PYTHONIOENCODING=utf-8 TF_SHELL_ALIASES=$(alias) thefuck $(fc -ln -1)) && eval $TF_CMD; history -s $TF_CMD'
-
 time_diff "thefuck"
 
 # Alias nvim to vim
@@ -228,6 +218,11 @@ time_diff "go"
 
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
+
+if command -v sccache >/dev/null; then
+	# use local sccache
+	export RUSTC_WRAPPER="sccache"
+fi
 
 time_diff "asdf"
 
@@ -329,7 +324,7 @@ touch-shell(){
 
 # Run a command for any change to non-gitignored files in the working directory
 onchange(){
-	ag -l | entr -s "hr && ($*)"
+	ag -l | entr -s "echo $(hr) && ($*)"
 }
 
 # Shortcut to run a Docker container like a command
@@ -350,17 +345,6 @@ export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_DEFAULT_OPTS='--inline-info'
 export FZF_CTRL_T_OPTS="--preview '[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-#t11e setup
-export PUPPET_VM_NFS_DISABLE=1
-export PATH="$PATH:$HOME/Dev/t11e/bin"
-export PATH="$PATH:$HOME/Dev/t11e/donkey/bin"
-
-# added by travis gem
-[ -f /home/wgoodall01/.travis/travis.sh ] && source /home/wgoodall01/.travis/travis.sh
 
 time_diff "path, travis"
 
