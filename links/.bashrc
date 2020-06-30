@@ -153,6 +153,18 @@ alias "open"="xdg-open"
 alias "yx"="yarn run --silent"
 alias "fd"="fdfind"
 
+# Keybinds
+function __fzf_edit__ () {
+	local file;
+	file="$(__fzf_select__)"
+	if [[ "$?" == "0"  && "${#file}" != "0" ]]; then
+		# slice the string, __fzf_select__ adds a space at the end.
+		$EDITOR "${file:0:-1}"
+	fi
+}
+bind -m vi-insert -x '"\C-o": __fzf_edit__'
+bind -m vi-insert -x '"\C-e": __fzf_cd__'
+
 time_diff "aliasses"
 
 # Utility commands
