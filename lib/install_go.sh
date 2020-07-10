@@ -4,6 +4,7 @@ set_go_env(){
 	# Set Go env vars
 	export GOPATH="$HOME/Dev/go"
 	export PATH="$PATH:$GOPATH/bin"
+	export GO111MODULE="on"
 	mkdir -p "$GOPATH"
 }
 

@@ -79,6 +79,7 @@ if [ "$CFG_GUI" = true ]; then
 	fi
 
 	comment "Alacritty"
+	add_ppa "mmstick76/alacritty"
 	install_apt alacritty
 	link .config/alacritty
 	link .fonts
@@ -105,8 +106,6 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt x11-xserver-utils
 	install_apt meld
 	install_apt ssh-askpass-gnome
-	install_snap ngrok
-	install_snap gitkraken
 	install_snap insomnia
 fi
 
@@ -159,7 +158,6 @@ if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
 	install_asdf_lang golang "1.14.4"
 	install_go golang.org/x/tools/cmd/gorename
 	install_go golang.org/x/tools/gopls@latest
-	install_go github.com/golang/dep/cmd/dep
 fi
 
 if [[ "$CFG_LANG_RUBY" == "true" ]]; then
@@ -180,7 +178,7 @@ if [[ "$CFG_LANG_RUBY" == "true" ]]; then
 	install_apt libgdbm-dev
 	install_asdf_plugin ruby "https://github.com/asdf-vm/asdf-ruby.git"
 	CC="/usr/bin/gcc-6"\
-		PKG_CONFIG_PATH="/usr/lib/openssl-1.0/" install_asdf_lang ruby "2.2.6" -patch <"$DIR/res/ruby2x-openssl-patch"
+		PKG_CONFIG_PATH="/usr/lib/openssl-1.0/" install_asdf_lang ruby "2.2.6" -patch <$DIR/res/ruby2x-openssl-patch
 fi
 
 if [[ "$CFG_LANG_JAVA" == "true" ]]; then
