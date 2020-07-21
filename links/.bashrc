@@ -163,7 +163,6 @@ function __fzf_edit__ () {
 	fi
 }
 bind -m vi-insert -x '"\C-o": __fzf_edit__'
-bind -m vi-insert -x '"\C-e": __fzf_cd__'
 
 time_diff "aliasses"
 
