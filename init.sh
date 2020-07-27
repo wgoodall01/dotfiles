@@ -123,7 +123,6 @@ link .config/git
 comment "Shell configuration"
 link .bashrc
 link .profile
-link .bash_stuff
 link .inputrc # for anything that uses readline
 install_apt highlight
 install_fzf
@@ -198,7 +197,7 @@ if [[ "$CFG_LANG_RUST" == "true" ]]; then
 	comment "Rust"
 	install_asdf_plugin rust 
 	install_asdf_lang rust "1.45.0"
-
+	link .local/bin/rust-analyzer
 fi
 
 if [[ "$CFG_CONDA" == "true" ]]; then
