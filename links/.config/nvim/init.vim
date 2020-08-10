@@ -32,6 +32,9 @@ set autoread
 Plug 'zacharied/lc3.vim'
 let g:lc3_detect_asm = 1
 
+" Config for Pest grammars
+Plug 'pest-parser/pest.vim'
+
 " Config for most languages
 Plug 'sheerun/vim-polyglot'
 

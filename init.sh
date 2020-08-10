@@ -107,6 +107,9 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt meld
 	install_apt ssh-askpass-gnome
 	install_snap insomnia
+
+	comment "VM tools"
+	install_apt open-vm-tools-desktop
 fi
 
 if [ "$CFG_SSH" = true ]; then
