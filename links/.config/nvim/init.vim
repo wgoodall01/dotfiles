@@ -28,10 +28,6 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " Auto reload files
 set autoread
 
-" Config for LC-3 assembly
-Plug 'zacharied/lc3.vim'
-let g:lc3_detect_asm = 1
-
 " Config for Pest grammars
 Plug 'pest-parser/pest.vim'
 
@@ -73,7 +69,6 @@ noremap <silent> <c-l> :Commands<CR>
 " Code analysis
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 1
-let g:ale_fixers = {'*': ['prettier']}
 Plug 'dense-analysis/ale'
 noremap <Leader>l :lnext<CR>
 
@@ -118,6 +113,9 @@ set ignorecase
 
 " Fix vim for webpack watcher
 set backupcopy=yes
+
+" Break lines at word boundary
+set linebreak
 
 " Then load in all the plugins to runtimepath
 call plug#end()

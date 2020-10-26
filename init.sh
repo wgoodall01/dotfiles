@@ -217,6 +217,7 @@ install_pip neovim
 install_apt editorconfig
 install_apt clang-format
 nvim_run +PlugInstall
+nvim_run +PlugUpdate
 if [[ "$CFG_LANG_GOLANG" == "true" ]]; then 
 	nvim_run +GoInstallBinaries
 fi
@@ -234,6 +235,3 @@ install_apt mosh
 install_apt aria2
 install_apt nginx-core
 install_snap shellcheck
-
-
-
