@@ -199,7 +199,7 @@ fi
 if [[ "$CFG_LANG_RUST" == "true" ]]; then
 	comment "Rust"
 	install_asdf_plugin rust 
-	install_asdf_lang rust "1.45.0"
+	install_asdf_lang rust "1.47.0"
 	link .local/bin/rust-analyzer
 fi
 
@@ -212,6 +212,8 @@ fi
 
 comment "neovim"
 install_apt neovim
+install_apt exuberant-ctags
+link .ctags
 link .config/nvim
 install_pip neovim
 install_apt editorconfig

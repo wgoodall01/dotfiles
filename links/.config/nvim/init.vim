@@ -55,8 +55,11 @@ let g:lightline = {
       \ },
       \ }
 
+" Generate ctags automatically
+Plug 'szw/vim-tags'
+
 " fzf for opening files
-Plug '~/.fzf'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
@@ -64,7 +67,7 @@ endfunction
 let g:fzf_layout = { 'down': '~20%' }
 command! Files call fzf#vim#files(s:find_git_root(), {'options': '--prompt " /"'})
 noremap <silent> <c-p> :Files<CR>
-noremap <silent> <c-l> :Commands<CR>
+noremap <silent> <c-l> :Tags<CR>
 
 " Code analysis
 let g:ale_lint_on_text_changed = 'never'
