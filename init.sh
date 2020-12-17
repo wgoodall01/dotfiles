@@ -34,6 +34,7 @@ printf "[config ] Language support for Node.js   : %s\n" "$CFG_LANG_NODEJS"
 printf "[config ] Language support for Golang    : %s\n" "$CFG_LANG_GOLANG"
 printf "[config ] Language support for Ruby      : %s\n" "$CFG_LANG_RUBY"
 printf "[config ] Language support for Java      : %s\n" "$CFG_LANG_JAVA"
+printf "[config ] Language support for Python    : %s\n" "$CFG_LANG_PYTHON"
 printf "[config ] Language support for C++       : %s\n" "$CFG_LANG_CPP"
 printf "[config ] Language support for Rust      : %s\n" "$CFG_LANG_RUST"
 printf "[config ] Environment support for Conda  : %s\n" "$CFG_CONDA"
@@ -144,6 +145,11 @@ install_pip powerline-shell
 
 comment "asdf:"
 install_asdf
+
+if [[ "$CFG_LANG_PYTHON" == "true" ]]; then
+	comment "Python"
+	install_pip "black"
+fi
 
 if [[ "$CFG_LANG_NODEJS" == "true" ]]; then
 	comment "Node.js"
