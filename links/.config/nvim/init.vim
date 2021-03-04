@@ -75,6 +75,9 @@ let g:ale_fix_on_save = 1
 Plug 'dense-analysis/ale'
 noremap <Leader>l :lnext<CR>
 
+" Select last paste
+nnoremap gp `[v`]
+
 " Colorcolumn colors
 highlight ColorColumn ctermbg=darkgray
 
