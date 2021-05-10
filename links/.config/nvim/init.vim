@@ -39,6 +39,7 @@ Plug 'pest-parser/pest.vim'
 
 " Config for most languages
 Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['markdown', 'sh']
 
 " Set columns for cs-1332
 augroup cs_1332_line_length
@@ -120,6 +121,7 @@ hi CursorLine	cterm=NONE ctermbg=234 ctermfg=NONE
 
 " Clear to read errors
 hi! link SpellBad Error
+hi SpellCap ctermbg=BLUE gui=undercurl ctermfg=BLACK
 
 " smartcase -- treat lowercase as mixed case in searches
 set smartcase
