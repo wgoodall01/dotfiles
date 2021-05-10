@@ -15,6 +15,12 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'godlygeek/tabular'
 
+" Remap window movement keys
+noremap <C-M-h> <C-w>h
+noremap <C-M-j> <C-w>j
+noremap <C-M-k> <C-w>k
+noremap <C-M-l> <C-w>l
+
 " Easymotion - Abbreviations and stuff
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -73,7 +79,6 @@ noremap <silent> <c-l> :Tags<CR>
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 1
 Plug 'dense-analysis/ale'
-noremap <Leader>l :lnext<CR>
 
 " Select last paste
 nnoremap gp `[v`]
@@ -112,6 +117,9 @@ set scrolloff=5
 " set cursor line
 set cursorline
 hi CursorLine	cterm=NONE ctermbg=234 ctermfg=NONE
+
+" Clear to read errors
+hi! link SpellBad Error
 
 " smartcase -- treat lowercase as mixed case in searches
 set smartcase
