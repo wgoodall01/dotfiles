@@ -152,6 +152,7 @@ alias "gcla"="gcloud alpha interactive"
 alias "open"="xdg-open"
 alias "yx"="yarn run --silent"
 alias "fd"="fdfind"
+alias "ungron"="gron --ungron"
 alias shutdown="systemctl poweroff"
 
 # Keybinds
