@@ -204,8 +204,9 @@ fi
 
 if [[ "$CFG_LANG_RUST" == "true" ]]; then
 	comment "Rust"
-	install_asdf_plugin rust 
-	install_asdf_lang rust "1.47.0"
+	install_asdf_plugin rust https://github.com/code-lever/asdf-rust
+	link .default-cargo-crates
+	RUSTC_WRAPPER="" install_asdf_lang rust "nightly"
 	link .local/bin/rust-analyzer
 fi
 

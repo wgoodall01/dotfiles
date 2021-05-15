@@ -41,7 +41,7 @@ install_asdf_lang(){
 	lang="$1"
 	version="$2"
 	printf "[asdf   ] install $lang $version..."
-	installed="$(asdf current |& awk -F' ' '{print $1 " @ " $2}')"
+	installed="$(asdf current |& grep -v "Not installed" | awk -F' ' '{print $1 " @ " $2}')"
 	logname="asdf_install_${lang}_${version}"
 	if [[ ! "$installed" = *"$lang @ $version"* ]]; then
 		asdf install "$lang" "$version" &>"$LOGS/$logname"\
