@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -euo pipefail  
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+
+laptop_dpi=150
+desktop_dpi=130
+
+# Script to set display DPI
+
+function usage_and_exit() {
+	echo "dpi: Set display DPI and restart i3"
+	echo
+	echo "Usage: "
+	echo "    dpi [preset | dpi-number]"
+	echo 
+	echo "Presets:"
+	echo "    laptop  : $laptop_dpi dpi"
+	echo "    desktop : $desktop_dpi dpi"
+	echo 
+	echo "Optionally, you can just pass a number:"
+	echo "    dpi 70  # set to 70 DPI"
+	exit 1
+}
+
+function set_dpi() {
+	echo
+	echo "Setting DPI to $1..."
+	echo
+	echo "*********************************************************"
+	echo "**                                                     **"
+	echo "**  Warning                                            **"
+	echo "**                                                     **"
+	echo "**  To apply changes, we need to restart the X         **"
+	echo "**  session, which will force-quit any open programs.  **"
+	echo "**                                                     **"
+	echo "**  (Ctrl-C to cancel)                                 **"
+	echo "**                                                     **"
+	echo "*********************************************************"
+	echo
+	
+	sudo -k # force password entry
+	sudo -v # authenticate
+
+	printf "Xft.dpi: %d\n" "$1" | sudo tee /etc/X11/Xresources/set-dpi >/dev/null
+	sudo systemctl restart display-manager # this kills everything
+}
+
+if [[ "$#" != "1" ]]; then
+	usage_and_exit
+fi
+
+# check if arg is number
+if [[ "$1" =~ ^[0-9]+$ ]]; then
+	# Handle numbers
+	set_dpi "$1"
+else
+	# Handle presets
+	case "$1" in 
+		"laptop") set_dpi "$laptop_dpi" ;;
+		"desktop") set_dpi "$desktop_dpi" ;;
+		*) usage_and_exit ;;
+	esac
+fi
