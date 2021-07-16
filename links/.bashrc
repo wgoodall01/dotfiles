@@ -200,9 +200,7 @@ fi
 time_diff "powerline-shell"
 
 # Load ssh env
-source ~/.ssh/environment
-
-time_diff "ssh env"
+# source ~/.ssh/environment
 
 time_diff "thefuck"
 

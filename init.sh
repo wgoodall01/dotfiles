@@ -29,6 +29,7 @@ source $DIR/config.sh
 printf "[config ] Enable SSH key decryption      : %s\n" "$CFG_SSH"
 printf "[config ] Install cloud utils            : %s\n" "$CFG_CLOUD"
 printf "[config ] Enable GUI app configuration   : %s\n" "$CFG_GUI"
+printf "[config ] GUI: Install groupware         : %s\n" "$CFG_GROUPWARE"
 printf "[config ] Language support for Node.js   : %s\n" "$CFG_LANG_NODEJS"
 printf "[config ] Language support for Golang    : %s\n" "$CFG_LANG_GOLANG"
 printf "[config ] Language support for Ruby      : %s\n" "$CFG_LANG_RUBY"
@@ -40,6 +41,7 @@ printf "[config ] Environment support for Conda  : %s\n" "$CFG_CONDA"
 
 comment "Dependencies"
 install_apt git
+install_apt git-lfs
 install_apt gnupg # for ./crypto.sh
 install_apt gdebi # install debs, resolve deps
 install_apt curl
@@ -58,8 +60,10 @@ if [ "$CFG_GUI" = true ]; then
 	link .local/bin/dpi
 	install_apt xorg
 	install_apt compton
+	install_apt udevil
 	install_apt dconf-cli
 	install_apt dbus-x11
+	install_apt hsetroot
 	install_apt i3
 	link .config/i3
 	printf "[copy   ] Add /etc/gdm3/custom.conf ..."
@@ -102,6 +106,14 @@ if [ "$CFG_GUI" = true ]; then
 
 	comment "VM tools"
 	install_apt open-vm-tools-desktop
+
+	if [[ "$CFG_GROUPWARE" == "true" ]]; then
+		comment "Groupware"
+		install_snap zoom-client
+		install_snap telegram-desktop
+		install_snap slack --classic
+		install_deb_url webex 'https://binaries.webex.com/WebexDesktop-Ubuntu-Official-Package/Webex.deb'
+	fi
 fi
 
 if [ "$CFG_SSH" = true ]; then
@@ -112,8 +124,7 @@ fi
 comment "Git config"
 install_apt hub
 link .config/git
-# NB: DO NOT SYMLINK ~/.config/hub
-#     IT CONTAINS AUTH TOKENS
+# NB: DO NOT SYMLINK ~/.config/hub. IT CONTAINS AUTH TOKENS. OOPS.
 
 comment "Shell configuration"
 link .bashrc
@@ -155,8 +166,8 @@ if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
 	install_asdf_plugin golang https://github.com/kennyp/asdf-golang.git
 	set_go_env
 	install_asdf_lang golang "1.14.4"
-	install_go golang.org/x/tools/cmd/gorename
-	install_go golang.org/x/tools/gopls@latest
+	install_go 'golang.org/x/tools/cmd/gorename'
+	install_go 'golang.org/x/tools/gopls@latest'
 fi
 
 if [[ "$CFG_LANG_RUBY" == "true" ]]; then
@@ -182,7 +193,9 @@ fi
 
 if [[ "$CFG_LANG_JAVA" == "true" ]]; then
 	comment "Java"
-	install_asdf_plugin java "https://github.com/skotchpine/asdf-java"
+	install_apt ca-certificates-java
+	install_snap intellij-idea-ultimate
+	install_asdf_plugin java
 	install_asdf_plugin maven
 	install_asdf_lang java "openjdk-10.0.2"
 fi
@@ -231,8 +244,8 @@ install_apt htop
 install_apt tig
 install_apt nload
 install_apt tree
-install_apt silversearcher-ag
 install_apt fd-find
+install_apt ripgrep
 install_apt mosh
 install_apt aria2
 install_apt nginx-core

@@ -10,24 +10,27 @@
 
 
 # Make sure ssh-agent is running
-SSH_ENV="$HOME/.ssh/environment"
+# SSH_ENV="$HOME/.ssh/environment"
+# function start_agent {
+#     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+#     chmod 600 "${SSH_ENV}"
+#     . "${SSH_ENV}" > /dev/null
+#     # /usr/bin/ssh-add; # This doesn't work - something about ssh-askpass
+# }
+# if [ -f "${SSH_ENV}" ]; then
+#     . "${SSH_ENV}" > /dev/null
+#     #ps ${SSH_AGENT_PID} doesn't work under cywgin
+#     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+#         start_agent;
+#     }
+# else
+#     start_agent;
+# fi
 
-function start_agent {
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}" > /dev/null
-    # /usr/bin/ssh-add; # This doesn't work - something about ssh-askpass
-}
-
-if [ -f "${SSH_ENV}" ]; then
-    . "${SSH_ENV}" > /dev/null
-    #ps ${SSH_AGENT_PID} doesn't work under cywgin
-    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-        start_agent;
-    }
-else
-    start_agent;
-fi
+case "$DESKTOP_SESSION" in
+    i3) export $(gnome-keyring-daemon --start) ;;
+    sway) export $(gnome-keyring-daemon --start) ;;
+esac
 
 # Set the timezone properly
 export TZ='America/New_York'
