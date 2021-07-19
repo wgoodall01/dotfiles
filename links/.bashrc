@@ -325,7 +325,8 @@ touch-shell(){
 		# Create the file if it doesn't already exist.
 		cat >$file <<-"EOF"
 			#!/usr/bin/env bash
-			set -euo pipefail  
+			set -euo pipefail
+			shopt -s inherit_errexit
 			DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 		EOF
 	fi

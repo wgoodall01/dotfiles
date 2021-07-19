@@ -245,6 +245,7 @@ install_apt tig
 install_apt nload
 install_apt tree
 install_apt fd-find
+install_apt jq
 install_apt ripgrep
 install_apt mosh
 install_apt aria2
