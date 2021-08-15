@@ -158,7 +158,7 @@ if [[ "$CFG_LANG_NODEJS" == "true" ]]; then
 	link ".default-npm-packages"
 	install_asdf_plugin nodejs "https://github.com/asdf-vm/asdf-nodejs.git"
 	install_asdf_node_keys
-	install_asdf_lang nodejs "12.12.0"
+	install_asdf_lang nodejs "lts-fermium"
 fi
 
 if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
