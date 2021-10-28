@@ -47,6 +47,13 @@ augroup cs_1332_line_length
 	autocmd BufNewFile,BufRead */Dev/cs-1332/* set textwidth=80 colorcolumn=+1
 augroup END
 
+" Disable autoformat for cs-3210
+augroup cs_3210_disable_autoformat
+      autocmd!
+      autocmd BufNewFile,BufRead */Dev/cs-3210/* let g:ale_fix_on_save=0
+augroup END
+
+
 " add ':date' to insert $(date)
 command Date r ! date -Iseconds
 
@@ -65,7 +72,7 @@ let g:lightline = {
 " Generate ctags automatically
 Plug 'szw/vim-tags'
 
-" fzf for opening files
+"fzf for opening files
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 function! s:find_git_root()

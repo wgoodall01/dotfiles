@@ -110,6 +110,7 @@ if [ "$CFG_GUI" = true ]; then
 	if [[ "$CFG_GROUPWARE" == "true" ]]; then
 		comment "Groupware"
 		install_snap zoom-client
+		install_snap teams
 		install_snap telegram-desktop
 		install_snap slack --classic
 		install_deb_url webex 'https://binaries.webex.com/WebexDesktop-Ubuntu-Official-Package/Webex.deb'

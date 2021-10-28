@@ -2,30 +2,6 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-enable_debug=false
-
-# On osx, use gdate.
-datecmd="date"
-[[ -e "/usr/local/bin/gdate" ]] && datecmd="/usr/local/bin/gdate"
-
-time_millis(){
-	rawtime="$($datecmd "+%s%N")"
-	echo "$((rawtime / 1000000))"
-}
-start_time="$(time_millis)"
-last_time="$start_time"
-line_length=0
-
-print_line(){
-	if shopt -q login_shell; then
-		clear_line
-		line_length=${#1}
-		printf "$1"
-	fi
-}
-
-
-
 hr() {
 	local COLS;
 	COLS="$(tput cols)";
@@ -52,42 +28,6 @@ pbcopy() {
 pbpaste() {
 	xclip -selection clipboard -o
 }
-
-clear_line(){
-	printf "\r"
-	printf '%0.s ' $(seq 1 $((line_length + 1)))
-	printf "\r"
-}
-
-time_diff(){
-	if $enable_debug; then
-		current="$(time_millis)"
-		startdiff="$((current - start_time))"
-		lastdiff="$((current - last_time))"
-		printf "[@%6d]  [+%6d]    $1\n" "$startdiff" "$lastdiff"
-		last_time="$current"
-	else
-		print_line "[ $1 ]"
-	fi;
-}
-
-time_end(){
-	if ! $enable_debug; then
-		clear_line
-	else
-		current="$(time_millis)"
-		printf "\n Total time: $((current - start_time)) ms\n"
-		hr
-		printf "\n"
-	fi;
-}
-
-# if ! $enable_debug; then
-# 	printf "| "
-# 	((line_length += 2))
-# fi;
-
-time_diff "start"
 
 
 # Source global env
@@ -120,7 +60,6 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-time_diff "environment"
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -166,8 +105,6 @@ alias shutdown="systemctl poweroff"
 # }
 # bind -m vi-insert -x '"\C-o": __fzf_edit__'
 
-time_diff "aliasses"
-
 # Utility commands
 lsmake(){
 	if [[ -e "./Makefile" ]]; then
@@ -187,8 +124,6 @@ lsmake(){
 	fi;
 }
 
-time_diff "lsmake"
-
 function _update_ps1() {
     PS1=$(powerline-shell $?)
 }
@@ -197,12 +132,8 @@ if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
 
-time_diff "powerline-shell"
-
 # Load ssh env
 # source ~/.ssh/environment
-
-time_diff "thefuck"
 
 # Alias nvim to vim
 alias vim=nvim
@@ -214,19 +145,16 @@ export MANPAGER="nvim -c 'set ft=man' -"
 # Set $CLICOLOR
 export CLICOLOR=1
 
-time_diff "clicolor, editor"
-
 # Add hub wrapper for git
 eval "$(hub alias -s)"
-
-time_diff "hub"
 
 # Set Go env vars
 export GOPATH="$HOME/Dev/go"
 export GO111MODULE="on"
 export PATH="$PATH:$GOPATH/bin"
 
-time_diff "go"
+# Set Java env vars
+export JAVA_HOME="/usr/lib/jvm/default-java"
 
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
@@ -235,8 +163,6 @@ if command -v sccache >/dev/null; then
 	# use local sccache
 	export RUSTC_WRAPPER="sccache"
 fi
-
-time_diff "asdf"
 
 # Path for global yarn modules
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
@@ -287,8 +213,6 @@ pjd(){
 
 #Automatically cd to projdir
 pjd
-
-time_diff "cd projdir"
 
 # cd relative to ~/Dev
 dcd(){
@@ -359,8 +283,6 @@ export FZF_DEFAULT_OPTS='--inline-info'
 export FZF_CTRL_T_OPTS="--preview '[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
 
-time_diff "path, travis"
-
 # The next line updates PATH, enables shell completion for the Google Cloud SDK.
 if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then source "$HOME/google-cloud-sdk/path.bash.inc"; fi
 if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then source "$HOME/google-cloud-sdk/completion.bash.inc"; fi
@@ -368,9 +290,6 @@ if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then source "$HOME/googl
 # Enable conda
 if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then source "/opt/conda/etc/profile.d/conda.sh"; fi
 
-time_diff "gcloud setup"
-
-time_end
 
 (	
 	flock -x 42
