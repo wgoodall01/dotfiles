@@ -48,8 +48,6 @@ install_apt curl
 install_apt build-essential
 install_apt libssl-dev
 install_apt libffi-dev
-install_apt python
-install_apt python-dev
 install_apt python3
 install_apt python3-dev
 install_apt python3-pip
@@ -114,6 +112,7 @@ if [ "$CFG_GUI" = true ]; then
 		install_snap telegram-desktop
 		install_snap slack --classic
 		install_deb_url webex 'https://binaries.webex.com/WebexDesktop-Ubuntu-Official-Package/Webex.deb'
+		install_deb_url roam-research 'https://roam-electron-deploy.s3.us-east-2.amazonaws.com/roam-research_0.0.13_amd64.deb'
 	fi
 fi
 
@@ -136,8 +135,8 @@ install_fzf
 
 if [ "$CFG_CLOUD" = true ]; then
 	comment "Cloud CLIs"
-	gcloud_install
-	install_snap heroku --classic
+	install_asdf_plugin gcloud
+	install_asdf_plugin awscli
 	install_apt docker.io
 	add_docker_user_group
 fi
@@ -167,8 +166,6 @@ if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
 	install_asdf_plugin golang https://github.com/kennyp/asdf-golang.git
 	set_go_env
 	install_asdf_lang golang "1.14.4"
-	install_go 'golang.org/x/tools/cmd/gorename'
-	install_go 'golang.org/x/tools/gopls@latest'
 fi
 
 if [[ "$CFG_LANG_RUBY" == "true" ]]; then
@@ -188,8 +185,6 @@ if [[ "$CFG_LANG_RUBY" == "true" ]]; then
 	install_apt libgdbm5
 	install_apt libgdbm-dev
 	install_asdf_plugin ruby "https://github.com/asdf-vm/asdf-ruby.git"
-	CC="/usr/bin/gcc-6"\
-		PKG_CONFIG_PATH="/usr/lib/openssl-1.0/" install_asdf_lang ruby "2.2.6" -patch <$DIR/res/ruby2x-openssl-patch
 fi
 
 if [[ "$CFG_LANG_JAVA" == "true" ]]; then
@@ -198,7 +193,7 @@ if [[ "$CFG_LANG_JAVA" == "true" ]]; then
 	install_snap intellij-idea-ultimate
 	install_asdf_plugin java
 	install_asdf_plugin maven
-	install_asdf_lang java "openjdk-10.0.2"
+	install_asdf_lang java "openjdk-11.0.2"
 fi
 
 if [[ "$CFG_LANG_CPP" == "true" ]]; then

@@ -238,6 +238,11 @@ mount-shared-folders(){
 	sudo mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other
 }
 
+# Remove ANSI codes from text
+uncolor() {
+	sed 's/\x1b\[[0-9;]*m//g'
+}
+
 # I always wind up looking up the boilerplate for this, so have this on hand in the shell
 touch-shell(){
 	file="$1"
