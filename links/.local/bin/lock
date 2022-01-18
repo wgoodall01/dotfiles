@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+shopt -s inherit_errexit
+
+i3lock \
+	--color 000000 \
+	--ignore-empty-password \
+	--show-failed-attempts \
+	--ignore-empty-password 
+

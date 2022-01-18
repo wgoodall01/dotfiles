@@ -41,7 +41,7 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal || gnome-terminal
 
 # Lock the display with i3lock
-bindsym $sup+l exec i3lock --color 000000 --pointer win --ignore-empty-password --show-failed-attempts
+bindsym $sup+l exec sh -c "lock && systemctl suspend"
 
 # kill focused window
 bindsym $mod+Shift+q kill

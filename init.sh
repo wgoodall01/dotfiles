@@ -53,9 +53,15 @@ install_apt python3-dev
 install_apt python3-pip
 install_apt software-properties-common # for apt-add-repository
 
+if [[ "$CFG_VM" == "true" ]]; then
+	comment "VM tools"
+	install_apt open-vm-tools
+fi
+
 if [ "$CFG_GUI" = true ]; then
 	comment "i3wm"
 	link .local/bin/dpi
+	link .local/bin/lock
 	install_apt xorg
 	install_apt compton
 	install_apt udevil
@@ -87,13 +93,6 @@ if [ "$CFG_GUI" = true ]; then
 	comment "Firefox"
 	install_apt firefox
 
-	comment "Disable ACPI sleep, suspend, hibernate"
-	printf "[acpi   ] Mask sleep..."
-	(\
-		sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target &>"$LOGS/disable_acpi_sleep" \
-		&& printf "done.\n" \
-	) || fatal "Failed to disable ACPI sleep";
-
 	comment "GUI utilities"
 	install_apt xclip
 	install_pip i3ipc
@@ -102,8 +101,16 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt ssh-askpass-gnome
 	install_snap insomnia
 
-	comment "VM tools"
-	install_apt open-vm-tools-desktop
+	if [[ "$CFG_VM" == "true" ]]; then
+		comment "VM tools (GUI)"
+		install_apt open-vm-tools-desktop
+		printf "[acpi   ] Mask sleep..."
+		(\
+			sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target &>"$LOGS/disable_acpi_sleep" \
+			&& printf "done.\n" \
+		) || fatal "Failed to disable ACPI sleep";
+	fi
+
 
 	if [[ "$CFG_GROUPWARE" == "true" ]]; then
 		comment "Groupware"

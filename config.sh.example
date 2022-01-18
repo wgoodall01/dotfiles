@@ -4,6 +4,7 @@ export CFG_SSH=false       # Enable SSH key decryption?
 export CFG_CLOUD=false     # Enable installing of cloud stuff?
 
 export CFG_GUI=false       # Enable GUI app installs and configuration?
+export CFG_VM=false        # Are we running inside a VM?
 export CFG_GROUPWARE=false # Install Slack, Zoom, Webex, etc
 
 # Language configuration
