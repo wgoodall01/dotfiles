@@ -30,14 +30,15 @@ printf "[config ] Enable SSH key decryption      : %s\n" "$CFG_SSH"
 printf "[config ] Install cloud utils            : %s\n" "$CFG_CLOUD"
 printf "[config ] Enable GUI app configuration   : %s\n" "$CFG_GUI"
 printf "[config ] GUI: Install groupware         : %s\n" "$CFG_GROUPWARE"
-printf "[config ] Language support for Node.js   : %s\n" "$CFG_LANG_NODEJS"
-printf "[config ] Language support for Golang    : %s\n" "$CFG_LANG_GOLANG"
-printf "[config ] Language support for Ruby      : %s\n" "$CFG_LANG_RUBY"
-printf "[config ] Language support for Java      : %s\n" "$CFG_LANG_JAVA"
-printf "[config ] Language support for Python    : %s\n" "$CFG_LANG_PYTHON"
-printf "[config ] Language support for C++       : %s\n" "$CFG_LANG_CPP"
-printf "[config ] Language support for Rust      : %s\n" "$CFG_LANG_RUST"
+printf "[config ] [lang] Node.js   : %s\n" "$CFG_LANG_NODEJS"
+printf "[config ] [lang] Golang    : %s\n" "$CFG_LANG_GOLANG"
+printf "[config ] [lang] Ruby      : %s\n" "$CFG_LANG_RUBY"
+printf "[config ] [lang] Java      : %s\n" "$CFG_LANG_JAVA"
+printf "[config ] [lang] Python    : %s\n" "$CFG_LANG_PYTHON"
+printf "[config ] [lang] C++       : %s\n" "$CFG_LANG_CPP"
+printf "[config ] [lang] Rust      : %s\n" "$CFG_LANG_RUST"
 printf "[config ] Environment support for Conda  : %s\n" "$CFG_CONDA"
+printf "[config ] Environment support for Nix    : %s\n" "$CFG_NIX"
 
 comment "Dependencies"
 install_apt git
@@ -118,8 +119,6 @@ if [ "$CFG_GUI" = true ]; then
 		install_snap teams
 		install_snap telegram-desktop
 		install_snap slack --classic
-		install_deb_url webex 'https://binaries.webex.com/WebexDesktop-Ubuntu-Official-Package/Webex.deb'
-		install_deb_url roam-research 'https://roam-electron-deploy.s3.us-east-2.amazonaws.com/roam-research_0.0.13_amd64.deb'
 	fi
 fi
 
@@ -228,6 +227,29 @@ if [[ "$CFG_CONDA" == "true" ]]; then
 	install_apt conda
 fi
 
+if [[ "$CFG_NIX" == "true" ]]; then
+	comment "Nix"
+	install_nix
+	source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # get the new install
+	
+	# Set the env for unstable features (like flakes)
+	printf '[nix    ] installing unstable features... ' \
+		&& nix-env -iA nixpkgs.nixUnstable &>"$LOGS/nix_install_unstable"\
+		&& printf "done.\n" \
+		|| fatal "failed to set nixpkgs.nixUnstable"
+
+	# Add the config line for unstable features
+	printf '[nix    ] configuring unstable features... '
+	if ! grep 'experimental-features' /etc/nix/nix.conf &>/dev/null; then
+		(echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf &>/dev/null) \
+			&& sudo systemctl restart nix-daemon --quiet \
+			&& printf "done.\n" \
+			|| fatal "failed to configure nix experimental-features"
+	else
+		printf "already configured.\n"
+	fi
+fi
+
 comment "neovim"
 install_apt neovim
 install_apt exuberant-ctags
@@ -242,8 +264,29 @@ if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
 	nvim_run +GoInstallBinaries
 fi
 
+comment "Pushover"
+if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
+	install_go github.com/adrianrudnik/pushover-cli
+
+	if [[ ! -f ~/.config/pushover-cli/config.json ]]; then
+		printf "[push   ] Decrypt config..." \
+			&& mkdir -p "$HOME/.config/pushover-cli/" \
+			&& ./crypto.sh decrypt \
+				"$DIR/enc/.config/pushover-cli/config.json" \
+				~/.config/pushover-cli/config.json \
+				>/dev/null \
+			&& printf "done.\n" \
+			|| fatal "failed to decrypt pushover config"
+	else
+		printf "[push   ] config already present\n"
+	fi
+
+
+else
+	printf "[skip   ] Skipping because we don't have golang\n"
+fi
+
 comment "Utilities"
-install_apt unp
 install_apt entr
 install_apt htop
 install_apt tig

@@ -19,5 +19,8 @@ export CFG_LANG_RUST=false
 # Conda?
 export CFG_CONDA=false
 
+# Nix?
+export CFG_NIX=true
+
 # Crypto password for SSH keys and sensitive info
 export CRYPTO_PW=""

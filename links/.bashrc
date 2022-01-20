@@ -29,15 +29,16 @@ pbpaste() {
 	xclip -selection clipboard -o
 }
 
+# Push a notification to Pushover with pushover-cli
+# And push a system notification as well.
+push() {
+	pushover-cli push "$*" >/dev/null
+	notify-send "CLI Push" "$*"
+}
 
-# Source global env
-[ -e /etc/environment ] && source /etc/environment
 
 # Set PATH with local bins
 export PATH="$HOME/.local/bin:$PATH"
-
-# Path for ubuntu snaps
-export PATH="$PATH:/snap/bin"
 
 # If not running interactively, don't do anything
 case $- in
@@ -59,7 +60,6 @@ HISTFILESIZE=2000
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -87,23 +87,10 @@ alias ".."="cd .."
 alias "..."="cd ../.."
 alias "...."="cd ../../.."
 alias "tree"="tree -I node_modules"
-alias "gcla"="gcloud alpha interactive"
 alias "open"="xdg-open"
 alias "yx"="yarn run --silent"
 alias "fd"="fdfind"
-alias "ungron"="gron --ungron"
 alias shutdown="systemctl poweroff"
-
-# Keybinds
-# function __fzf_edit__ () {
-# 	local file;
-# 	file="$(__fzf_select__)"
-# 	if [[ "$?" == "0"  && "${#file}" != "0" ]]; then
-# 		# slice the string, __fzf_select__ adds a space at the end.
-# 		$EDITOR "${file:0:-1}"
-# 	fi
-# }
-# bind -m vi-insert -x '"\C-o": __fzf_edit__'
 
 # Utility commands
 lsmake(){
@@ -132,9 +119,6 @@ if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
 
-# Load ssh env
-# source ~/.ssh/environment
-
 # Alias nvim to vim
 alias vim=nvim
 
@@ -156,6 +140,7 @@ export PATH="$PATH:$GOPATH/bin"
 # Set Java env vars
 export JAVA_HOME="/usr/lib/jvm/default-java"
 
+# Install ASDF hook
 source ~/.asdf/asdf.sh
 source ~/.asdf/completions/asdf.bash
 
