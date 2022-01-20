@@ -240,8 +240,14 @@ if [[ "$CFG_NIX" == "true" ]]; then
 
 	# Add the config line for unstable features
 	printf '[nix    ] configuring unstable features... '
-	if ! grep 'experimental-features' /etc/nix/nix.conf &>/dev/null; then
-		(echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf &>/dev/null) \
+	if ! grep '# dotfiles init' /etc/nix/nix.conf &>/dev/null; then
+
+		{ sudo tee -a /etc/nix/nix.conf &>/dev/null <<-EOF
+			# dotfiles init
+			experimental-features = nix-command flakes
+			max-jobs = auto
+		EOF
+		} \
 			&& sudo systemctl restart nix-daemon --quiet \
 			&& printf "done.\n" \
 			|| fatal "failed to configure nix experimental-features"
