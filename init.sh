@@ -264,9 +264,6 @@ install_apt editorconfig
 install_apt clang-format
 nvim_run +PlugInstall
 nvim_run +PlugUpdate
-if [[ "$CFG_LANG_GOLANG" == "true" ]]; then 
-	nvim_run +GoInstallBinaries
-fi
 
 comment "Pushover"
 if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
