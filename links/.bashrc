@@ -132,11 +132,6 @@ export CLICOLOR=1
 # Add hub wrapper for git
 eval "$(hub alias -s)"
 
-# Set Go env vars
-export GOPATH="$HOME/Dev/go"
-export GO111MODULE="on"
-export PATH="$PATH:$GOPATH/bin"
-
 # Set Java env vars
 export JAVA_HOME="/usr/lib/jvm/default-java"
 

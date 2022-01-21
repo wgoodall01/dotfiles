@@ -172,8 +172,7 @@ fi
 if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
 	comment "Golang"
 	install_asdf_plugin golang https://github.com/kennyp/asdf-golang.git
-	set_go_env
-	install_asdf_lang golang "1.14.4"
+	install_asdf_lang golang "1.17.6"
 fi
 
 if [[ "$CFG_LANG_RUBY" == "true" ]]; then
@@ -214,7 +213,6 @@ if [[ "$CFG_LANG_RUST" == "true" ]]; then
 	comment "Rust"
 	install_asdf_plugin rust https://github.com/code-lever/asdf-rust
 	link .default-cargo-crates
-	link .cargo
 	install_apt lld # LLVM linker, for performance
 	RUSTC_WRAPPER="" install_asdf_lang rust "nightly"
 	link .local/bin/rust-analyzer
@@ -272,7 +270,7 @@ fi
 
 comment "Pushover"
 if [[ "$CFG_LANG_GOLANG" == "true" ]]; then
-	install_go github.com/adrianrudnik/pushover-cli
+	install_go github.com/adrianrudnik/pushover-cli@latest
 
 	if [[ ! -f ~/.config/pushover-cli/config.json ]]; then
 		printf "[push   ] Decrypt config..." \
