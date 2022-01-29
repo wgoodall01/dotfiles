@@ -22,5 +22,8 @@ export CFG_CONDA=false
 # Nix?
 export CFG_NIX=true
 
+# Install IntelliJ and CLion?
+export CFG_JETBRAINS=false
+
 # Crypto password for SSH keys and sensitive info
 export CRYPTO_PW=""

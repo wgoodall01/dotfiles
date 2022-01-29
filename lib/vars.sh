@@ -30,3 +30,6 @@ if [ -f $DIR/password ]; then
 	PASSWORD=$(<$DIR/password)
 fi
 
+# APT things
+export DEBIAN_FRONTEND=noninteractive
+

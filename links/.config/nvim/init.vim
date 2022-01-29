@@ -41,19 +41,6 @@ Plug 'pest-parser/pest.vim'
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown', 'sh']
 
-" Set columns for cs-1332
-augroup cs_1332_line_length
-	autocmd!
-	autocmd BufNewFile,BufRead */Dev/cs-1332/* set textwidth=80 colorcolumn=+1
-augroup END
-
-" Disable autoformat for cs-3210
-augroup cs_3210_disable_autoformat
-      autocmd!
-      autocmd BufNewFile,BufRead */Dev/cs-3210/* let g:ale_fix_on_save=0
-augroup END
-
-
 " add ':date' to insert $(date)
 command Date r ! date -Iseconds
 
@@ -87,6 +74,8 @@ noremap <silent> <c-l> :Tags<CR>
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 1
 Plug 'dense-analysis/ale'
+nnoremap gd :ALEGoToDefinition<CR>
+nnoremap gu :ALEFindReferences<CR>
 
 " Select last paste
 nnoremap gp `[v`]

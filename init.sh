@@ -115,10 +115,23 @@ if [ "$CFG_GUI" = true ]; then
 
 	if [[ "$CFG_GROUPWARE" == "true" ]]; then
 		comment "Groupware"
-		install_snap zoom-client
 		install_snap teams
 		install_snap telegram-desktop
 		install_snap slack --classic
+
+		add_apt_key_url "https://zoom.us/linux/download/pubkey"
+		install_deb_url zoom "https://zoom.us/client/latest/zoom_amd64.deb"
+
+		printf '[zoom   ] set DPI scaling...' \
+			&& sed -i 's/scaleFactor=1/scaleFactor=1.25/g' "$HOME/.config/zoomus.conf" \
+			&& printf "done.\n" \
+			|| fatal "Failed to configure zoom dpi"
+	fi
+
+	if [[ "$CFG_JETBRAINS" == "true" ]]; then
+		comment "JetBrains"
+		install_snap intellij-idea-ultimate --classic
+		install_snap clion --classic
 	fi
 fi
 
@@ -197,7 +210,6 @@ fi
 if [[ "$CFG_LANG_JAVA" == "true" ]]; then
 	comment "Java"
 	install_apt ca-certificates-java
-	install_snap intellij-idea-ultimate
 	install_asdf_plugin java
 	install_asdf_plugin maven
 	install_asdf_lang java "openjdk-11.0.2"
@@ -288,6 +300,7 @@ else
 fi
 
 comment "Utilities"
+install_apt openssh-server
 install_apt entr
 install_apt htop
 install_apt tig

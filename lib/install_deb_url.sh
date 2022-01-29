@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 install_deb_url(){
-	tempdir="$(mktemp -d -t 'install_deb_url.XXXXXX')";
-	logfile="$LOGS/install_deb_url";
 	name="$1";
 	url="$2";
+	
+	tempdir="$(mktemp -d -t 'install_deb_url.XXXXXX')";
+	logfile="$LOGS/install_deb_url_$name";
 
 	printf "[install] $1: ";
 
@@ -18,7 +19,7 @@ install_deb_url(){
 		echo "Retrieved from $1 on $(date)" > $tempdir/info.txt;
 
 		result=\
-			curl "$url" -o "$tempdir/package.deb" &>$logfile &&\
+			curl -L "$url" -o "$tempdir/package.deb" &>$logfile &&\
 			sudo gdebi -n "$tempdir/package.deb" &>$logfile;
 		
 		if $result; then
@@ -29,5 +30,4 @@ install_deb_url(){
 		fi
 
 	fi
-
 }
