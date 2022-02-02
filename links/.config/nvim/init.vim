@@ -74,8 +74,11 @@ noremap <silent> <c-l> :Tags<CR>
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 1
 Plug 'dense-analysis/ale'
-nnoremap gd :ALEGoToDefinition<CR>
-nnoremap gu :ALEFindReferences<CR>
+nnoremap <Leader>d :ALEGoToDefinition<CR>
+nnoremap <Leader>u :ALEFindReferences<CR>
+nnoremap <Leader>r :ALERename<CR>
+nnoremap <Leader>a :ALECodeAction<CR>
+xnoremap <Leader>a :ALECodeAction<CR>
 
 " Select last paste
 nnoremap gp `[v`]
