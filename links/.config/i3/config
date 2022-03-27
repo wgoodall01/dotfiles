@@ -228,3 +228,6 @@ for_window [class="zoom" title="Zoom Meeting"] floating disable
 
 # Config for Android emulator windows
 for_window [title="Android Emulator"] floating enable
+
+# Config for Blender render popup
+for_window [title="Blender Render"] floating enable
