@@ -79,6 +79,7 @@ nnoremap <Leader>u :ALEFindReferences<CR>
 nnoremap <Leader>r :ALERename<CR>
 nnoremap <Leader>a :ALECodeAction<CR>
 xnoremap <Leader>a :ALECodeAction<CR>
+xnoremap <Leader>e :ALEDetail<CR>
 
 " Select last paste
 nnoremap gp `[v`]

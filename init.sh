@@ -313,3 +313,4 @@ install_apt mosh
 install_apt aria2
 install_apt nginx-core
 install_snap shellcheck
+link .local/bin/ngrok
