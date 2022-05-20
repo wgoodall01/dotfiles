@@ -21,14 +21,6 @@ hr() {
     fi
 }
 
-pbcopy() {
-	xclip -selection clipboard
-}
-
-pbpaste() {
-	xclip -selection clipboard -o
-}
-
 # Push a notification to Pushover with pushover-cli
 # And push a system notification as well.
 push() {
@@ -87,10 +79,19 @@ alias ".."="cd .."
 alias "..."="cd ../.."
 alias "...."="cd ../../.."
 alias "tree"="tree -I node_modules"
-alias "open"="xdg-open"
 alias "yx"="yarn run --silent"
-alias "fd"="fdfind"
-alias shutdown="systemctl poweroff"
+
+if [[ "$(uname)" != "Darwin" ]]; then 
+	alias shutdown="systemctl poweroff"
+	alias "fd"="fdfind"
+	alias "open"="xdg-open"
+	alias "pbcopy"="xclip -selection clipboard"
+	alias "pbpaste"="xclip -selection clipboard -o"
+fi
+
+if [[ "$(uname)" == "Darwin" ]]; then
+	alias make=gmake
+fi
 
 # Utility commands
 lsmake(){
@@ -138,20 +139,20 @@ alias vim=nvim
 
 # Set $EDITOR, etc
 export EDITOR=$(which nvim)
-export MANPAGER="nvim -c 'set ft=man' -"
+export MANPAGER="nvim +Man!"
 
 # Set $CLICOLOR
 export CLICOLOR=1
-
-# Add hub wrapper for git
-eval "$(hub alias -s)"
 
 # Set Java env vars
 export JAVA_HOME="/usr/lib/jvm/default-java"
 
 # Install ASDF hook
-source ~/.asdf/asdf.sh
-source ~/.asdf/completions/asdf.bash
+if [[ "$(uname)" == "Darwin" ]]; then
+	source "$(brew --prefix asdf)/asdf.sh"
+else
+	source ~/.asdf/asdf.sh
+fi
 
 if command -v sccache >/dev/null; then
 	# use local sccache
@@ -277,10 +278,11 @@ docli(){
 }
 
 # Install FZF bash keybinds and config
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_COMMAND='fd'
 export FZF_DEFAULT_OPTS='--inline-info'
 export FZF_CTRL_T_OPTS="--preview '[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+[[ "$(uname)" == "Darwin" ]] && source /opt/homebrew/opt/fzf/shell/key-bindings.bash
 
 # The next line updates PATH, enables shell completion for the Google Cloud SDK.
 if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then source "$HOME/google-cloud-sdk/path.bash.inc"; fi

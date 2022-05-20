@@ -3,9 +3,9 @@
 	name = William Goodall
 
 [alias]
-	lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%<(15)%ar%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%<(15)%ar%C(reset) %C(white)%s%C(reset) %C(dim white)- %aN%C(reset)%C(bold yellow)%d%C(reset)' --all
 	lg = "lgl -n 20"
-	o = !"tig"
+	browse = !"gh browse"
 
 	s = "status -u"
 	a = "add"
@@ -15,11 +15,6 @@
 	df = "diff"
 	amend = "commit --amend --no-edit"
 	sweep = "stash -k -u"
-	ff = "pull --ff-only"
-
-	watch=!"watch --color \"git -c color.status=always status\""
-	eslint-staged=!"eslint $(git diff --staged --name-only | tr '\n' ' ')"
-	eslint-changed=!"eslint $(git diff --name-only | tr '\n' ' ')"
 
 [push]
 	default = matching
@@ -29,3 +24,9 @@
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+
+[log]
+	mailmap = true
+
+[mailmap]
+	file = ~/.config/git/mailmap
