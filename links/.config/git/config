@@ -13,6 +13,7 @@ lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 	c = "commit -m"
 	ds = "diff --staged"
 	df = "diff"
+	ff = "merge --ff-only"
 	amend = "commit --amend --no-edit"
 	sweep = "stash -k -u"
 
@@ -30,3 +31,9 @@ lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 
 [mailmap]
 	file = ~/.config/git/mailmap
+
+[merge]
+	tool = bc4
+
+[mergetool "bc4"]
+	trustExitCode = true

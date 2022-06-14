@@ -91,6 +91,7 @@ fi
 
 if [[ "$(uname)" == "Darwin" ]]; then
 	alias make=gmake
+	alias stat="stat -x" # better stat
 fi
 
 # Utility commands
@@ -190,6 +191,11 @@ pjd(){
 			else
 				printf "~/Dev/$2 is not a directory.\n"
 			fi;;
+
+		"r"|"root")
+			pjd # cd to projdir
+			cd "$(git rev-parse --show-toplevel)" || return 1
+			;;
 		*)	
 			cat <<-EOF
 			usage: pjd [<command>] [<dir>]
@@ -200,6 +206,7 @@ pjd(){
 			  set       Set the ~/.projdir to the current directory.
 			  pwd       Prints the contents of ~/.projdir.
 			  to <dir>  Creates ~/Dev/<dir>, sets ~/.projdir, and cds to it.
+			  r,root    cd to the nearest Git root containing the projdir
 
 			EOF
 			;;
@@ -261,7 +268,7 @@ touch-shell(){
 
 # Run a command for any change to non-gitignored files in the working directory
 onchange(){
-	ag -l | entr -s "echo $(hr) && ($*)"
+	fd | entr -s "echo $(hr) && ($*)"
 }
 
 # Shortcut to run a Docker container like a command
@@ -279,6 +286,7 @@ docli(){
 
 # Install FZF bash keybinds and config
 export FZF_DEFAULT_COMMAND='fd'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--inline-info'
 export FZF_CTRL_T_OPTS="--preview '[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
