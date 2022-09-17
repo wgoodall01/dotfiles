@@ -17,6 +17,9 @@ lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 	amend = "commit --amend --no-edit"
 	sweep = "stash -k -u"
 
+[diff]
+	submodule = "log"
+
 [push]
 	default = matching
 

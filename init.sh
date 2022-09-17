@@ -80,8 +80,7 @@ if [ "$CFG_GUI" = true ]; then
 	)   || fatal "Could not copy gdm3-custom.conf to /etc/gdm3/custom.conf"
 
 	comment "Alacritty"
-	add_ppa "mmstick76/alacritty"
-	install_apt alacritty
+	install_snap alacritty --classic
 	link .config/alacritty
 	link .fonts
 
@@ -100,7 +99,6 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt x11-xserver-utils
 	install_apt meld
 	install_apt ssh-askpass-gnome
-	install_snap insomnia
 
 	if [[ "$CFG_VM" == "true" ]]; then
 		comment "VM tools (GUI)"
@@ -174,8 +172,7 @@ if [[ "$CFG_LANG_NODEJS" == "true" ]]; then
 	comment "Node.js"
 	link ".default-npm-packages"
 	install_asdf_plugin nodejs "https://github.com/asdf-vm/asdf-nodejs.git"
-	install_asdf_node_keys
-	nodejs_major_version="17"
+	nodejs_major_version="18"
 	nodejs_version="$(asdf list-all nodejs | grep -E "^$nodejs_major_version\\." | tail -n1)"
 	install_asdf_lang nodejs "$nodejs_version"
 fi
@@ -210,7 +207,7 @@ if [[ "$CFG_LANG_JAVA" == "true" ]]; then
 	install_apt ca-certificates-java
 	install_asdf_plugin java
 	install_asdf_plugin maven
-	install_asdf_lang java "openjdk-11.0.2"
+	install_asdf_lang java "openjdk-18"
 fi
 
 if [[ "$CFG_LANG_CPP" == "true" ]]; then
@@ -225,7 +222,8 @@ if [[ "$CFG_LANG_RUST" == "true" ]]; then
 	link .default-cargo-crates
 	install_apt lld # LLVM linker, for performance
 	RUSTC_WRAPPER="" install_asdf_lang rust "nightly"
-	link .local/bin/rust-analyzer
+	install_asdf_plugin rust-analyzer
+	install_asdf_lang rust-analyzer nightly
 fi
 
 if [[ "$CFG_CONDA" == "true" ]]; then

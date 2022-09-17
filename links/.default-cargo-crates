@@ -1,4 +1,3 @@
 sccache
 cargo-insta
 cargo-release
-cargo-edit

@@ -3,7 +3,7 @@
 install_asdf(){
 	printf "[asdf   ] install asdf... "
 	if [[ ! -d ~/.asdf ]]; then
-		git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0 &>"$LOGS/asdf_dl"\
+		git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2 &>"$LOGS/asdf_dl"\
 			&& printf "done.\n"\
 			|| fatal "failed--check logs/asdf_dl for details"
 	else
@@ -19,19 +19,6 @@ install_asdf_plugin(){
 		asdf plugin-add "$1" "$2" &>"$LOGS/asdf_$1"\
 			&& printf "done.\n"\
 			|| fatal "failed--check logs/asdf_$1 for details"
-	else
-		printf "already installed.\n"
-	fi
-}
-
-install_asdf_node_keys(){
-	printf "[asdf   ] install keyring for nodejs..."\
-	
-	if [[ ! -e ~/.asdf/dotfiles-node-keyring-done ]]; then
-		~/.asdf/plugins/nodejs/bin/import-release-team-keyring &> "$LOGS/asdf_node_keyring"\
-			&& touch ~/.asdf/dotfiles-node-keyring-done\
-			&& printf "done.\n"\
-			|| fatal "couldn't install nodejs keyring for asdf--check logs/asdf_node_keyring for details."
 	else
 		printf "already installed.\n"
 	fi

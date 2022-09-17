@@ -38,7 +38,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal || gnome-terminal
+bindsym $mod+Return exec alacritty || i3-sensible-terminal || gnome-terminal
 
 # Start a browser
 bindsym $mod+shift+Return exec "xdg-open https://"

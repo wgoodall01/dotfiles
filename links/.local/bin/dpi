@@ -3,8 +3,8 @@ set -euo pipefail
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 
-laptop_dpi=150
-desktop_dpi=130
+dpi_mbp=180
+dpi_lg4k=190
 
 # Script to set display DPI
 
@@ -15,8 +15,8 @@ function usage_and_exit() {
 	echo "    dpi [preset | dpi-number]"
 	echo 
 	echo "Presets:"
-	echo "    laptop  : $laptop_dpi dpi"
-	echo "    desktop : $desktop_dpi dpi"
+	echo "    mbp     : $dpi_mbp dpi"
+	echo "    lg4k    : $dpi_lg4k dpi"
 	echo 
 	echo "Optionally, you can just pass a number:"
 	echo "    dpi 70  # set to 70 DPI"
@@ -57,8 +57,8 @@ if [[ "$1" =~ ^[0-9]+$ ]]; then
 else
 	# Handle presets
 	case "$1" in 
-		"laptop") set_dpi "$laptop_dpi" ;;
-		"desktop") set_dpi "$desktop_dpi" ;;
+		"mbp") set_dpi "$dpi_mbp" ;;
+		"lg4k") set_dpi "$dpi_lg4k" ;;
 		*) usage_and_exit ;;
 	esac
 fi
