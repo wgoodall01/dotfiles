@@ -140,6 +140,10 @@ fi
 
 comment "Git config"
 link .config/git
+add_apt_key_url "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
+add_apt "https://cli.github.com/packages"
+install_apt gh
+
 
 comment "Shell configuration"
 link .bashrc
