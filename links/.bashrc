@@ -217,7 +217,7 @@ pjd(){
 pjd
 
 # cd relative to ~/Dev
-dcd(){
+to(){
 	cd ~/Dev/$*
 }
 
@@ -285,7 +285,7 @@ docli(){
 }
 
 # Install FZF bash keybinds and config
-export FZF_DEFAULT_COMMAND='fd'
+export FZF_DEFAULT_COMMAND='fdfind'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--inline-info'
 export FZF_CTRL_T_OPTS="--preview '[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'"

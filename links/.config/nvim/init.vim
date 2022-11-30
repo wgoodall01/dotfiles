@@ -115,6 +115,12 @@ set number
 " scrolloff -- number of lines to keep above/below cursor at all times
 set scrolloff=5
 
+" breakindent: indent soft-wrapped lines
+set breakindent
+set breakindentopt=shift:2,sbr
+set showbreak=↪
+
+
 " set cursor line
 set cursorline
 hi CursorLine	cterm=NONE ctermbg=234 ctermfg=NONE
