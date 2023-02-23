@@ -19,9 +19,6 @@ export CFG_LANG_RUST=false
 # Conda?
 export CFG_CONDA=false
 
-# Nix?
-export CFG_NIX=true
-
 # Install IntelliJ and CLion?
 export CFG_JETBRAINS=false
 

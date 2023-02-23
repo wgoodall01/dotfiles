@@ -1,0 +1,8 @@
+[Unit]
+Description=Parallels Copy-Paste Tool
+
+[Install]
+WantedBy=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/prlcp

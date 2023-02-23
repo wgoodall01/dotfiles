@@ -54,8 +54,11 @@ install_apt python3-dev
 install_apt python3-pip
 install_apt software-properties-common # for apt-add-repository
 
-if [[ "$CFG_VM" == "true" ]]; then
-	comment "VM tools"
+comment "Local services"
+link .config/systemd
+
+if [[ "$CFG_OPEN_VM_TOOLS" == "true" ]]; then
+	comment "Open VM Tools"
 	install_apt open-vm-tools
 fi
 
@@ -71,13 +74,13 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt hsetroot
 	install_apt i3
 	link .config/i3
-	printf "[copy   ] Add /etc/gdm3/custom.conf ..."
-	(
-		sudo cp "$DIR/res/gdm3-custom.conf" "/etc/gdm3/custom.conf" &&\
-		sudo chown root:root "/etc/gdm3/custom.conf" &&\
-		sudo chmod 0644 "/etc/gdm3/custom.conf" &&\
-		printf "done.\n" 
-	)   || fatal "Could not copy gdm3-custom.conf to /etc/gdm3/custom.conf"
+
+	run "gdm3" "Add /etc/gdm3/custom.conf" \
+		sudo cp "$DIR/res/gdm3-custom.conf" "/etc/gdm3/custom.conf"
+	run "gdm3" "Chown /etc/gdm3/custom.conf" \
+		sudo chown root:root "/etc/gdm3/custom.conf"
+	run "gdm3" "Chmod /etc/gdm3/custom.conf" \
+		sudo chmod 0644 "/etc/gdm3/custom.conf"
 
 	comment "Alacritty"
 	install_snap alacritty --classic
@@ -86,9 +89,9 @@ if [ "$CFG_GUI" = true ]; then
 
 	comment "Cursor theme"
 	install_apt dmz-cursor-theme
-	printf "[alternt] Updating default cursor... "
-	(sudo update-alternatives --set x-cursor-theme "/usr/share/icons/DMZ-White/cursor.theme" && printf "done.\n") \
-		|| fatal "Failed to update alternatives for cursor theme."
+	run "alternt" "Update default cursor..." \
+		sudo update-alternatives --set \
+			x-cursor-theme "/usr/share/icons/DMZ-White/cursor.theme"
 
 	comment "Firefox"
 	install_apt firefox
@@ -100,30 +103,34 @@ if [ "$CFG_GUI" = true ]; then
 	install_apt meld
 	install_apt ssh-askpass-gnome
 
-	if [[ "$CFG_VM" == "true" ]]; then
+	if [[ "$CFG_PARALLELS" == "true" ]]; then
+		comment "Parallels Tools"
+		run 'service' 'Enable prlcc service' \
+			systemctl --user enable --now prlcc.service
+		run 'service' 'Enable prlcp service' \
+			systemctl --user enable --now prlcp.service
+	fi
+
+
+	if [[ "$CFG_OPEN_VM_TOOLS" == "true" ]]; then
 		comment "VM tools (GUI)"
 		install_apt open-vm-tools-desktop
-		printf "[acpi   ] Mask sleep..."
-		(\
-			sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target &>"$LOGS/disable_acpi_sleep" \
-			&& printf "done.\n" \
-		) || fatal "Failed to disable ACPI sleep";
+		run "ACPI" "Mask sleep" \
+			sudo systemctl mask sleep.target suspend.target \
+				hibernate.target hybrid-sleep.target
 	fi
 
 
 	if [[ "$CFG_GROUPWARE" == "true" ]]; then
 		comment "Groupware"
-		install_snap teams
 		install_snap telegram-desktop
 		install_snap slack --classic
 
 		add_apt_key_url "https://zoom.us/linux/download/pubkey"
 		install_deb_url zoom "https://zoom.us/client/latest/zoom_amd64.deb"
 
-		printf '[zoom   ] set DPI scaling...' \
-			&& sed -i 's/scaleFactor=1/scaleFactor=1.25/g' "$HOME/.config/zoomus.conf" \
-			&& printf "done.\n" \
-			|| fatal "Failed to configure zoom dpi"
+		run "zoom" "Set DPI scaling..." \
+			sed -i 's/scaleFactor=1/scaleFactor=1.25/g' "$HOME/.config/zoomus.conf"
 	fi
 
 	if [[ "$CFG_JETBRAINS" == "true" ]]; then
@@ -143,7 +150,6 @@ link .config/git
 add_apt_key_url "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
 add_apt "https://cli.github.com/packages"
 install_apt gh
-
 
 comment "Shell configuration"
 link .bashrc
@@ -235,35 +241,6 @@ if [[ "$CFG_CONDA" == "true" ]]; then
 	add_apt_key_url "https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc"
 	add_apt "deb [arch=amd64] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main"
 	install_apt conda
-fi
-
-if [[ "$CFG_NIX" == "true" ]]; then
-	comment "Nix"
-	install_nix
-	source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # get the new install
-	
-	# Set the env for unstable features (like flakes)
-	printf '[nix    ] installing unstable features... ' \
-		&& nix-env -iA nixpkgs.nixUnstable &>"$LOGS/nix_install_unstable"\
-		&& printf "done.\n" \
-		|| fatal "failed to set nixpkgs.nixUnstable"
-
-	# Add the config line for unstable features
-	printf '[nix    ] configuring unstable features... '
-	if ! grep '# dotfiles init' /etc/nix/nix.conf &>/dev/null; then
-
-		{ sudo tee -a /etc/nix/nix.conf &>/dev/null <<-EOF
-			# dotfiles init
-			experimental-features = nix-command flakes
-			max-jobs = auto
-		EOF
-		} \
-			&& sudo systemctl restart nix-daemon --quiet \
-			&& printf "done.\n" \
-			|| fatal "failed to configure nix experimental-features"
-	else
-		printf "already configured.\n"
-	fi
 fi
 
 comment "neovim"
