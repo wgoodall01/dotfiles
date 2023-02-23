@@ -21,7 +21,7 @@ lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 	submodule = "log"
 
 [push]
-	default = matching
+	default = upstream
 
 [filter "lfs"]
 	process = git-lfs filter-process

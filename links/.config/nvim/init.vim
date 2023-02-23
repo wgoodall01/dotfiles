@@ -117,7 +117,7 @@ set scrolloff=5
 
 " breakindent: indent soft-wrapped lines
 set breakindent
-set breakindentopt=shift:2,sbr
+set breakindentopt=shift:4,sbr
 set showbreak=↪
 
 
