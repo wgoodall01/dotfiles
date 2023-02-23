@@ -92,6 +92,7 @@ fi
 if [[ "$(uname)" == "Darwin" ]]; then
 	alias make=gmake
 	alias stat="stat -x" # better stat
+	export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"  # recent sqlite3
 fi
 
 # Utility commands
@@ -299,10 +300,6 @@ if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then source "$HOME/googl
 # Enable conda
 if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then source "/opt/conda/etc/profile.d/conda.sh"; fi
 
-
-# Path for fly.io flyctl
-export FLYCTL_INSTALL="/home/wgoodall01/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 (	
 	flock -x 42

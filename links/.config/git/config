@@ -40,3 +40,5 @@ lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 
 [mergetool "bc4"]
 	trustExitCode = true
+[init]
+	defaultBranch = main
