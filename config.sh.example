@@ -10,11 +10,12 @@ export CFG_GROUPWARE=false # Install Slack, Zoom, Webex, etc
 # Language configuration
 export CFG_LANG_NODEJS=true 
 export CFG_LANG_GOLANG=true
-export CFG_LANG_RUBY=true
-export CFG_LANG_JAVA=true
+export CFG_LANG_RUST=true
 export CFG_LANG_PYTHON=true
+export CFG_LANG_ZIG=false
+export CFG_LANG_JAVA=false
+export CFG_LANG_RUBY=false
 export CFG_LANG_CPP=false
-export CFG_LANG_RUST=false
 
 # Conda?
 export CFG_CONDA=false

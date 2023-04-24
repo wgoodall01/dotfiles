@@ -70,6 +70,9 @@ command! Files call fzf#vim#files(s:find_git_root(), {'options': '--prompt " /"'
 noremap <silent> <c-p> :Files<CR>
 noremap <silent> <c-l> :Tags<CR>
 
+" Copilot
+Plug 'github/copilot.vim'
+
 " Code analysis
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 1

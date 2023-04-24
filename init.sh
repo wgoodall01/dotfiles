@@ -37,6 +37,7 @@ printf "[config ] [lang] Java      : %s\n" "$CFG_LANG_JAVA"
 printf "[config ] [lang] Python    : %s\n" "$CFG_LANG_PYTHON"
 printf "[config ] [lang] C++       : %s\n" "$CFG_LANG_CPP"
 printf "[config ] [lang] Rust      : %s\n" "$CFG_LANG_RUST"
+printf "[config ] [lang] Zig       : %s\n" "$CFG_LANG_ZIG"
 printf "[config ] Environment support for Conda  : %s\n" "$CFG_CONDA"
 printf "[config ] Environment support for Nix    : %s\n" "$CFG_NIX"
 
@@ -234,6 +235,12 @@ if [[ "$CFG_LANG_RUST" == "true" ]]; then
 	RUSTC_WRAPPER="" install_asdf_lang rust "nightly"
 	install_asdf_plugin rust-analyzer
 	install_asdf_lang rust-analyzer nightly
+fi
+
+if [[ "$CFG_LANG_ZIG" == "true" ]]; then
+	comment "Zig"
+	install_asdf_plugin "zig"
+	install_asdf_lang zig "0.10.1"
 fi
 
 if [[ "$CFG_CONDA" == "true" ]]; then
