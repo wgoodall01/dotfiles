@@ -130,7 +130,7 @@ if [ "$CFG_GUI" = true ]; then
 		add_apt_key_url "https://zoom.us/linux/download/pubkey"
 		install_deb_url zoom "https://zoom.us/client/latest/zoom_amd64.deb"
 
-		run "zoom" "Set DPI scaling..." \
+		run "zoom" "Set DPI scaling" \
 			sed -i 's/scaleFactor=1/scaleFactor=1.25/g' "$HOME/.config/zoomus.conf"
 	fi
 
@@ -148,8 +148,12 @@ fi
 
 comment "Git config"
 link .config/git
-add_apt_key_url "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
-add_apt "https://cli.github.com/packages"
+function install_gh_cli() {
+	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg 2>/dev/null \
+	&& sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+}
+run "gh" "Add 'gh' CLI repository" install_gh_cli
 install_apt gh
 
 comment "Shell configuration"
@@ -158,6 +162,9 @@ link .profile
 link .inputrc # for anything that uses readline
 install_apt highlight
 install_fzf
+
+comment "asdf:"
+install_asdf
 
 if [ "$CFG_CLOUD" = true ]; then
 	comment "Cloud CLIs"
@@ -170,9 +177,6 @@ fi
 comment "Powerline"
 link .config/powerline-shell
 install_pip powerline-shell
-
-comment "asdf:"
-install_asdf
 
 if [[ "$CFG_LANG_PYTHON" == "true" ]]; then
 	comment "Python"
@@ -246,7 +250,7 @@ fi
 if [[ "$CFG_CONDA" == "true" ]]; then
 	comment "Conda"
 	add_apt_key_url "https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc"
-	add_apt "deb [arch=amd64] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main"
+	add_apt "deb [arch=$(dpkg --print-architecture)] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main"
 	install_apt conda
 fi
 

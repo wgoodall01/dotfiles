@@ -34,7 +34,7 @@ add_apt(){
 		printf "already added.\n"
 	else
 		# Install PPA
-		if sudo apt-add-repository "$name" -y &>> $LOGS/ppa && sudo apt update &>> $LOGS/ppa; then
+		if sudo apt-add-repository -S "$name" -y &>> $LOGS/ppa && sudo apt update &>> $LOGS/ppa; then
 			printf "done.\n"
 		else
 			fatal "failed - check logs/ppa\n"
