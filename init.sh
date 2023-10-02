@@ -51,6 +51,7 @@ install_apt build-essential
 install_apt libssl-dev
 install_apt libffi-dev
 install_apt python3
+install_apt pipx
 install_apt python3-dev
 install_apt python3-pip
 install_apt software-properties-common # for apt-add-repository
@@ -84,7 +85,7 @@ if [ "$CFG_GUI" = true ]; then
 		sudo chmod 0644 "/etc/gdm3/custom.conf"
 
 	comment "Alacritty"
-	install_snap alacritty --classic
+	install_apt alacritty
 	link .config/alacritty
 	link .fonts
 
@@ -95,11 +96,11 @@ if [ "$CFG_GUI" = true ]; then
 			x-cursor-theme "/usr/share/icons/DMZ-White/cursor.theme"
 
 	comment "Firefox"
-	install_apt firefox
+	install_apt firefox-esr
 
 	comment "GUI utilities"
 	install_apt xclip
-	install_pip i3ipc
+	install_apt python3-i3ipc
 	install_apt x11-xserver-utils
 	install_apt meld
 	install_apt ssh-askpass-gnome
@@ -180,7 +181,7 @@ install_pip powerline-shell
 
 if [[ "$CFG_LANG_PYTHON" == "true" ]]; then
 	comment "Python"
-	install_pip "black"
+	install_pip "black" 
 fi
 
 if [[ "$CFG_LANG_NODEJS" == "true" ]]; then
@@ -259,7 +260,7 @@ install_apt neovim
 install_apt exuberant-ctags
 link .ctags
 link .config/nvim
-install_pip neovim
+install_apt python3-neovim
 install_apt editorconfig
 install_apt clang-format
 nvim_run +PlugInstall
@@ -300,5 +301,5 @@ install_apt ripgrep
 install_apt mosh
 install_apt aria2
 install_apt nginx-core
-install_snap shellcheck
+install_apt shellcheck
 link .local/bin/ngrok

@@ -6,7 +6,7 @@ install_pip(){
 		printf "already installed\n"
 	else
 		printf "installing... "
-		if pip3 install --user $1 &>$LOGS/pip3_$1_install; then
+		if pipx install $1 &>$LOGS/pip3_$1_install; then
 			printf "done\n"
 		else
 			fatal "failed - check logs/pip3_${1}_install\n"

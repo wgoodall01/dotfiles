@@ -17,6 +17,8 @@ window:
   # Startup Mode
   startup_mode: Windowed
 
+  opacity: 1.0
+
   # Window title
   #title: Alacritty
   # Window class (Linux only):
@@ -72,8 +74,6 @@ bell:
   animation: EaseOutExpo
   duration: 0
   color: "0xffffff"
-
-background_opacity: 1.0
 
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
