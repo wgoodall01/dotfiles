@@ -73,6 +73,9 @@ noremap <silent> <c-l> :Tags<CR>
 " Copilot
 Plug 'github/copilot.vim'
 
+" Coq
+Plug 'whonore/Coqtail'
+
 " Code analysis
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 1
