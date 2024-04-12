@@ -14,6 +14,7 @@ lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 	ds = "diff --staged"
 	df = "diff"
 	ff = "merge --ff-only"
+	fa = "fetch --all"
 	amend = "commit --amend --no-edit"
 	sweep = "stash -k -u"
 
@@ -22,6 +23,7 @@ lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 
 [push]
 	default = upstream
+	autoSetupRemote = true
 
 [filter "lfs"]
 	process = git-lfs filter-process
