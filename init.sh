@@ -171,8 +171,11 @@ if [ "$CFG_CLOUD" = true ]; then
 	comment "Cloud CLIs"
 	install_asdf_plugin gcloud
 	install_asdf_plugin awscli
-	install_apt docker.io
 	add_docker_user_group
+
+	add_apt_key_url "https://download.docker.com/linux/debian/gpg"
+	add_apt "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+	install_apt docker-ce docker-compose-plugin
 fi
 
 comment "Powerline"

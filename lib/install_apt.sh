@@ -3,12 +3,12 @@
 
 install_apt(){
 	# Install a package and log the installation
-	printf "[install] $1: "
-	if dpkg -s $1 &>/dev/null; then
+	printf "[install] $*: "
+	if dpkg -s "$@" &>/dev/null; then
 		printf "already installed\n"
 	else
 		printf "installing... "
-		if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y $1 &>$LOGS/$1_install; then
+		if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$@" &>$LOGS/$1_install; then
 			printf "done\n"
 		else
 			fatal "failed - check logs/${1}_install\n"
