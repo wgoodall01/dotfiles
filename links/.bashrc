@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+[[ "$(uname)" == "Darwin" ]] && eval $(/opt/homebrew/bin/brew shellenv)
+
 hr() {
 	local COLS;
 	COLS="$(tput cols)";
@@ -95,6 +97,32 @@ if [[ "$(uname)" == "Darwin" ]]; then
 	export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"  # recent sqlite3
 fi
 
+# allGood environment presets
+function @prod () {
+	local creds="$HOME/Dev/ag/creds/prod"
+	TEMPORAL_CLI_ADDRESS="prod-us-west-2.wxrfl.tmprl.cloud:7233" \
+	TEMPORAL_CLI_NAMESPACE="prod-us-west-2.wxrfl" \
+	TEMPORAL_CLI_TLS_CERT="$creds/temporal_client_cert.crt" \
+	TEMPORAL_CLI_TLS_KEY="$creds/temporal_client_key.key" \
+	AWS_PROFILE=ag_prod \
+	AG_DEPLOY_ENV=prod \
+	"$@"
+}
+function @dev () {
+	local creds="$HOME/Dev/ag/creds/dev"
+	TEMPORAL_CLI_ADDRESS="stage-us-west-2.wxrfl.tmprl.cloud:7233" \
+	TEMPORAL_CLI_NAMESPACE="stage-us-west-2.wxrfl" \
+	TEMPORAL_CLI_TLS_CERT="$creds/temporal_client_cert.crt" \
+	TEMPORAL_CLI_TLS_KEY="$creds/temporal_client_key.key" \
+	AWS_PROFILE=ag_dev \
+	AG_DEPLOY_ENV=stage \
+	"$@"
+}
+function @minio () {
+	AWS_PROFILE=local_minio \
+	"$@"
+}
+
 # Utility commands
 lsmake(){
 	if [[ -e "./Makefile" ]]; then
@@ -151,7 +179,7 @@ export JAVA_HOME="/usr/lib/jvm/default-java"
 
 # Install ASDF hook
 if [[ "$(uname)" == "Darwin" ]]; then
-	source "$(brew --prefix asdf)/asdf.sh"
+	source "$(brew --prefix asdf)/libexec/asdf.sh"
 else
 	source ~/.asdf/asdf.sh
 fi
@@ -180,14 +208,14 @@ pjd(){
 			fi;;
 		"")    
 			if [[ -e ~/.projdir ]]; then 
-				cd $(cat ~/.projdir)
+				cd "$(cat ~/.projdir)" || return
 			else 
 				printf "Projdir does not exist yet.\n"
 			fi;;
 		"to") 
 			dir="$HOME/Dev/$2"
 			if [[ -d "$dir" ]]; then
-				cd "$dir"
+				cd "$dir" || return
 				pjd set "$dir"
 			else
 				printf "~/Dev/$2 is not a directory.\n"
@@ -287,6 +315,7 @@ docli(){
 
 # Install FZF bash keybinds and config
 export FZF_DEFAULT_COMMAND='fdfind'
+[[ "$(uname)" == "Darwin" ]] && export FZF_DEFAULT_COMMAND="fd"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--inline-info'
 export FZF_CTRL_T_OPTS="--preview '[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'"
@@ -322,3 +351,4 @@ if [ "$NAGGED" = true ]; then
 fi
 
 
+. "$HOME/.cargo/env"

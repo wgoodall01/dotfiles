@@ -1,1 +1,1 @@
-let g:ale_fixers = ['black']
+let g:ale_fixers = ['black', 'isort']

@@ -3,10 +3,9 @@
 	name = William Goodall
 
 [alias]
-lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%<(15)%ar%C(reset) %C(white)%s%C(reset) %C(dim white)- %aN%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%<(15)%ar%C(reset) %C(white)%s%C(reset) %C(dim white)- %aN%C(reset)%C(bold yellow)%d%C(reset)' --all
 	lg = "lgl -n 20"
 	browse = !"gh browse"
-
 	s = "status -u"
 	a = "add"
 	aa = "add --all"
@@ -17,6 +16,8 @@ lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(
 	fa = "fetch --all"
 	amend = "commit --amend --no-edit"
 	sweep = "stash -k -u"
+	wt = "worktree"
+	topic = "checkout --no-track origin/main -b"
 
 [diff]
 	submodule = "log"
