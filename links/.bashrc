@@ -72,7 +72,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# Aliasses
+# Aliases
 alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
@@ -82,6 +82,11 @@ alias "..."="cd ../.."
 alias "...."="cd ../../.."
 alias "tree"="tree -I node_modules"
 alias "yx"="yarn run --silent"
+
+# Aliases (allGood-specific)
+alias "sf"="~/Dev/ag/m/apps/sfdc/node_modules/.bin/sf"
+alias "ag"="allgood"
+function agb() { cd "$(allgood box run "$*")" || return 1; }
 
 if [[ "$(uname)" != "Darwin" ]]; then 
 	alias shutdown="systemctl poweroff"
@@ -106,6 +111,7 @@ function @prod () {
 	TEMPORAL_CLI_TLS_KEY="$creds/temporal_client_key.key" \
 	AWS_PROFILE=ag_prod \
 	AG_DEPLOY_ENV=prod \
+	AG_PROFILE=prod \
 	"$@"
 }
 function @dev () {
@@ -116,10 +122,11 @@ function @dev () {
 	TEMPORAL_CLI_TLS_KEY="$creds/temporal_client_key.key" \
 	AWS_PROFILE=ag_dev \
 	AG_DEPLOY_ENV=stage \
+	AG_PROFILE=stage \
 	"$@"
 }
-function @minio () {
-	AWS_PROFILE=local_minio \
+function @bark () {
+	AWS_PROFILE=wag_bark \
 	"$@"
 }
 
@@ -287,7 +294,7 @@ touch-shell(){
 			#!/usr/bin/env bash
 			set -euo pipefail
 			shopt -s inherit_errexit
-			DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+			DIR="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" >/dev/null 2>&1 && pwd )"
 		EOF
 	fi
 
@@ -311,6 +318,175 @@ docli(){
 		--sig-proxy=true\
 		-it\
 		"$@"
+}
+
+# Shortcut to CD to directories, or `$EDITOR` files, or `vim`/`vi` if nvim not available.
+-(){
+	# If no arguments, just print the current directory
+	if [[ $# -eq 0 ]]; then
+		echo "Usage: - <directory|files>"
+		return 1
+	fi
+
+	# If the first arg doesn't exist, fail.
+	if [[ ! -e "$1" ]]; then
+		echo "Usage: - <directory|file>"
+		echo "  '$1' does not exist."
+		return 1
+	fi
+
+	# If the first argument is a directory, cd to it, and list.
+	if [[ -d "$1" ]]; then
+		# if there's more than one arg, error.
+		if [[ $# -gt 1 ]]; then
+			echo "Usage: - <directory|file>"
+			echo "  First arg was directory; cannot pass more than one directory."
+			return 1
+		fi
+
+		cd "$1" || {
+			echo "Could not cd to '$1'. Does it exist?"
+			return 1
+		}
+		ls -a
+		return
+	fi
+
+	# If the first argument is a file, open it with $EDITOR or nvim/vim/vi if nvim not available
+	if [[ -f "$1" ]]; then
+		if command -v "$EDITOR" >/dev/null; then
+			"$EDITOR" "$@"
+		elif command -v nvim >/dev/null; then
+			nvim "$@"
+		elif command -v vim >/dev/null; then
+			vim "$@"
+		elif command -v vi >/dev/null; then
+			vi "$@"
+		else
+			echo "No editor available to open '$1'."
+			return 1
+		fi
+		return
+	fi
+}
+
+# dfconvert - Convert dataframes between file formats using DuckDB
+#
+# Usage:
+#   dfconvert <input_file> <output_file> [--mode MODE]
+#
+# Examples:
+#   dfconvert data.csv data.parquet
+#   dfconvert data.json data-table.md --mode markdown
+#
+# This will infer filetypes based on the file extensions.
+dfconvert() {
+    if [[ $# -le 2 ]]; then
+        echo "Usage: dfconvert <input_file> <output_file> [--mode MODE]"
+        return 1
+    fi
+    
+    local input_file="$1"
+    local output_file="$2"
+
+
+	# Parse the mode arg into the `mode` var. Otherwise, leave `mode` empty.
+	local mode=""
+	while [[ $# -gt 0 ]]; do
+		case "$1" in
+			--mode)
+				mode="$2"
+				shift 2
+				;;
+			*)
+				shift
+				;;
+		esac
+	done
+
+    if [[ ! -f "$input_file" ]]; then
+        echo "Input file '$input_file' does not exist."
+        return 1
+    fi
+    
+    if [[ -z "$output_file" ]]; then
+        echo "Output file must be specified."
+        return 1
+	fi
+
+	# If we have a --mode, use it as the output mode.
+	if [[ -n "$mode" ]]; then
+		duckdb <<EOF
+create table t as select * from '${input_file}';
+.mode $mode
+.output '${output_file}'
+select * from t;
+EOF
+		return
+	fi
+
+    # Otherwise, use DuckDB's file extension inference to convert between formats.
+    duckdb -c "create table t as select * from '${input_file}'; copy t to '${output_file}';"
+}
+
+
+# dfi - explore a dataframe file with DuckDB
+# Usage:
+#   dfi <file> [--format csv|json|parquet]
+#
+# Examples:
+#   dfi data.csv
+#   dfi data.json --format json
+#   dfi data.parquet
+#
+# This will read the file into DuckDB, and run a `summarize` command on it, which gives a nice overview of the data. If --format is not provided, it will be inferred from the file extension. Then, you can run queries against the 'df' table, which is loaded for you.
+dfi() {
+	local file=""
+	local format=""
+
+	while [[ $# -gt 0 ]]; do
+	  case "$1" in
+		  --format)
+			  format="$2"
+			  shift 2
+			  ;;
+		  *)
+			  file="$1"
+			  shift
+			  ;;
+	  esac
+	done
+
+	if [[ -z "$file" ]]; then
+	  echo "Usage: dfexplore <file> [--format csv|json|parquet]" >&2
+	  return 1
+	fi
+
+	if [[ -z "$format" ]]; then
+	  local ext="${file##*.}"
+	  case "$ext" in
+		  csv|CSV|tsv|TSV)               format="csv" ;;
+		  json|JSON|jsonl|JSONL|ndjson)  format="json" ;;
+		  parquet|PARQUET)               format="parquet" ;;
+		  xls|xlsx)                      format="excel" ;;
+		  *)                             format="infer" ;;
+	  esac
+	fi
+
+	local from_expr
+	case "$format" in
+	  csv)     from_expr="read_csv('${file}')" ;;
+	  json)    from_expr="read_json('${file}')" ;;
+	  parquet) from_expr="read_parquet('${file}')" ;;
+	  excel)   from_expr="read_xlsx('${file}', empty_as_varchar=true)" ;;
+	  infer)   from_expr="'./${file}'" ;;
+	  *)
+		  echo "dfexplore: unknown format '${format}'; expected csv, json, or parquet" >&2
+		  return 1
+		  ;;
+	esac
+
+	duckdb -cmd "create table df as select * from ${from_expr}; summarize df;"
 }
 
 # Install FZF bash keybinds and config

@@ -17,7 +17,15 @@
 	amend = "commit --amend --no-edit"
 	sweep = "stash -k -u"
 	wt = "worktree"
-	topic = "checkout --no-track origin/main -b"
+	uncommit = "reset --soft HEAD~"
+	remain = "!git fetch origin && git rebase origin/main"
+
+	# Create topic branches, create PRs to get them merged.
+	topic = "!f() { git fetch --all -q; git show-ref --verify --quiet refs/heads/$1 && git checkout $1 || git checkout --no-track origin/main -b $1; }; f"
+	pr = !"gh pr view -w || (git push origin HEAD && gh pr new -w --title \"$(git branch --show-current)\")"
+
+	# Force push the current branch with lease
+	fpl = !"git push --force-with-lease origin $(git symbolic-ref --short HEAD)"
 
 [diff]
 	submodule = "log"
@@ -40,8 +48,13 @@
 
 [merge]
 	tool = bc4
+	conflictStyle = "diff3"
 
 [mergetool "bc4"]
 	trustExitCode = true
+
 [init]
 	defaultBranch = main
+	
+[core]
+	hooksPath = $HOME/.config/git/hooks/

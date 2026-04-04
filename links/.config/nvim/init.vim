@@ -46,6 +46,7 @@ command Date r ! date -Iseconds
 
 " Lightline
 Plug 'itchyny/lightline.vim'
+set noshowmode
 let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
@@ -54,6 +55,7 @@ let g:lightline = {
       \ 'component_function': {
       \   'gitbranch': 'FugitiveHead'
       \ },
+      \ 'colorscheme': 'wombat',
       \ }
 
 " Generate ctags automatically
@@ -72,9 +74,16 @@ noremap <silent> <c-l> :Tags<CR>
 
 " Copilot
 Plug 'github/copilot.vim'
+let g:copilot_workspace_folders = ['~/Dev/ag/m'] " Use monorepo to inform suggestions
 
 " Coq
 Plug 'whonore/Coqtail'
+
+" CSV view
+Plug 'hat0uma/csvview.nvim'
+autocmd BufRead,BufNewFile *.csv lua require('csvview').setup()
+nnoremap <Leader>c :CsvViewToggle<CR>
+
 
 " Code analysis
 let g:ale_lint_on_text_changed = 'never'
@@ -83,20 +92,22 @@ Plug 'dense-analysis/ale'
 nnoremap <Leader>d :ALEGoToDefinition<CR>
 nnoremap <Leader>u :ALEFindReferences<CR>
 nnoremap <Leader>r :ALERename<CR>
+nnoremap <Leader>e :ALEDetail<CR>
+nnoremap <Leader>h :ALEHover<CR>
 nnoremap <Leader>a :ALECodeAction<CR>
 xnoremap <Leader>a :ALECodeAction<CR>
-xnoremap <Leader>e :ALEDetail<CR>
 
 " Select last paste
 nnoremap gp `[v`]
 
-" Colorcolumn colors
-highlight ColorColumn ctermbg=darkgray
+" Un-screw-up colorscheme
+colorscheme vim
+set notermguicolors
 
 " Completions config
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'ervandew/supertab'
-let g:SuperTabDefaultCompletionType = "<c-n>"
+" Plug 'ervandew/supertab'
+" let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:deoplete#enable_at_startup = 1
 set completeopt-=preview 
 
@@ -144,6 +155,9 @@ set backupcopy=yes
 
 " Break lines at word boundary
 set linebreak
+
+" Colorcolumn colors
+highlight ColorColumn ctermbg=black
 
 " Then load in all the plugins to runtimepath
 call plug#end()

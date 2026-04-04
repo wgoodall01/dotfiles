@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Guard against re-entrant execution (e.g. when .husky/pre-commit calls this script,
+# and this script then delegates to a repo-level hook that calls it again).
+if [[ -n "${_GLOBAL_PRE_COMMIT_RUNNING:-}" ]]; then
+    exit 0
+fi
+export _GLOBAL_PRE_COMMIT_RUNNING=1
+
+# Block any commit introducing RIPOUT.
+# In Husky v9 repos (where core.hooksPath = .husky overrides this global hook),
+# call this script directly from .husky/pre-commit:
+#   "${HOME}/.config/git/hooks/pre-commit"
+if git diff --cached -U0 | grep -q $'^+[^+].*RIPOUT'; then
+    echo "Error: staged changes contain 'RIPOUT' — remove it before committing." >&2
+    exit 1
+fi
+
+# Delegate to repo-level pre-commit hook if present (covers Husky v8 and plain hooks).
+repo_hook="$(git rev-parse --git-dir)/hooks/pre-commit"
+if [[ -x "$repo_hook" ]]; then
+    exec "$repo_hook"
+fi
