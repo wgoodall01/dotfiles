@@ -250,7 +250,7 @@ pjd(){
 }
 
 #Automatically cd to projdir
-pjd
+# pjd
 
 # cd relative to ~/Dev
 to(){
