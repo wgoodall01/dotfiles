@@ -24,3 +24,6 @@ let cargo_bin = ('~/.cargo/bin' | path expand)
 if ($cargo_bin | path exists) {
     $env.PATH = ($env.PATH | prepend $cargo_bin)
 }
+
+# ASDF shims
+$env.PATH = ($env.PATH | prepend ('~/.asdf/shims' | path expand))

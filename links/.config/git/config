@@ -24,6 +24,9 @@
 	topic = "!f() { git fetch --all -q; git show-ref --verify --quiet refs/heads/$1 && git checkout $1 || git checkout --no-track origin/main -b $1; }; f"
 	pr = !"gh pr view -w || (git push origin HEAD && gh pr new -w --title \"$(git branch --show-current)\")"
 
+	# Open the Linear ticket for the current branch
+	lin = "!open \"https://linear.app/allgood/issue/$(git symbolic-ref --short HEAD | grep -oE '^[A-Z]+-[0-9]+')\""
+
 	# Force push the current branch with lease
 	fpl = !"git push --force-with-lease origin $(git symbolic-ref --short HEAD)"
 

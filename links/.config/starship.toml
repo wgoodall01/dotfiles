@@ -2,8 +2,12 @@
 # Only path + git info
 
 add_newline = false
-format = "$directory "
+format = "$status$directory "
 right_format = "$git_status$git_branch"
+
+[status]
+disabled = false
+format = "[ $status ](bg:#ff69b4 fg:#000000 bold)"
 
 [directory]
 format = "[ $path ](bg:#3a3a3a fg:#bcbcbc)"
