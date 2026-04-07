@@ -15,10 +15,6 @@ $env.MANPAGER = "nvim +Man!"
 # Colors
 $env.CLICOLOR = "1"
 
-# Yarn / NPM global bin
-$env.PATH = ($env.PATH | prepend ('~/.yarn/bin' | path expand))
-$env.PATH = ($env.PATH | prepend ('~/.config/yarn/global/node_modules/.bin' | path expand))
-
 # Cargo
 let cargo_bin = ('~/.cargo/bin' | path expand)
 if ($cargo_bin | path exists) {
