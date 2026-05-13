@@ -9,7 +9,7 @@ def --env agb [...args: string] {
 }
 
 # !prod - run command with prod Temporal/AWS env vars
-def "!prod" [...cmd: string] {
+def --wrapped "!prod" [...cmd: string] {
     let creds = ('~/Dev/ag/creds/prod' | path expand)
     with-env {
         TEMPORAL_CLI_ADDRESS: "prod-us-west-2.wxrfl.tmprl.cloud:7233"
@@ -25,7 +25,7 @@ def "!prod" [...cmd: string] {
 }
 
 # !dev - run command with dev/stage Temporal/AWS env vars
-def "!dev" [...cmd: string] {
+def --wrapped "!dev" [...cmd: string] {
     let creds = ('~/Dev/ag/creds/dev' | path expand)
     with-env {
         TEMPORAL_CLI_ADDRESS: "stage-us-west-2.wxrfl.tmprl.cloud:7233"

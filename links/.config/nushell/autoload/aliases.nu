@@ -2,7 +2,6 @@
 
 # Navigation
 alias g = git
-alias .. = cd ..
 alias ... = cd ../..
 alias .... = cd ../../..
 
@@ -16,9 +15,6 @@ def gmake-alias [] {
         alias make = gmake
     }
 }
-
-# l - compact ls (nushell's ls is already good, but keep the short name)
-def l [] { ls -s }
 
 # todo - search for TODOs in codebase
 def todo [dir?: string] {

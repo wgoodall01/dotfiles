@@ -3,8 +3,9 @@
 	name = William Goodall
 
 [alias]
-	lgl = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%<(15)%ar%C(reset) %C(white)%s%C(reset) %C(dim white)- %aN%C(reset)%C(bold yellow)%d%C(reset)' --all
-	lg = "lgl -n 20"
+	lg-internal = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%<(15)%ar%C(reset) %C(white)%s%C(reset) %C(dim white)- %aN%C(reset)%C(bold yellow)%d%C(reset)'
+	lgl = "lg-internal --all"
+	lg = "lg-internal -n 20"
 	browse = !"gh browse"
 	s = "status -u"
 	a = "add"
@@ -19,6 +20,7 @@
 	wt = "worktree"
 	uncommit = "reset --soft HEAD~"
 	remain = "!git fetch origin && git rebase origin/main"
+	farp = "!git fa && git remain && git fpl"
 
 	# Create topic branches, create PRs to get them merged.
 	topic = "!f() { git fetch --all -q; git show-ref --verify --quiet refs/heads/$1 && git checkout $1 || git checkout --no-track origin/main -b $1; }; f"

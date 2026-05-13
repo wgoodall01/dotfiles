@@ -18,15 +18,15 @@ truncate_to_repo = true
 format = "[ $branch ](bg:#005faf fg:#c0c0c0 bold)"
 
 [git_status]
-format = "$conflicted$untracked$modified$staged$stashed$ahead_behind"
+format = "$conflicted$untracked$modified$deleted$staged$stashed$ahead_behind"
 ahead = "[ ⬆ $count ](bg:#585858 fg:#bcbcbc)"
 behind = "[ ⬇ $count ](bg:#585858 fg:#bcbcbc)"
 diverged = "[ ⬆ $ahead_count ⬇ $behind_count ](bg:#585858 fg:#bcbcbc)"
 stashed = "[ ⚑$count ](bg:#ffd75f fg:#000000)"
 staged = "[ $count✔ ](bg:#005f00 fg:#ffffff)"
 modified = "[ $count✎ ](bg:#af5f00 fg:#ffffff)"
+deleted = "[ $count✗ ](bg:#d70000 fg:#ffffff)"
 untracked = "[ $count? ](bg:#5f0000 fg:#ffffff)"
 conflicted = "[ $count✘ ](bg:#ff0000 fg:#ffffff)"
-deleted = ""
 renamed = ""
 up_to_date = ""
