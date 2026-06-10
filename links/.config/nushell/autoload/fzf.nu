@@ -49,19 +49,18 @@ $env.config.keybindings ++= [
       event: {
           send: executehostcommand
           cmd: "
-              if ((commandline | str trim) | is-empty) {
-                  let raw = (fd --type d --hidden --follow --exclude .git --print0 | fzf --read0 --print0 --bind=tab:toggle+down --height=40% --reverse | decode utf-8)
-                  if ($raw | is-not-empty) {
-                      commandline edit --replace (fzf-quote-paths $raw)
-                  }
+              let trimmed = (commandline | str trim)
+              let dir_mode = (($trimmed | is-empty) or ($trimmed == 'cd') or ($trimmed | str starts-with 'cd '))
+              let ctx = (fzf-split-before-cursor)
+              let raw = if $dir_mode {
+                  fd --type d --hidden --follow --exclude .git --print0 | fzf --read0 --print0 --bind=tab:toggle+down --height=40% --reverse --query $ctx.query | decode utf-8
               } else {
-                  let ctx = (fzf-split-before-cursor)
-                  let raw = (fd --type f --hidden --follow --exclude .git --print0 | fzf --read0 --print0 --multi --bind=tab:toggle+down --height=40% --reverse --query $ctx.query | decode utf-8)
-                  if ($raw | is-not-empty) {
-                      let quoted = (fzf-quote-paths $raw)
-                      commandline edit --replace ($ctx.prefix + $quoted + $ctx.after)
-                      commandline set-cursor (($ctx.prefix | str length) + ($quoted | str length))
-                  }
+                  fd --type f --type d --hidden --follow --exclude .git --print0 | fzf --read0 --print0 --multi --bind=tab:toggle+down --height=40% --reverse --query $ctx.query | decode utf-8
+              }
+              if ($raw | is-not-empty) {
+                  let quoted = (fzf-quote-paths $raw)
+                  commandline edit --replace ($ctx.prefix + $quoted + $ctx.after)
+                  commandline set-cursor (($ctx.prefix | str length) + ($quoted | str length))
               }
           "
       }
