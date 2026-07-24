@@ -5,9 +5,6 @@ shopt -s nullglob
 # Start file logging
 exec &> >(tee -a "$LOGS/init")
 
-# Prompt for sudo
-sudo printf ""
-
 comment(){
 	printf "\n          $ANSI_RED$1$ANSI_RESET\n"
 }

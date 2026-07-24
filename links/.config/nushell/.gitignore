@@ -1,1 +1,8 @@
 history.*
+
+# ~/.config/nushell is a symlink into this repo, so scripts outside it that write
+# to Nushell's autoload directory land here. These two are fully managed by the
+# allGood monorepo (scripts/provision.sh and apps/cli/scripts/install.sh) and
+# regenerated on every run, so they aren't ours to track.
+autoload/allgood.nu
+autoload/allgood-cli.nu

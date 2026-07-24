@@ -2,7 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-[[ "$(uname)" == "Darwin" ]] && eval $(/opt/homebrew/bin/brew shellenv)
+eval $(/opt/homebrew/bin/brew shellenv)
 
 hr() {
 	local COLS;
@@ -24,10 +24,8 @@ hr() {
 }
 
 # Push a notification to Pushover with pushover-cli
-# And push a system notification as well.
 push() {
 	pushover-cli push "$*" >/dev/null
-	notify-send "CLI Push" "$*"
 }
 
 
@@ -57,20 +55,15 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-[[ $(uname) != "Darwin" ]] && shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+# Not available in the bash 3.2 that ships with macOS.
+if (( BASH_VERSINFO[0] >= 4 )); then
+	shopt -s globstar
 fi
+
+# Colorized grep. BSD ls takes its colors from $CLICOLOR, set further down.
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 # Aliases
 alias ll='ls -alFh'
@@ -88,19 +81,9 @@ alias "sf"="~/Dev/ag/m/apps/sfdc/node_modules/.bin/sf"
 alias "ag"="allgood"
 function agb() { cd "$(allgood box run "$*")" || return 1; }
 
-if [[ "$(uname)" != "Darwin" ]]; then 
-	alias shutdown="systemctl poweroff"
-	alias "fd"="fdfind"
-	alias "open"="xdg-open"
-	alias "pbcopy"="xclip -selection clipboard"
-	alias "pbpaste"="xclip -selection clipboard -o"
-fi
-
-if [[ "$(uname)" == "Darwin" ]]; then
-	alias make=gmake
-	alias stat="stat -x" # better stat
-	export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"  # recent sqlite3
-fi
+alias make=gmake
+alias stat="stat -x" # better stat
+export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"  # recent sqlite3
 
 # allGood environment presets
 function @prod () {
@@ -167,7 +150,7 @@ function _update_ps1() {
     PS1=$(powerline-shell $?)
 }
 
-if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+if [[ ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
 
@@ -181,19 +164,11 @@ export MANPAGER="nvim +Man!"
 # Set $CLICOLOR
 export CLICOLOR=1
 
-# Set Java env vars
-export JAVA_HOME="/usr/lib/jvm/default-java"
-
-# Install ASDF hook
-if [[ "$(uname)" == "Darwin" ]]; then
-	source "$(brew --prefix asdf)/libexec/asdf.sh"
-else
-	source ~/.asdf/asdf.sh
-fi
-
-if command -v sccache >/dev/null; then
-	# use local sccache
-	export RUSTC_WRAPPER="sccache"
+# Activate mise, which manages language runtimes and CLIs.
+# The allGood monorepo's provision.sh activates mise from ~/.profile and
+# ~/.bash_profile too, so only do it here if that hasn't already happened.
+if [[ -z "$MISE_SHELL" ]] && command -v mise >/dev/null; then
+	eval "$(mise activate bash)"
 fi
 
 # Path for global yarn modules
@@ -269,11 +244,6 @@ update-dotfiles(){
 
 install-dotfiles(){
 	~/Dev/dotfiles/init.sh
-}
-
-# Shortcut to mount vmware shared folders
-mount-shared-folders(){
-	sudo mount -t fuse.vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other
 }
 
 # Remove ANSI codes from text
@@ -490,37 +460,24 @@ dfi() {
 }
 
 # Install FZF bash keybinds and config
-export FZF_DEFAULT_COMMAND='fdfind'
-[[ "$(uname)" == "Darwin" ]] && export FZF_DEFAULT_COMMAND="fd"
+export FZF_DEFAULT_COMMAND="fd"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--inline-info'
 export FZF_CTRL_T_OPTS="--preview '[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (highlight -O ansi -l {} || cat {}) 2> /dev/null | head -500'"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
-[[ "$(uname)" == "Darwin" ]] && source /opt/homebrew/opt/fzf/shell/key-bindings.bash
+[ -f /opt/homebrew/opt/fzf/shell/key-bindings.bash ] && source /opt/homebrew/opt/fzf/shell/key-bindings.bash
 
 # The next line updates PATH, enables shell completion for the Google Cloud SDK.
 if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then source "$HOME/google-cloud-sdk/path.bash.inc"; fi
 if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then source "$HOME/google-cloud-sdk/completion.bash.inc"; fi
 
-# Enable conda
-if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then source "/opt/conda/etc/profile.d/conda.sh"; fi
 
-
-(	
-	flock -x 42
-	if ! ssh-add -l &>/dev/null; then
-		# Prompt for SSH key, if askpass is installed.
-		askpass="$(which ssh-askpass)"
-		if [[ "$askpass" != "" ]]; then
-			# use askpass
-			SSH_ASKPASS="$askpass" ssh-add &>/dev/null </dev/null
-		else
-			# prompt to do it manually.
-			printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
-			NAGGED=true
-		fi
-	fi
-) 42>"$HOME/.w_ssh_ask_pass.lock"
+# Nag if the agent has no keys loaded. This used to shell out to ssh-askpass
+# under a flock; neither ships with macOS.
+if ! ssh-add -l &>/dev/null; then
+	printf "No SSH keys in ssh-agent - run 'ssh-add'\n"
+	NAGGED=true
+fi
 
 if [ "$NAGGED" = true ]; then
 	hr

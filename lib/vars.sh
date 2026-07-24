@@ -11,7 +11,7 @@ else
 fi
 
 
-TIMESTAMP=$(date -d "today" +"%Y-%m-%d_%H-%M-%S")
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 
 # Dir of backups
 BACKUPS=$DIR/backups/$TIMESTAMP
@@ -29,7 +29,4 @@ ln -s "$LOGS" "$DIR/logs/latest"
 if [ -f $DIR/password ]; then
 	PASSWORD=$(<$DIR/password)
 fi
-
-# APT things
-export DEBIAN_FRONTEND=noninteractive
 

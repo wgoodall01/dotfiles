@@ -13,12 +13,3 @@ install_pip(){
 		fi
 	fi
 }
-
-fix_local_perms(){
-	printf "[perms  ] Fix .local perms: "
-	if sudo chown -R ${USER}:${USER} ~/.local ~/.cache &> $LOGS/chown; then
-		printf "done\n"
-	else
-		fatal "failed - check logs/chown for details\n"
-	fi
-}

@@ -1,5 +1,27 @@
 let s:editor_root=expand('~/.config/nvim/')
 
+" Pin the python3 provider to a mise-managed python.
+"
+" Left unset, nvim searches $PATH for `pynvim-python` -- but mise rewrites $PATH
+" per directory, so opening a file inside a project that pins a different python
+" silently leaves nvim with no python3 provider at all (which breaks Coqtail).
+" Every python mise installs gets pynvim from ~/.default-python-packages, so any
+" of them works as the host; we just need a choice that doesn't depend on cwd.
+" Guarded by executable() so a missing host degrades to the $PATH search rather
+" than erroring.
+" Prefer mise's `latest` symlink, so this keeps working across python upgrades
+" without editing this file; fall back to any installed version.
+if !exists('g:python3_host_prog')
+	let s:pynvim_host = expand('~/.local/share/mise/installs/python/latest/bin/pynvim-python')
+	if !executable(s:pynvim_host)
+		let s:found = glob('~/.local/share/mise/installs/python/*/bin/pynvim-python', 1, 1)
+		let s:pynvim_host = empty(s:found) ? '' : s:found[-1]
+	endif
+	if !empty(s:pynvim_host) && executable(s:pynvim_host)
+		let g:python3_host_prog = s:pynvim_host
+	endif
+endif
+
 " Stuff for Plug
 set nocompatible
 filetype off

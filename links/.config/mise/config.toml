@@ -1,0 +1,40 @@
+# Global tool versions, managed by ~/Dev/dotfiles.
+# Migrated from ~/.tool-versions (asdf) -- mise does not treat that file as a
+# global config the way asdf did, so the pins live here instead.
+#
+# Project-level .tool-versions / mise.toml files still override these.
+[tools]
+node = "26.4.0"
+
+# NOTE: was 3.10.13 under asdf. Bumped because that patch release predates the
+# GitHub artifact attestations mise verifies by default, so it fails to install.
+#
+# postinstall puts pynvim inside the interpreter itself, which is what nvim's
+# python3 provider needs (a `pipx:` install would be isolated in its own venv).
+# Runs for every python mise installs here, so the provider follows upgrades.
+# This replaces the `pynvim` line that used to live in ~/.default-python-packages.
+python = { version = "3.10.20", postinstall = "pip install --quiet pynvim" }
+
+awscli = "2.15.34"
+tctl = "1.18.0"
+uv = "0.4.15"
+
+# Carried over from links/.default-cargo-crates, which asdf's rust plugin used
+# to read. Both resolve to prebuilt binaries from mise's registry rather than
+# building from source.
+cargo-insta = "latest"
+cargo-release = "latest"
+
+# fastmod was on that list too, but has no registry entry -- the only backend is
+# `cargo:`, which compiles it from source against whatever rustup toolchain is
+# active. Left inactive; uncomment if you want it back:
+#   "cargo:fastmod" = "latest"
+
+# Carried over from links/.default-npm-packages.
+yarn = "latest"
+"npm:serve" = "latest"
+"npm:nodemon" = "latest"
+
+# nvim's node provider (provides the `neovim-node-host` executable). Replaces
+# the `neovim` line that used to live in ~/.default-npm-packages.
+"npm:neovim" = "latest"

@@ -1,8 +1,0 @@
-[Unit]
-Description=Parallels Control Center
-
-[Install]
-WantedBy=graphical-session.target
-
-[Service]
-ExecStart=/usr/bin/prlcc
